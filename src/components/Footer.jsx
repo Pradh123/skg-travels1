@@ -16,14 +16,15 @@ export default function Footer() {
       <footer className="bg-ink text-slate-300">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
           <div>
-            <Image
-              src="/skg-logo-hd.png"
-              alt="SKG Travels"
-              width={130}
-              height={80}
-              unoptimized
-              className="h-16 w-auto object-contain"
-            />
+            <span className="footer-logo-mark">
+              <Image
+                src="/skg-logo-hd.png"
+                alt="SKG Travels"
+                width={1254}
+                height={1254}
+                unoptimized
+              />
+            </span>
             <p className="mt-5 text-sm leading-7">
               Reliable cab service in Mumbai for local travel and outstation journeys, with
               professional drivers and 24×7 support.
