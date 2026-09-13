@@ -21,7 +21,8 @@ export default function Footer() {
               alt="SKG Travels"
               width={130}
               height={80}
-              className="h-16 w-auto rounded bg-white object-contain"
+              unoptimized
+              className="h-16 w-auto object-contain"
             />
             <p className="mt-5 text-sm leading-7">
               Reliable cab service in Mumbai for local travel and outstation journeys, with
