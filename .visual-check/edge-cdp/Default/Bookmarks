@@ -1,0 +1,169 @@
+{
+   "checksum": "830ecaf7c01cc947b8d9081b9765e254",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13291729906722139",
+            "date_last_used": "13315136556431607",
+            "guid": "6cc380e3-7329-4bfe-8731-58a0e6465aea",
+            "id": "7",
+            "name": "REC BANDA INTERNET PORTAL",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "http://172.16.1.1:8090/httpclient.html",
+            "visit_count": 0
+         }, {
+            "date_added": "13289408134362947",
+            "date_last_used": "0",
+            "guid": "ca5c8bb7-f7a0-49c4-9764-8ab4f8e5df23",
+            "id": "8",
+            "name": "Booking.com",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "http://secure.rezserver.com/sdk/v1/LinkFwd?refid=9006&destination=booking&refclickid=webslice1819",
+            "visit_count": 0
+         }, {
+            "date_added": "13290020573770764",
+            "date_last_used": "0",
+            "guid": "0cb0b95a-1dbd-4798-8c7e-a7824974b9ee",
+            "id": "9",
+            "name": "Gmail",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://accounts.google.com/b/0/AddMailService",
+            "visit_count": 0
+         }, {
+            "date_added": "13290020573771229",
+            "date_last_used": "13327520660565054",
+            "guid": "c0e69e3b-9a47-4feb-9c08-ae194d6288de",
+            "id": "10",
+            "name": "YouTube",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://youtube.com/",
+            "visit_count": 0
+         }, {
+            "date_added": "13290020573771489",
+            "date_last_used": "0",
+            "guid": "cc23abcf-c692-443c-bcdb-af78c297757e",
+            "id": "11",
+            "name": "Maps",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://maps.google.com/",
+            "visit_count": 0
+         } ],
+         "date_added": "13433706285544704",
+         "date_last_used": "0",
+         "date_modified": "13291729906722139",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Favorites bar",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [ {
+            "children": [ {
+               "date_added": "13289408134362947",
+               "date_last_used": "0",
+               "guid": "fbf098fc-4172-4c53-969d-d56edc2c74b2",
+               "id": "13",
+               "name": "Booking.com",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "http://secure.rezserver.com/sdk/v1/LinkFwd?refid=9006&destination=booking&refclickid=iefav1819",
+               "visit_count": 0
+            }, {
+               "date_added": "13293056986672132",
+               "date_last_used": "0",
+               "guid": "a405641e-4a84-4cdd-a7d9-c9e46d503377",
+               "id": "14",
+               "name": "DSTL CS_IT.pdf",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "file:///P:/quantum/DSTL%20CS_IT.pdf",
+               "visit_count": 0
+            } ],
+            "date_added": "13292654301961418",
+            "date_last_used": "0",
+            "date_modified": "13293056986672132",
+            "guid": "bbf32e65-c990-46cc-86a9-7038ffcea393",
+            "id": "12",
+            "name": "HP",
+            "source": "unknown",
+            "type": "folder"
+         }, {
+            "children": [ {
+               "children": [ {
+                  "date_added": "13291302873936582",
+                  "date_last_used": "0",
+                  "guid": "65e1a83b-5382-4ec5-9e20-75035656666c",
+                  "id": "17",
+                  "name": "cricbuzz - Search",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://www.bing.com/search?q=cricbuzz&form=EDGSPH&refig=6c299e757e9e40de8cb3907f0df6b553&mkt=en-in&msnews=1&sp=1&qs=AS&pq=cr&sk=PRES1&sc=8-2&cvid=6c299e757e9e40de8cb3907f0df6b553&cc=IN&setlang=en-US",
+                  "visit_count": 0
+               } ],
+               "date_added": "13305171189789438",
+               "date_last_used": "0",
+               "date_modified": "13305171189789438",
+               "guid": "6025501c-f180-4ab7-9771-2bd10b78b9ad",
+               "id": "16",
+               "name": "Group 1",
+               "source": "unknown",
+               "type": "folder"
+            } ],
+            "date_added": "13305171189786966",
+            "date_last_used": "0",
+            "date_modified": "13305171189786966",
+            "guid": "2e4b2bed-de22-4288-a79c-5b3574613461",
+            "id": "15",
+            "name": "Tabs set aside",
+            "source": "unknown",
+            "type": "folder"
+         } ],
+         "date_added": "13433706285544704",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13433706285544704",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "workspaces_v2": {
+         "children": [  ],
+         "date_added": "13433706285544704",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "75aa6670-344f-549d-b742-660f029506ab",
+         "id": "5",
+         "name": "Workspaces",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CkEKHgiIgQISCHSqj5agAQAAKg4QABgBIAAoBTAAOABAABIAKhhyK0M5d3N0bStjelB0TEQwWjhMMTBBPT1IA6AGDBKsAQgQEqcBChxHeTI0VlFTcWVadFQ0ZkpsRGRPRDdhbVRMWTA9EiQ2MDI1NTAxYy1mMTgwLTRhYjctOTc3MS0yYmQxMGI3OGI5YWQYACAAKAAwu8bJs6wxOIPLybOsMUCDy8mzrDFKHEpZKyt1dW1LUHR4NXU4cWhSczVLb0FvUVMvND1aHiIcaVp0QTRVZWtrTk9FN2F4L2k5Tk9rQmh4aUdrPWUAAAAAwj4CYAASjAEIBRKHAQocd1JCclpMKzZQQTlhdktnak5QN0pYRExjZnZzPRIkYjFhZTlkMDYtZjkyZS01ODEyLWJmYzItYzU0ZmM1YTlmZjFkGAAgACgAMI2IqKWYMzi1iailmDNAtYmopZgzShxubXg2NXNRRHZ4SThUZ0VlditBK250dG9TbjQ9ZQAAAADCPgJgABKtAQgOEqgBChxTVjdWOEY2NlorditOd0tubFliT1Y5ZUhWVkU9EiRhNDA1NjQxZS00YTg0LTRjZGQtYTdkOS1jOWU0NmQ1MDMzNzcYACAAKAAwu9j80v0vONbZ/NL9L0DW2fzS/S9KHGs1bnRRdEF5S1ZUcW42UmFQcHdld3U1alpJcz1aHyIdvUpZSm5PV1YzeUJmanhCZXZ6a2VqY04vQllVQT1lAAAAAMI+AmAFEq0BCA8SqAEKHEp5dUNidHBSU3RjaFZFeGwxdGxVa1RSNlZHUT0SJDJlNGIyYmVkLWRlMjItNDI4OC1hNzljLTViMzU3NDYxMzQ2MRgAIAAoADC6xsmzrDE428rJs6wxQNvKybOsMUoccFhhTjQ1S2kwL3psdEhkbCtIVXpINHZHNjhVPVofIh22MnZUczBBMFJ2KzFJNXlybFRYS2VFbzhGUFdjPWUAAAAAwj4CYAASrAEIDRKnAQoceVptdEVTQ2hHZ2VWV2JuWTFvVEQ3RkpBTzV3PRIkZmJmMDk4ZmMtNDE3Mi00YzUzLTk2OWQtZDU2ZWRjMmM3NGIyGAAgACgAMMiai7b8Lzjom4u2/C9A6JuLtvwvShxjSUpjbFJvWS9wbC92TUZSM3FvTkpZeWpjWGc9Wh4iHHpFQkZMdjNFeWhldmtFK2QrK0tENm5OYUE4ST1lAAAAAMI+AmAFEqwBCAwSpwEKHHlDc2NsUjJVNGFmSGUvNkNBcTBuWVVpdmtMQT0SJGJiZjMyZTY1LWM5OTAtNDZjYy04NmE5LTcwMzhmZmNlYTM5MxgAIAAoADDImou2/C84uZuLtvwvQLmbi7b8L0ocTlBaZ0NwSWIyTzRlSnl0VmhSdnRKbE9RZ09FPVoeIhxsRmhtN2h5VEw3VFJhSzVVWkVxQTNsTmhBZTQ9ZQAAAADCPgJgABKsAQgHEqcBChxUQzYwNE9zdENxYVg3MzNaa1ZKY1o4STdteHc9EiQ2Y2MzODBlMy03MzI5LTRiZmUtODczMS01OGEwZTY0NjVhZWEYACAAKAAwvcbJs6wxOIeci7b8L0CHnIu2/C9KHGp1RUVDd1M2K3lhQ1dSdjdwN0V6WTFYY1VJST1aHiIcVjY5QXBQcCt6dEJ3L2kzZVpsaEZBdmZqbEM0PWU/tN5mwj4CYAUSjAEIAhKHAQocWWNTVG9udkVTUHdxQ3M0TDJjclZodjY4TDk4PRIkNTRjYjA3NzgtNTkyZC01MzFjLThkOTMtNTMwMDg5NTUxODUwGAAgACgAMLui3OiyMDjQtPTj+y9A0LT04/svShxvUFZraHdCUmJWNjVLQ1dSMitJT05IV29PdTg9ZQAAAADCPgJgABKtAQgLEqgBChxkVHU5MTZFMEh6T2VlT08zVDlYLytobXM1eFE9EiRjYzIzYWJjZi1jNjkyLTQ0M2MtYmNkYi1hZjc4YzI5Nzc1N2UYACAAKAAwvsbJs6wxOOP2rp+HMEDj9q6fhzBKHEpkNzRNSGZKL0tEV3FFbnlYUTdqYS9rYTFMST1aHyId9WRYNWhHWVFpYW16akhnS0xuQ1MwVFEycCtFUT1lpPvomMI+AmAFEq0BCAoSqAEKHG1SdEhWSjVXaEY0QnR5M0g3YUlGTDlzNXNtbz0SJGMwZTY5ZTNiLTlhNDctNGZlYi05YzA4LWFlMTk0ZDYyODhkZRgAIAAoADC4xsmzrDE4tfaun4cwQLX2rp+HMEocbGU3blpFWHA1eXlJcTVQUytHVXUvOVdNVlJ3PVofIh3qYWFBaFNmam9xWFhqanZDUnl0VFQxaHA4RlFBPWU4+Tkzwj4CYAUSjAEIARKHAQoceXhKLzZmdmtlY3I3a3A1RVF6QjR0V0xwZGJFPRIkMTU0N2RkZmQtNGQwMS01ODE0LWFhZTEtYWE5MTI3NDYwZTIyGAAgACgAMLui3OiyMDiitPTj+y9AorT04/svShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9ZQAAAADCPgJgABKtAQgJEqgBChxkbXRqSFk0dU16RWphcnkvdzFKTWNHZnRRVFU9EiQwY2IwYjk1YS0xZGJkLTQ3OTgtOGM3ZS1hNzgyNDk3NGI5ZWUYACAAKAAwucbJs6wxOMT2rp+HMEDE9q6fhzBKHHlUWHg0UTdGeldJVjZFUU9qU0lHYzQ5SG5qMD1aHyId1UpKS2RvUTRMMmt6M3JITXUxc0VUQzk3Ymh2WT1le6dAccI+AmAFEqwBCBESpwEKHE9xVjdZWXRaRlVvdEV0QkRWNXhUaGhTOWxWYz0SJDY1ZTFhODNiLTUzODItNGVjNS05ZTIwLTc1MDM1NjU2NjY2YxgAIAAoADC8xsmzrDE4osvJs6wxQKLLybOsMUocYURtM2tyamk3MUh6T0JGRStCQjFoUGFGblFNPVoeIhxFOGRFbEordWNHZG1zVGxoL2tUcmVObUt6V289ZdrTlazCPgJgBRKtAQgIEqgBChw5TDBCdlQ3MHVZYjJOODg5U3l1dmsySFg1V2s9EiRjYTVjOGJiNy1mN2EwLTQ5YzQtOTc2NC04YWI0ZjhlNWRmMjMYACAAKAAwt8bJs6wxOPebi7b8L0D3m4u2/C9KHDN6aW5kdlVtMjlSQmMvL3dBditsWXBUNUtxYz1aHyIdq04rMGpDNHp1bnMzV1RMSHJBVnZzb0k4SkJ2bz1l1c/LgMI+AmAFEowBCAMShwEKHG5qZ0R1ODhlQ3J2WHA4NnBEN2ZIR2NxRnA4OD0SJGZhMzQwNjgzLWQ1MjctNWExZS1hYjJlLTQxMjkyMjcyNmM3NBgAIAAoADC7otzosjA4mbf04/svQJm39OP7L0oceXpOQjAxY241NEE3Y1JVMHVUKy9QZ21UdFVvPWUAAAAAwj4CYAAwADgA",
+   "version": 1
+}

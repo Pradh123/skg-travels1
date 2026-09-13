@@ -1,0 +1,634 @@
+[
+  {
+    "source": "/services.aspx",
+    "destination": "/services"
+  },
+  {
+    "source": "/aboutus.html",
+    "destination": "/about"
+  },
+  {
+    "source": "/popular-cities.html",
+    "destination": "/cities"
+  },
+  {
+    "source": "/blogs.aspx",
+    "destination": "/blogs"
+  },
+  {
+    "source": "/contact.aspx",
+    "destination": "/contact"
+  },
+  {
+    "source": "/privacy-policy.html",
+    "destination": "/privacy-policy"
+  },
+  {
+    "source": "/lucknow.html",
+    "destination": "/cities/lucknow"
+  },
+  {
+    "source": "/taxi-service-in-bandra-khar-road-mumbai.html",
+    "destination": "/taxi-service-in-bandra-khar-road-mumbai"
+  },
+  {
+    "source": "/cab-service-in-dadar-west-east-mumbai.html",
+    "destination": "/cab-service-in-dadar-west-east-mumbai"
+  },
+  {
+    "source": "/cab-service-in-borivali-west-east-mumbai.html",
+    "destination": "/cab-service-in-borivali-west-east-mumbai"
+  },
+  {
+    "source": "/car-rental-in-charni-road-east-west-mumbai.html",
+    "destination": "/car-rental-in-charni-road-east-west-mumbai"
+  },
+  {
+    "source": "/cab-service-in-bhayandar-mumbai.html",
+    "destination": "/cab-service-in-bhayandar-mumbai"
+  },
+  {
+    "source": "/cab-service-in-churchgate-mumbai.html",
+    "destination": "/cab-service-in-churchgate-mumbai"
+  },
+  {
+    "source": "/mumbai.html",
+    "destination": "/cities/mumbai"
+  },
+  {
+    "source": "/car-rental-in-andheri-west-east-mumbai.html",
+    "destination": "/car-rental-in-andheri-west-east-mumbai"
+  },
+  {
+    "source": "/varanasi.html",
+    "destination": "/cities/varanasi"
+  },
+  {
+    "source": "/cab-service-in-dahisar-west-east-mumbai.html",
+    "destination": "/cab-service-in-dahisar-west-east-mumbai"
+  },
+  {
+    "source": "/cab-service-in-karol-bagh-delhi.html",
+    "destination": "/cab-service-in-karol-bagh-delhi"
+  },
+  {
+    "source": "/taxi-service-in-goregaon-west-east-mumbai.html",
+    "destination": "/taxi-service-in-goregaon-west-east-mumbai"
+  },
+  {
+    "source": "/taxi-service-in-jogeshwari-mumbai.html",
+    "destination": "/taxi-service-in-jogeshwari-mumbai"
+  },
+  {
+    "source": "/car-rental-in-grant-road-west-east-mumbai.html",
+    "destination": "/car-rental-in-grant-road-west-east-mumbai"
+  },
+  {
+    "source": "/cab-service-in-kandivali-west-east-mumbai.html",
+    "destination": "/cab-service-in-kandivali-west-east-mumbai"
+  },
+  {
+    "source": "/taxi-service-in-malad-west-mumbai.html",
+    "destination": "/taxi-service-in-malad-west-mumbai"
+  },
+  {
+    "source": "/car-rental-in-lower-parel-prabhadevi-mumbai.html",
+    "destination": "/car-rental-in-lower-parel-prabhadevi-mumbai"
+  },
+  {
+    "source": "/cab-service-in-marine-lines-mumbai.html",
+    "destination": "/cab-service-in-marine-lines-mumbai"
+  },
+  {
+    "source": "/taxi-service-in-matunga-road-mahim-junction-mumbai.html",
+    "destination": "/taxi-service-in-matunga-road-mahim-junction-mumbai"
+  },
+  {
+    "source": "/cab-service-in-nalasopara-mumbai.html",
+    "destination": "/cab-service-in-nalasopara-mumbai"
+  },
+  {
+    "source": "/cab-service-in-mira-road-west-east-mumbai.html",
+    "destination": "/cab-service-in-mira-road-west-east-mumbai"
+  },
+  {
+    "source": "/cab-service-in-naigaon-mumbai.html",
+    "destination": "/cab-service-in-naigaon-mumbai"
+  },
+  {
+    "source": "/car-rental-in-mumbai-central-mahalaxmi-west-east-mumbai.html",
+    "destination": "/car-rental-in-mumbai-central-mahalaxmi-west-east-mumbai"
+  },
+  {
+    "source": "/cab-service-in-virar-mumbai.html",
+    "destination": "/cab-service-in-virar-mumbai"
+  },
+  {
+    "source": "/cab-service-in-vasai-road-mumbai.html",
+    "destination": "/cab-service-in-vasai-road-mumbai"
+  },
+  {
+    "source": "/taxi-service-in-thane-mumbai.html",
+    "destination": "/taxi-service-in-thane-mumbai"
+  },
+  {
+    "source": "/taxi-service-in-santacruz-vile-parle-mumbai.html",
+    "destination": "/taxi-service-in-santacruz-vile-parle-mumbai"
+  },
+  {
+    "source": "/varanasi/azamgarh-to-varanasi-cab.html",
+    "destination": "/varanasi/azamgarh-to-varanasi-cab"
+  },
+  {
+    "source": "/varanasi/auraiya-to-varanasi-cab-services.html",
+    "destination": "/varanasi/auraiya-to-varanasi-cab-services"
+  },
+  {
+    "source": "/varanasi/amethi-to-varanasi-taxi.html",
+    "destination": "/varanasi/amethi-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/agra-to-varanasi-taxi.html",
+    "destination": "/varanasi/agra-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/ballia-to-varanasi-taxi-service.html",
+    "destination": "/varanasi/ballia-to-varanasi-taxi-service"
+  },
+  {
+    "source": "/varanasi/barabanki-to-varanasi-airport-taxi.html",
+    "destination": "/varanasi/barabanki-to-varanasi-airport-taxi"
+  },
+  {
+    "source": "/varanasi/bareilly-to-varanasi-taxi.html",
+    "destination": "/varanasi/bareilly-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/bhadohi-to-varanasi-cab.html",
+    "destination": "/varanasi/bhadohi-to-varanasi-cab"
+  },
+  {
+    "source": "/varanasi/budaun-to-varanasi-taxi.html",
+    "destination": "/varanasi/budaun-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/bulandshahr-to-varanasi-taxi.html",
+    "destination": "/varanasi/bulandshahr-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/deoria-to-varanasi-taxi.html",
+    "destination": "/varanasi/deoria-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/farrukhabad-to-varanasi-taxi.html",
+    "destination": "/varanasi/farrukhabad-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/ghaziabad-to-varanasi-taxi.html",
+    "destination": "/varanasi/ghaziabad-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/fatehpur-to-varanasi-taxi.html",
+    "destination": "/varanasi/fatehpur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/gaya-to-varanasi-cabs.html",
+    "destination": "/varanasi/gaya-to-varanasi-cabs"
+  },
+  {
+    "source": "/varanasi/varanasi-to-hapur-taxi.html",
+    "destination": "/varanasi/varanasi-to-hapur-taxi"
+  },
+  {
+    "source": "/varanasi/hardoi-to-varanasi-taxi.html",
+    "destination": "/varanasi/hardoi-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/gorakhpur-to-varanasi-taxi.html",
+    "destination": "/varanasi/gorakhpur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/gurgaon-to-varanasi-taxi.html",
+    "destination": "/varanasi/gurgaon-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/jalaun-to-varanasi-taxi-service.html",
+    "destination": "/varanasi/jalaun-to-varanasi-taxi-service"
+  },
+  {
+    "source": "/varanasi/jaunpur-to-varanasi-cab.html",
+    "destination": "/varanasi/jaunpur-to-varanasi-cab"
+  },
+  {
+    "source": "/varanasi/jhansi-to-varanasi-cab-booking.html",
+    "destination": "/varanasi/jhansi-to-varanasi-cab-booking"
+  },
+  {
+    "source": "/varanasi/jhansi-to-varanasi-taxi.html",
+    "destination": "/varanasi/jhansi-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/kannauj-to-varanasi-cab.html",
+    "destination": "/varanasi/kannauj-to-varanasi-cab"
+  },
+  {
+    "source": "/varanasi/kolkata-to-varanasi-cabs.html",
+    "destination": "/varanasi/kolkata-to-varanasi-cabs"
+  },
+  {
+    "source": "/varanasi/kannauj-to-kanpur-cab.html",
+    "destination": "/varanasi/kannauj-to-kanpur-cab"
+  },
+  {
+    "source": "/varanasi/kanpur-to-varanasi-taxi.html",
+    "destination": "/varanasi/kanpur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/lalitpur-to-varanasi-taxi-service.html",
+    "destination": "/varanasi/lalitpur-to-varanasi-taxi-service"
+  },
+  {
+    "source": "/varanasi/lucknow-to-varanasi-taxi-service.html",
+    "destination": "/varanasi/lucknow-to-varanasi-taxi-service"
+  },
+  {
+    "source": "/varanasi/kasganj-to-varanasi-taxi.html",
+    "destination": "/varanasi/kasganj-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/mathura-to-varanasi-taxi.html",
+    "destination": "/varanasi/mathura-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-mainpuri-taxi.html",
+    "destination": "/varanasi/varanasi-to-mainpuri-taxi"
+  },
+  {
+    "source": "/mumbai-to-pune-car-rental.html",
+    "destination": "/mumbai-to-pune-car-rental"
+  },
+  {
+    "source": "/varanasi/moradabad-to-varanasi-cab-booking.html",
+    "destination": "/varanasi/moradabad-to-varanasi-cab-booking"
+  },
+  {
+    "source": "/varanasi/mau-to-varanasi-taxi.html",
+    "destination": "/varanasi/mau-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/mirzapur-to-varanasi-taxi.html",
+    "destination": "/varanasi/mirzapur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-meerut-taxi.html",
+    "destination": "/varanasi/varanasi-to-meerut-taxi"
+  },
+  {
+    "source": "/varanasi/meerut-to-varanasi-taxi-hire.html",
+    "destination": "/varanasi/meerut-to-varanasi-taxi-hire"
+  },
+  {
+    "source": "/mumbai-to-pune-cab.html",
+    "destination": "/mumbai-to-pune-cab"
+  },
+  {
+    "source": "/mumbai-to-surat-cab.html",
+    "destination": "/mumbai-to-surat-cab"
+  },
+  {
+    "source": "/varanasi/varanasi-to-shamli-taxi.html",
+    "destination": "/varanasi/varanasi-to-shamli-taxi"
+  },
+  {
+    "source": "/varanasi/patna-to-varanasi-taxi.html",
+    "destination": "/varanasi/patna-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/pilibhit-to-varanasi-cab.html",
+    "destination": "/varanasi/pilibhit-to-varanasi-cab"
+  },
+  {
+    "source": "/varanasi/rampur-to-varanasi-taxi.html",
+    "destination": "/varanasi/rampur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/prayagraj-to-varanasi-taxi.html",
+    "destination": "/varanasi/prayagraj-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/shimla-to-varanasi-one-way.html",
+    "destination": "/varanasi/shimla-to-varanasi-one-way"
+  },
+  {
+    "source": "/varanasi/saharanpur-to-varanasi-taxi.html",
+    "destination": "/varanasi/saharanpur-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/siddharthnagar-to-varanasi-taxi.html",
+    "destination": "/varanasi/siddharthnagar-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/sambhal-to-varanasi-taxi.html",
+    "destination": "/varanasi/sambhal-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/pratapgarh-to-varanasi-cab-booking.html",
+    "destination": "/varanasi/pratapgarh-to-varanasi-cab-booking"
+  },
+  {
+    "source": "/varanasi/siddharthnagara-to-varanasi-taxi.html",
+    "destination": "/varanasi/siddharthnagara-to-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/sonbhadra-to-varanasi-cab-fare.html",
+    "destination": "/varanasi/sonbhadra-to-varanasi-cab-fare"
+  },
+  {
+    "source": "/varanasi/sitapur-varanasi-taxi.html",
+    "destination": "/varanasi/sitapur-varanasi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-agra-cab.html",
+    "destination": "/varanasi/varanasi-to-agra-cab"
+  },
+  {
+    "source": "/varanasi/sultanpur-to-varanasi-cab.html",
+    "destination": "/varanasi/sultanpur-to-varanasi-cab"
+  },
+  {
+    "source": "/cheapest-cab-from-varanasi-to-ayodhya.html",
+    "destination": "/cheapest-cab-from-varanasi-to-ayodhya"
+  },
+  {
+    "source": "/varanasi/varanasi-to-auraiya-taxi-service.html",
+    "destination": "/varanasi/varanasi-to-auraiya-taxi-service"
+  },
+  {
+    "source": "/varanasi/varanasi-to-amethi-taxi.html",
+    "destination": "/varanasi/varanasi-to-amethi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-azamgarh-cab.html",
+    "destination": "/varanasi/varanasi-to-azamgarh-cab"
+  },
+  {
+    "source": "/varanasi/varanasi-to-barabanki-dzire-cab.html",
+    "destination": "/varanasi/varanasi-to-barabanki-dzire-cab"
+  },
+  {
+    "source": "/varanasi-to-ballia-taxi.html",
+    "destination": "/varanasi-to-ballia-taxi"
+  },
+  {
+    "source": "/varanasi-to-bareilly-taxi.html",
+    "destination": "/varanasi-to-bareilly-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-bijnor-taxi.html",
+    "destination": "/varanasi/varanasi-to-bijnor-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-budaun-cab-service.html",
+    "destination": "/varanasi/varanasi-to-budaun-cab-service"
+  },
+  {
+    "source": "/varanasi/varanasi-to-bhadohi-cab.html",
+    "destination": "/varanasi/varanasi-to-bhadohi-cab"
+  },
+  {
+    "source": "/varanasi-to-delhi-cab-service.html",
+    "destination": "/varanasi-to-delhi-cab-service"
+  },
+  {
+    "source": "/varanasi/varanasi-to-deoria-taxi.html",
+    "destination": "/varanasi/varanasi-to-deoria-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-fatehpur-taxi.html",
+    "destination": "/varanasi/varanasi-to-fatehpur-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-bulandshahr-taxi.html",
+    "destination": "/varanasi/varanasi-to-bulandshahr-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-farrukhabad-taxi.html",
+    "destination": "/varanasi/varanasi-to-farrukhabad-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-gautam-buddha-nagar-taxi.html",
+    "destination": "/varanasi/varanasi-to-gautam-buddha-nagar-taxi"
+  },
+  {
+    "source": "/varanasi-to-ghaziabad-taxi-service.html",
+    "destination": "/varanasi-to-ghaziabad-taxi-service"
+  },
+  {
+    "source": "/varanasi-to-gaya-taxi-service.html",
+    "destination": "/varanasi-to-gaya-taxi-service"
+  },
+  {
+    "source": "/varanasi-to-ghazipur-cab.html",
+    "destination": "/varanasi-to-ghazipur-cab"
+  },
+  {
+    "source": "/varanasi-to-gorakhpur-one-way-taxi.html",
+    "destination": "/varanasi-to-gorakhpur-one-way-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-hardoi-taxi.html",
+    "destination": "/varanasi/varanasi-to-hardoi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-hathras-cab.html",
+    "destination": "/varanasi/varanasi-to-hathras-cab"
+  },
+  {
+    "source": "/varanasi-to-gurgaon-cab.html",
+    "destination": "/varanasi-to-gurgaon-cab"
+  },
+  {
+    "source": "/varanasi/varanasi-to-jalaun-taxi.html",
+    "destination": "/varanasi/varanasi-to-jalaun-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-hapur-cab-fare.html",
+    "destination": "/varanasi/varanasi-to-hapur-cab-fare"
+  },
+  {
+    "source": "/varanasi/varanasi-to-jaunpur-cab.html",
+    "destination": "/varanasi/varanasi-to-jaunpur-cab"
+  },
+  {
+    "source": "/varanasi/varanasi-to-kannauj-taxi.html",
+    "destination": "/varanasi/varanasi-to-kannauj-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-jhansi-taxi.html",
+    "destination": "/varanasi/varanasi-to-jhansi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-kaushambi-taxi.html",
+    "destination": "/varanasi/varanasi-to-kaushambi-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-kasganj-taxi.html",
+    "destination": "/varanasi/varanasi-to-kasganj-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-khushinagar-taxi.html",
+    "destination": "/varanasi/varanasi-to-khushinagar-taxi"
+  },
+  {
+    "source": "/varanasi-to-kolkata-taxi.html",
+    "destination": "/varanasi-to-kolkata-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-lalitpur-round-trip.html",
+    "destination": "/varanasi/varanasi-to-lalitpur-round-trip"
+  },
+  {
+    "source": "/varanasi/varanasi-to-lakhimpur-kheri-taxi.html",
+    "destination": "/varanasi/varanasi-to-lakhimpur-kheri-taxi"
+  },
+  {
+    "source": "/varanasi-to-lucknow-cab.html",
+    "destination": "/varanasi-to-lucknow-cab"
+  },
+  {
+    "source": "/varanasi/varanasi-to-maharajganj-taxi.html",
+    "destination": "/varanasi/varanasi-to-maharajganj-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-mathura-taxi-service.html",
+    "destination": "/varanasi/varanasi-to-mathura-taxi-service"
+  },
+  {
+    "source": "/varanasi/varanasi-to-mahoba-cab.html",
+    "destination": "/varanasi/varanasi-to-mahoba-cab"
+  },
+  {
+    "source": "/varanasi-to-mau-taxi-fare.html",
+    "destination": "/varanasi-to-mau-taxi-fare"
+  },
+  {
+    "source": "/varanasi/varanasi-to-moradabad-cabs.html",
+    "destination": "/varanasi/varanasi-to-moradabad-cabs"
+  },
+  {
+    "source": "/varanasi/varanasi-to-muzaffarnagar-taxi-service.html",
+    "destination": "/varanasi/varanasi-to-muzaffarnagar-taxi-service"
+  },
+  {
+    "source": "/varanasi-to-mirzapur-taxi.html",
+    "destination": "/varanasi-to-mirzapur-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-raebareli-taxi.html",
+    "destination": "/varanasi/varanasi-to-raebareli-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-pilibhit-taxi.html",
+    "destination": "/varanasi/varanasi-to-pilibhit-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-pratapgarh-taxi.html",
+    "destination": "/varanasi/varanasi-to-pratapgarh-taxi"
+  },
+  {
+    "source": "/varanasi-to-patna-cab-service.html",
+    "destination": "/varanasi-to-patna-cab-service"
+  },
+  {
+    "source": "/varanasi/varanasi-to-rampur-taxi.html",
+    "destination": "/varanasi/varanasi-to-rampur-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-saharanpur-taxi.html",
+    "destination": "/varanasi/varanasi-to-saharanpur-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sant-kabir-nagar-taxi.html",
+    "destination": "/varanasi/varanasi-to-sant-kabir-nagar-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sambhal-taxi.html",
+    "destination": "/varanasi/varanasi-to-sambhal-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-shahjahanpurr-taxi.html",
+    "destination": "/varanasi/varanasi-to-shahjahanpurr-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-siddharthnagar-taxi.html",
+    "destination": "/varanasi/varanasi-to-siddharthnagar-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sravasti-taxi.html",
+    "destination": "/varanasi/varanasi-to-sravasti-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sonbhadra-taxi.html",
+    "destination": "/varanasi/varanasi-to-sonbhadra-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sitapur-taxi.html",
+    "destination": "/varanasi/varanasi-to-sitapur-taxi"
+  },
+  {
+    "source": "/varanasi/varanasi-to-sultanpur-cab-service.html",
+    "destination": "/varanasi/varanasi-to-sultanpur-cab-service"
+  },
+  {
+    "source": "/blogs/mumbai-to-rajkot-taxi-travel-guide.html",
+    "destination": "/blogs/mumbai-to-rajkot-taxi-travel-guide"
+  },
+  {
+    "source": "/blogs/one-day-trips-near-mumbai.html",
+    "destination": "/blogs/one-day-trips-near-mumbai"
+  },
+  {
+    "source": "/blogs/pune-to-matheran-tour.html",
+    "destination": "/blogs/pune-to-matheran-tour"
+  },
+  {
+    "source": "/blogs/mumbai-to-mahabaleshwar-cab.html",
+    "destination": "/blogs/mumbai-to-mahabaleshwar-cab"
+  },
+  {
+    "source": "/blogs/best-monsoon-getaways-from-mumbai.html",
+    "destination": "/blogs/best-monsoon-getaways-from-mumbai"
+  },
+  {
+    "source": "/blogs/tour-packages-from-pune.html",
+    "destination": "/blogs/tour-packages-from-pune"
+  },
+  {
+    "source": "/varanasi/varanasi-to-unnao-taxi-service.html",
+    "destination": "/varanasi/varanasi-to-unnao-taxi-service"
+  },
+  {
+    "source": "/privacy.html",
+    "destination": "/privacy"
+  },
+  {
+    "source": "/varanasi-to-mua-cab.html",
+    "destination": "/varanasi-to-mua-cab"
+  },
+  {
+    "source": "/Varanasi-to-Gorakhpur-Taxi-Services.html",
+    "destination": "/Varanasi-to-Gorakhpur-Taxi-Services"
+  },
+  {
+    "source": "/Varanasi-to-Lucknow-Cab-Service.html",
+    "destination": "/Varanasi-to-Lucknow-Cab-Service"
+  },
+  {
+    "source": "/Varanasi-to-Ghazipur-Cab-Service.html",
+    "destination": "/Varanasi-to-Ghazipur-Cab-Service"
+  },
+  {
+    "source": "/index.aspx",
+    "destination": "/"
+  }
+]

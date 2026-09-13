@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-brand: #65a30d;
+  --color-brand-dark: #4d7c0f;
+  --color-ink: #102c42;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: #fcfdfc;
+  color: #102c42;
+}
+* {
+  box-sizing: border-box;
+}
+img {
+  max-width: 100%;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 3px solid #84cc16;
+  outline-offset: 3px;
+}
+::selection {
+  background: #d9f99d;
+  color: #12213b;
+}
+
+.site-copy {
+  color: #253241;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.site-copy h2,
+.site-copy h3 {
+  color: #0f7491;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.site-copy p {
+  margin-top: 18px;
+}
+.theme-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(15, 44, 66, 0.055);
+}
+.theme-details {
+  border: 1px solid #dae9e5;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(18, 48, 35, 0.035);
+}
+.theme-details[open] {
+  border-color: #84cc16;
+}
+.theme-details summary {
+  list-style-position: outside;
+}

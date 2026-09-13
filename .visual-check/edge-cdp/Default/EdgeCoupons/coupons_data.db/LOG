@@ -1,0 +1,5 @@
+2026/09/12-22:34:48.597 358c Creating DB C:\Users\user\Desktop\skg\skg1\.visual-check\edge-cdp\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/09/12-22:34:48.661 358c Reusing MANIFEST C:\Users\user\Desktop\skg\skg1\.visual-check\edge-cdp\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/09/12-22:35:23.513 5614 Level-0 table #5: started
+2026/09/12-22:35:23.522 5614 Level-0 table #5: 683284 bytes OK
+2026/09/12-22:35:23.529 5614 Delete type=0 #3

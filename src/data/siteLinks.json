@@ -1,0 +1,581 @@
+[
+  {
+    "title": "Popular Cities",
+    "links": [
+      {
+        "label": "Lucknow",
+        "href": "/cities/lucknow"
+      },
+      {
+        "label": "Mumbai",
+        "href": "/cities/mumbai"
+      },
+      {
+        "label": "Varanasi",
+        "href": "/cities/varanasi"
+      },
+      {
+        "label": "All cities →",
+        "href": "/cities"
+      }
+    ]
+  },
+  {
+    "title": "Service Areas",
+    "links": [
+      {
+        "label": "Taxi Service in Andheri West/East",
+        "href": "/car-rental-in-andheri-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Bandra / Khar Road",
+        "href": "/taxi-service-in-bandra-khar-road-mumbai"
+      },
+      {
+        "label": "Taxi Service in Bhayandar",
+        "href": "/cab-service-in-bhayandar-mumbai"
+      },
+      {
+        "label": "Taxi Service in Borivali West/East",
+        "href": "/cab-service-in-borivali-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in charniroad west/east",
+        "href": "/car-rental-in-charni-road-east-west-mumbai"
+      },
+      {
+        "label": "Taxi Service in Churchgate",
+        "href": "/cab-service-in-churchgate-mumbai"
+      },
+      {
+        "label": "Taxi Service in dadar west/east",
+        "href": "/cab-service-in-dadar-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Dahisar West/East",
+        "href": "/cab-service-in-dahisar-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in goregaon west/east",
+        "href": "/taxi-service-in-goregaon-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Grant Road West / East",
+        "href": "/car-rental-in-grant-road-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in jogeshwari",
+        "href": "/taxi-service-in-jogeshwari-mumbai"
+      },
+      {
+        "label": "Taxi Service in Kandivali West/East",
+        "href": "/cab-service-in-kandivali-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Karol Bagh",
+        "href": "/cab-service-in-karol-bagh-delhi"
+      },
+      {
+        "label": "Taxi Service in Lower Parel / Prabhadevi",
+        "href": "/car-rental-in-lower-parel-prabhadevi-mumbai"
+      },
+      {
+        "label": "Taxi Service in Malad West",
+        "href": "/taxi-service-in-malad-west-mumbai"
+      },
+      {
+        "label": "Taxi Service in Marine Lines",
+        "href": "/cab-service-in-marine-lines-mumbai"
+      },
+      {
+        "label": "Taxi Service in Matunga Road / Mahim Junction",
+        "href": "/taxi-service-in-matunga-road-mahim-junction-mumbai"
+      },
+      {
+        "label": "Taxi Service in Mira Road West/East",
+        "href": "/cab-service-in-mira-road-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Mumbai Central / Mahalaxmi West / East",
+        "href": "/car-rental-in-mumbai-central-mahalaxmi-west-east-mumbai"
+      },
+      {
+        "label": "Taxi Service in Naigaon",
+        "href": "/cab-service-in-naigaon-mumbai"
+      },
+      {
+        "label": "Taxi Service in Nalasopara",
+        "href": "/cab-service-in-nalasopara-mumbai"
+      },
+      {
+        "label": "Taxi Service in Santacruz / Vile Parle",
+        "href": "/taxi-service-in-santacruz-vile-parle-mumbai"
+      },
+      {
+        "label": "Taxi Service in thane",
+        "href": "/taxi-service-in-thane-mumbai"
+      },
+      {
+        "label": "Taxi Service in Vasai Road",
+        "href": "/cab-service-in-vasai-road-mumbai"
+      },
+      {
+        "label": "Taxi Service in Virar",
+        "href": "/cab-service-in-virar-mumbai"
+      }
+    ]
+  },
+  {
+    "title": "Popular Routes",
+    "links": [
+      {
+        "label": "Agra to Varanasi Cab",
+        "href": "/varanasi/agra-to-varanasi-taxi"
+      },
+      {
+        "label": "Amethi to Varanasi Cab",
+        "href": "/varanasi/amethi-to-varanasi-taxi"
+      },
+      {
+        "label": "Auraiya to Varanasi Cab",
+        "href": "/varanasi/auraiya-to-varanasi-cab-services"
+      },
+      {
+        "label": "Azamgarh to Varanasi Cab",
+        "href": "/varanasi/azamgarh-to-varanasi-cab"
+      },
+      {
+        "label": "Ballia to Varanasi Cab",
+        "href": "/varanasi/ballia-to-varanasi-taxi-service"
+      },
+      {
+        "label": "Barabanki to Varanasi Cab",
+        "href": "/varanasi/barabanki-to-varanasi-airport-taxi"
+      },
+      {
+        "label": "Bareilly to Varanasi Cab",
+        "href": "/varanasi/bareilly-to-varanasi-taxi"
+      },
+      {
+        "label": "Bhadohi to Varanasi Cab",
+        "href": "/varanasi/bhadohi-to-varanasi-cab"
+      },
+      {
+        "label": "Budaun to Varanasi Cab",
+        "href": "/varanasi/budaun-to-varanasi-taxi"
+      },
+      {
+        "label": "bulandshahr to Varanasi Cab",
+        "href": "/varanasi/bulandshahr-to-varanasi-taxi"
+      },
+      {
+        "label": "Deoria to Varanasi Cab",
+        "href": "/varanasi/deoria-to-varanasi-taxi"
+      },
+      {
+        "label": "farrukhabad to Varanasi Cab",
+        "href": "/varanasi/farrukhabad-to-varanasi-taxi"
+      },
+      {
+        "label": "Fatehpur to Varanasi Cab",
+        "href": "/varanasi/fatehpur-to-varanasi-taxi"
+      },
+      {
+        "label": "gaya to Varanasi Cab",
+        "href": "/varanasi/gaya-to-varanasi-cabs"
+      },
+      {
+        "label": "ghaziabad to Varanasi Cab",
+        "href": "/varanasi/ghaziabad-to-varanasi-taxi"
+      },
+      {
+        "label": "gorakhpur to Varanasi Cab",
+        "href": "/varanasi/gorakhpur-to-varanasi-taxi"
+      },
+      {
+        "label": "gurgaon to Varanasi Cab",
+        "href": "/varanasi/gurgaon-to-varanasi-taxi"
+      },
+      {
+        "label": "Hapur to Varanasi Cab",
+        "href": "/varanasi/varanasi-to-hapur-taxi"
+      },
+      {
+        "label": "Hardoi to Varanasi Cab",
+        "href": "/varanasi/hardoi-to-varanasi-taxi"
+      },
+      {
+        "label": "Jalaun to Varanasi Cab",
+        "href": "/varanasi/jalaun-to-varanasi-taxi-service"
+      },
+      {
+        "label": "Jaunpur to Varanasi Cab",
+        "href": "/varanasi/jaunpur-to-varanasi-cab"
+      },
+      {
+        "label": "jhansi to Varanasi Cab",
+        "href": "/varanasi/jhansi-to-varanasi-cab-booking"
+      },
+      {
+        "label": "jhansi to Varanasi Cab",
+        "href": "/varanasi/jhansi-to-varanasi-taxi"
+      },
+      {
+        "label": "Kannauj to Varanasi Cab",
+        "href": "/varanasi/kannauj-to-kanpur-cab"
+      },
+      {
+        "label": "Kannauj to Varanasi Cab",
+        "href": "/varanasi/kannauj-to-varanasi-cab"
+      },
+      {
+        "label": "Kanpur to Varanasi Cab",
+        "href": "/varanasi/kanpur-to-varanasi-taxi"
+      },
+      {
+        "label": "kasganj to Varanasi Cab",
+        "href": "/varanasi/kasganj-to-varanasi-taxi"
+      },
+      {
+        "label": "Kolkata to Varanasi Cab",
+        "href": "/varanasi/kolkata-to-varanasi-cabs"
+      },
+      {
+        "label": "Lalipur to Varanasi Cab",
+        "href": "/varanasi/lalitpur-to-varanasi-taxi-service"
+      },
+      {
+        "label": "Lucknow to Varanasi Cab",
+        "href": "/varanasi/lucknow-to-varanasi-taxi-service"
+      },
+      {
+        "label": "Mathura to Varanasi Cab",
+        "href": "/varanasi/mathura-to-varanasi-taxi"
+      },
+      {
+        "label": "Meerut to Varanasi Cab",
+        "href": "/varanasi/meerut-to-varanasi-taxi-hire"
+      },
+      {
+        "label": "mirzapur to Varanasi Cab",
+        "href": "/varanasi/mirzapur-to-varanasi-taxi"
+      },
+      {
+        "label": "Moradabad to Varanasi Cab",
+        "href": "/varanasi/moradabad-to-varanasi-cab-booking"
+      },
+      {
+        "label": "Mua to Varanasi Cab",
+        "href": "/varanasi/mau-to-varanasi-taxi"
+      },
+      {
+        "label": "Mumbai to mainpuri Cab",
+        "href": "/varanasi/varanasi-to-mainpuri-taxi"
+      },
+      {
+        "label": "Mumbai to meerut Cab",
+        "href": "/varanasi/varanasi-to-meerut-taxi"
+      },
+      {
+        "label": "Mumbai to Pune Cab",
+        "href": "/mumbai-to-pune-car-rental"
+      },
+      {
+        "label": "Mumbai to Pune Cab",
+        "href": "/mumbai-to-pune-cab"
+      },
+      {
+        "label": "Mumbai to Shamli Cab",
+        "href": "/varanasi/varanasi-to-shamli-taxi"
+      },
+      {
+        "label": "Mumbai to surat Cab",
+        "href": "/mumbai-to-surat-cab"
+      },
+      {
+        "label": "Patna to Varanasi Cab",
+        "href": "/varanasi/patna-to-varanasi-taxi"
+      },
+      {
+        "label": "Pilibhit to Varanasi Cab",
+        "href": "/varanasi/pilibhit-to-varanasi-cab"
+      },
+      {
+        "label": "pratapgarh to Varanasi Cab",
+        "href": "/varanasi/pratapgarh-to-varanasi-cab-booking"
+      },
+      {
+        "label": "Prayagraj to Varanasi Cab",
+        "href": "/varanasi/prayagraj-to-varanasi-taxi"
+      },
+      {
+        "label": "Rampur to Varanasi Cab",
+        "href": "/varanasi/rampur-to-varanasi-taxi"
+      },
+      {
+        "label": "saharanpur to Varanasi Cab",
+        "href": "/varanasi/saharanpur-to-varanasi-taxi"
+      },
+      {
+        "label": "sambhal to Varanasi Cab",
+        "href": "/varanasi/sambhal-to-varanasi-taxi"
+      },
+      {
+        "label": "shimla to Varanasi Cab",
+        "href": "/varanasi/shimla-to-varanasi-one-way"
+      },
+      {
+        "label": "Siddharthnagar to Varanasi Cab",
+        "href": "/varanasi/siddharthnagar-to-varanasi-taxi"
+      },
+      {
+        "label": "Siddharthnagar to Varanasi Cab",
+        "href": "/varanasi/siddharthnagara-to-varanasi-taxi"
+      },
+      {
+        "label": "Sitapur to Varanasi Cab",
+        "href": "/varanasi/sitapur-varanasi-taxi"
+      },
+      {
+        "label": "Sonbhadra to Varanasi Cab",
+        "href": "/varanasi/sonbhadra-to-varanasi-cab-fare"
+      },
+      {
+        "label": "sultanpur to Varanasi Cab",
+        "href": "/varanasi/sultanpur-to-varanasi-cab"
+      },
+      {
+        "label": "Varanasi to Agra Cab",
+        "href": "/varanasi/varanasi-to-agra-cab"
+      },
+      {
+        "label": "Varanasi to Amethi Cab",
+        "href": "/varanasi/varanasi-to-amethi-taxi"
+      },
+      {
+        "label": "Varanasi to Auraiya Cab",
+        "href": "/varanasi/varanasi-to-auraiya-taxi-service"
+      },
+      {
+        "label": "Varanasi to Ayodhya Cab",
+        "href": "/cheapest-cab-from-varanasi-to-ayodhya"
+      },
+      {
+        "label": "Varanasi to Azamgarh Cab",
+        "href": "/varanasi/varanasi-to-azamgarh-cab"
+      },
+      {
+        "label": "Varanasi to Ballia Cab",
+        "href": "/varanasi-to-ballia-taxi"
+      },
+      {
+        "label": "Varanasi to Barabanki Cab",
+        "href": "/varanasi/varanasi-to-barabanki-dzire-cab"
+      },
+      {
+        "label": "Varanasi to Bareilly Cab",
+        "href": "/varanasi-to-bareilly-taxi"
+      },
+      {
+        "label": "Varanasi to Bhadohi Cab",
+        "href": "/varanasi/varanasi-to-bhadohi-cab"
+      },
+      {
+        "label": "Varanasi to Bijnor Cab",
+        "href": "/varanasi/varanasi-to-bijnor-taxi"
+      },
+      {
+        "label": "Varanasi to Budaun Cab",
+        "href": "/varanasi/varanasi-to-budaun-cab-service"
+      },
+      {
+        "label": "Varanasi to Bulandshahr Cab",
+        "href": "/varanasi/varanasi-to-bulandshahr-taxi"
+      },
+      {
+        "label": "Varanasi to Delhi Cab",
+        "href": "/varanasi-to-delhi-cab-service"
+      },
+      {
+        "label": "Varanasi to Deoria Cab",
+        "href": "/varanasi/varanasi-to-deoria-taxi"
+      },
+      {
+        "label": "Varanasi to farrukhabad Cab",
+        "href": "/varanasi/varanasi-to-farrukhabad-taxi"
+      },
+      {
+        "label": "Varanasi to Fatehpur Cab",
+        "href": "/varanasi/varanasi-to-fatehpur-taxi"
+      },
+      {
+        "label": "Varanasi to Gautam Buddha Nagar Cab",
+        "href": "/varanasi/varanasi-to-gautam-buddha-nagar-taxi"
+      },
+      {
+        "label": "Varanasi to gaya Cab",
+        "href": "/varanasi-to-gaya-taxi-service"
+      },
+      {
+        "label": "Varanasi to ghaziabad Cab",
+        "href": "/varanasi-to-ghaziabad-taxi-service"
+      },
+      {
+        "label": "Varanasi to ghazipur Cab",
+        "href": "/varanasi-to-ghazipur-cab"
+      },
+      {
+        "label": "Varanasi to gorakhpur Cab",
+        "href": "/varanasi-to-gorakhpur-one-way-taxi"
+      },
+      {
+        "label": "Varanasi to Gurgaon Cab",
+        "href": "/varanasi-to-gurgaon-cab"
+      },
+      {
+        "label": "Varanasi to Hapur Cab",
+        "href": "/varanasi/varanasi-to-hapur-cab-fare"
+      },
+      {
+        "label": "Varanasi to Hardoi Cab",
+        "href": "/varanasi/varanasi-to-hardoi-taxi"
+      },
+      {
+        "label": "Varanasi to Hathras Cab",
+        "href": "/varanasi/varanasi-to-hathras-cab"
+      },
+      {
+        "label": "Varanasi to Jalaun Cab",
+        "href": "/varanasi/varanasi-to-jalaun-taxi"
+      },
+      {
+        "label": "Varanasi to Jaunpur Cab",
+        "href": "/varanasi/varanasi-to-jaunpur-cab"
+      },
+      {
+        "label": "Varanasi to Jhansi Cab",
+        "href": "/varanasi/varanasi-to-jhansi-taxi"
+      },
+      {
+        "label": "Varanasi to Kannauj Cab",
+        "href": "/varanasi/varanasi-to-kannauj-taxi"
+      },
+      {
+        "label": "Varanasi to Kasganj Cab",
+        "href": "/varanasi/varanasi-to-kasganj-taxi"
+      },
+      {
+        "label": "Varanasi to kaushambi Cab",
+        "href": "/varanasi/varanasi-to-kaushambi-taxi"
+      },
+      {
+        "label": "Varanasi to Kolkata Cab",
+        "href": "/varanasi-to-kolkata-taxi"
+      },
+      {
+        "label": "Varanasi to Kushinagar Cab",
+        "href": "/varanasi/varanasi-to-khushinagar-taxi"
+      },
+      {
+        "label": "Varanasi to Lakhimpur Kheri Cab",
+        "href": "/varanasi/varanasi-to-lakhimpur-kheri-taxi"
+      },
+      {
+        "label": "Varanasi to Lalitpur Cab",
+        "href": "/varanasi/varanasi-to-lalitpur-round-trip"
+      },
+      {
+        "label": "varanasi to lucknow Cab",
+        "href": "/varanasi-to-lucknow-cab"
+      },
+      {
+        "label": "Varanasi to Maharajganj Cab",
+        "href": "/varanasi/varanasi-to-maharajganj-taxi"
+      },
+      {
+        "label": "Varanasi to mahoba Cab",
+        "href": "/varanasi/varanasi-to-mahoba-cab"
+      },
+      {
+        "label": "Varanasi to Mathura Cab",
+        "href": "/varanasi/varanasi-to-mathura-taxi-service"
+      },
+      {
+        "label": "Varanasi to Mau Cab",
+        "href": "/varanasi-to-mau-taxi-fare"
+      },
+      {
+        "label": "Varanasi to mirzapur Cab",
+        "href": "/varanasi-to-mirzapur-taxi"
+      },
+      {
+        "label": "Varanasi to Moradabad Cab",
+        "href": "/varanasi/varanasi-to-moradabad-cabs"
+      },
+      {
+        "label": "Varanasi to Muzaffarnagar Cab",
+        "href": "/varanasi/varanasi-to-muzaffarnagar-taxi-service"
+      },
+      {
+        "label": "Varanasi to Patna Cab",
+        "href": "/varanasi-to-patna-cab-service"
+      },
+      {
+        "label": "Varanasi to Pilibhit Cab",
+        "href": "/varanasi/varanasi-to-pilibhit-taxi"
+      },
+      {
+        "label": "Varanasi to Pratapgarh Cab",
+        "href": "/varanasi/varanasi-to-pratapgarh-taxi"
+      },
+      {
+        "label": "Varanasi to raebareli Cab",
+        "href": "/varanasi/varanasi-to-raebareli-taxi"
+      },
+      {
+        "label": "Varanasi to Rampur Cab",
+        "href": "/varanasi/varanasi-to-rampur-taxi"
+      },
+      {
+        "label": "Varanasi to Saharanpur Cab",
+        "href": "/varanasi/varanasi-to-saharanpur-taxi"
+      },
+      {
+        "label": "Varanasi to Sambhal Cab",
+        "href": "/varanasi/varanasi-to-sambhal-taxi"
+      },
+      {
+        "label": "Varanasi to Sant Kabir Nagar Cab",
+        "href": "/varanasi/varanasi-to-sant-kabir-nagar-taxi"
+      },
+      {
+        "label": "Varanasi to Shahjahanpur Cab",
+        "href": "/varanasi/varanasi-to-shahjahanpurr-taxi"
+      },
+      {
+        "label": "Varanasi to Shravasti Cab",
+        "href": "/varanasi/varanasi-to-sravasti-taxi"
+      },
+      {
+        "label": "Varanasi to siddharthnagar Cab",
+        "href": "/varanasi/varanasi-to-siddharthnagar-taxi"
+      },
+      {
+        "label": "Varanasi to Sitapur Cab",
+        "href": "/varanasi/varanasi-to-sitapur-taxi"
+      },
+      {
+        "label": "Varanasi to Sonbhadra Cab",
+        "href": "/varanasi/varanasi-to-sonbhadra-taxi"
+      },
+      {
+        "label": "Varanasi to Sultanpur Cab",
+        "href": "/varanasi/varanasi-to-sultanpur-cab-service"
+      },
+      {
+        "label": "Varanasi to Unnao Cab",
+        "href": "/varanasi/varanasi-to-unnao-taxi-service"
+      }
+    ]
+  }
+]
