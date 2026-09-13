@@ -1,7 +1,8 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import { Phone } from "lucide-react";
+import { ArrowLeft, Phone } from "lucide-react";
 import BookingForm from "./BookingForm";
+import FaqItem from "./FaqItem";
 import QuickQuote from "./QuickQuote";
 import { getPage, sitePages } from "@/data/site";
 import { serviceFleet } from "@/data/siteMeta";
@@ -13,7 +14,7 @@ const adImages = [
   siteAssets["https://skgtravels.com/images/outstationoffer.png"],
 ];
 
-function Sidebar({ quote = false }) {
+function Sidebar({ quote = false, familyTours = false }) {
   return (
     <aside className="space-y-6 pb-10 text-center lg:text-left">
       {quote && <QuickQuote />}
@@ -47,16 +48,30 @@ function Sidebar({ quote = false }) {
           </Link>
         ))}
       </div>
-      <p className="text-center text-sm text-slate-700">Experts in Family Tours</p>
+      {familyTours && (
+        <div className="theme-card mx-auto max-w-[300px] overflow-hidden bg-white p-4 text-center">
+          <h2 className="text-ink mb-3 text-lg font-medium">Experts in Family Tours</h2>
+          <Link href="/#book" aria-label="Book a family tour with SKG Travels">
+            <Image
+              src={siteAssets["https://skgtravels.com/images/cheap-car-rental.jpg"]}
+              alt="Family with luggage beside a spacious car"
+              width={500}
+              height={300}
+              sizes="(max-width: 300px) 100vw, 268px"
+              className="h-auto w-full"
+            />
+          </Link>
+        </div>
+      )}
     </aside>
   );
 }
 
-function Shell({ children, quote = false }) {
+function Shell({ children, quote = false, familyTours = false }) {
   return (
     <main className="mx-auto grid max-w-[1170px] gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-6 xl:grid-cols-[minmax(0,878px)_263px] xl:px-0">
       <div className="min-w-0">{children}</div>
-      <Sidebar quote={quote} />
+      <Sidebar quote={quote} familyTours={familyTours} />
     </main>
   );
 }
@@ -75,16 +90,9 @@ function ContentSection({ section, first = false }) {
   if (!section.paragraphs.length && !section.images?.length) return null;
   if (/^Q[.\s:-]*\d/i.test(section.heading)) {
     return (
-      <details className="theme-details mb-3 p-4 sm:p-5">
-        <summary className="text-ink cursor-pointer text-[17px] font-semibold">
-          {section.heading}
-        </summary>
-        {section.paragraphs.map((text, i) => (
-          <p key={i} className="mt-3 text-[16px] leading-7 text-[#293848]">
-            {text}
-          </p>
-        ))}
-      </details>
+      <div className="mb-3">
+        <FaqItem question={section.heading} answers={section.paragraphs} />
+      </div>
     );
   }
   return (
@@ -115,58 +123,67 @@ function ContentSection({ section, first = false }) {
   );
 }
 
-function PageLinks({ paths, title = "Popular Routes" }) {
+function routeCardLabel(item) {
+  const slug = item.pathname
+    .split("/")
+    .at(-1)
+    .replace(/^cheapest-cab-from-/, "");
+  const route = slug.match(/^(.+?)-to-(.+?)(?:-(?:taxi|cabs?|car|one-way|round-trip)(?:-|$)|$)/);
+  if (!route) return item.heading || item.title;
+  const name = (part) =>
+    part.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return `${name(route[1])} to ${name(route[2])} Cab`;
+}
+
+function PageLinks({ paths, title = "Popular Routes", cityStyle = false }) {
   const items = [...new Set(paths)].map(getPage).filter(Boolean);
   if (!items.length) return null;
   return (
     <section className="my-9">
-      <h2 className="mb-4 text-2xl text-teal-800">{title}</h2>
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-        {items.map((item) => (
-          <Link
-            key={item.pathname}
-            href={item.pathname}
-            className="hover:border-brand hover:text-brand rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-teal-800 transition-colors"
-          >
-            {item.heading || item.title}
-          </Link>
-        ))}
-      </div>
+      {!cityStyle && <h2 className="mb-4 text-2xl text-teal-800">{title}</h2>}
+      {cityStyle ? (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {items.map((item) => (
+            <Link key={item.pathname} href={item.pathname} className="city-route-card">
+              {routeCardLabel(item)}
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+          {items.map((item) => (
+            <Link
+              key={item.pathname}
+              href={item.pathname}
+              className="hover:border-brand hover:text-brand rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-teal-800 transition-colors"
+            >
+              {item.heading || item.title}
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
 
 function CityList({ page }) {
-  const descriptions = {
-    "/cities/lucknow": "Outstation cabs and tempo travellers",
-    "/cities/mumbai": "3 routes",
-    "/cities/varanasi": "109 routes",
-  };
   return (
-    <Shell quote>
+    <Shell quote familyTours>
       <PageTitle>Popular Cities</PageTitle>
       <p className="mt-7 text-[16px] leading-7">
         {page.sections.find((section) => section.paragraphs.length)?.paragraphs[0]}
       </p>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {cityPaths.map((path) => {
-          const city = getPage(path);
-          return (
-            <Link
-              key={path}
-              href={path}
-              className="theme-card border-l-brand border-l-4 p-6 transition-transform hover:-translate-y-1"
-            >
-              <h2 className="font-bold text-teal-800">
-                {path
-                  .split("/")
-                  .at(-1)
-                  .replace(/^./, (char) => char.toUpperCase())}
-              </h2>
-              <p className="mt-1 text-sm text-slate-600">{descriptions[path] || city.heading}</p>
-            </Link>
-          );
-        })}
+      <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {cityPaths.map((path) => (
+          <Link key={path} href={path} className="city-route-card self-start">
+            <h2>
+              {path
+                .split("/")
+                .at(-1)
+                .replace(/^./, (char) => char.toUpperCase())}
+            </h2>
+          </Link>
+        ))}
       </div>
     </Shell>
   );
@@ -183,7 +200,7 @@ function BlogList({ page }) {
       !ordered.some((blog) => blog.pathname === item.pathname)
   );
   return (
-    <Shell>
+    <Shell familyTours>
       <h1 className="py-1 text-center text-2xl text-teal-800">SKG Travels Blogs</h1>
       <div className="mt-9 space-y-5">
         {[...ordered, ...extra].map((blog) => (
@@ -312,8 +329,22 @@ function ArticlePage({ page }) {
       section.paragraphs.length || section.images?.length || /^FAQ/i.test(section.heading)
   );
   const related = page.links.filter((path) => path !== page.pathname && path !== "/");
+  const cityRoutes = isCity
+    ? related.filter(
+        (path) =>
+          path.includes("-to-") && path.toLowerCase().includes(page.pathname.split("/").at(-1))
+      )
+    : [];
   return (
-    <Shell>
+    <Shell familyTours={isBlog || isCity}>
+      {isCity && (
+        <Link
+          href="/cities"
+          className="text-ink hover:text-brand-dark mb-5 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+        >
+          <ArrowLeft size={17} aria-hidden="true" /> Back to Cities
+        </Link>
+      )}
       <PageTitle large={isBlog}>{page.heading}</PageTitle>
       {page.date && <p className="mt-4 text-center text-sm text-slate-500">{page.date}</p>}
       {page.image && (
@@ -336,12 +367,7 @@ function ArticlePage({ page }) {
             {/^FAQ/i.test(section.heading) ? (
               <h2 className="text-2xl text-teal-800">{section.heading}</h2>
             ) : /^Q[.\s:-]*\d/i.test(section.heading) ? (
-              <details className="theme-details p-4 sm:p-5">
-                <summary className="cursor-pointer font-semibold">{section.heading}</summary>
-                {section.paragraphs.map((text, j) => (
-                  <p key={j}>{text}</p>
-                ))}
-              </details>
+              <FaqItem question={section.heading} answers={section.paragraphs} />
             ) : (
               <>
                 {section.heading !== page.heading && (
@@ -368,8 +394,8 @@ function ArticlePage({ page }) {
           </section>
         ))}
       </div>
-      {isCity && <PageLinks paths={related} title="Popular Routes" />}
-      {!isCity && related.length > 0 && (
+      {isCity && <PageLinks paths={cityRoutes} cityStyle />}
+      {!isCity && page.pathname !== "/about" && related.length > 0 && (
         <PageLinks paths={related.slice(0, 12)} title={isBlog ? "More Blogs" : "Popular Routes"} />
       )}
     </Shell>

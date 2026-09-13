@@ -14,6 +14,16 @@ const entryPaths = [
   "/privacy-policy.html",
 ];
 const outDir = path.join(process.cwd(), "src", "data");
+const blogImageFallbacks = {
+  "/blogs/best-monsoon-getaways-from-mumbai": {
+    src: "/blog-monsoon-getaways.webp",
+    alt: "Misty green Western Ghats and a winding road during the monsoon",
+  },
+  "/blogs/mumbai-to-rajkot-taxi-travel-guide": {
+    src: "/blog-mumbai-rajkot-road-trip.webp",
+    alt: "White taxi on a highway through western India toward Rajkot",
+  },
+};
 
 function pagePath(href, base = origin) {
   try {
@@ -246,6 +256,11 @@ async function main() {
         ...image,
         src: assets.get(image.src) || image.src,
       }));
+    }
+    if (!page.image && blogImageFallbacks[page.pathname]) {
+      const image = blogImageFallbacks[page.pathname];
+      page.image = image.src;
+      page.images = [image];
     }
   }
   routedPages.sort((a, b) => a.pathname.localeCompare(b.pathname));

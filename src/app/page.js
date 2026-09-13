@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Check, Star } from "lucide-react";
 import BookingForm from "@/components/BookingForm";
+import FaqItem from "@/components/FaqItem";
 import { getPage } from "@/data/site";
 import { benefits, fleet } from "@/data/siteMeta";
 
@@ -218,14 +219,7 @@ export default function HomePage() {
         <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">FAQ&apos;s</h2>
         <div className="mt-6 space-y-3">
           {faqs.map((item) => (
-            <details key={item.heading} className="theme-details p-4 sm:p-5">
-              <summary className="cursor-pointer font-bold">{item.heading}</summary>
-              {item.paragraphs.map((text, i) => (
-                <p key={i} className="mt-3 text-[15px] leading-7">
-                  {text}
-                </p>
-              ))}
-            </details>
+            <FaqItem key={item.heading} question={item.heading} answers={item.paragraphs} />
           ))}
         </div>
       </section>

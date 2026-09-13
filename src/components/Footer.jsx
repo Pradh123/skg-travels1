@@ -1,33 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { navLinks } from "@/data/siteMeta";
-import siteLinks from "@/data/siteLinks.json";
+import FooterSiteLinks from "./FooterSiteLinks";
+
+const socialIconClass =
+  "grid p-2 shrink-0 place-items-center rounded-full border border-white/40 text-white transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-ink focus-visible:border-brand focus-visible:bg-brand focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400";
 
 export default function Footer() {
   return (
     <>
-      <section
-        className="mx-auto max-w-[1170px] px-4 py-10"
-        aria-label="Travel destinations and routes"
-      >
-        {siteLinks.map((group) => (
-          <div key={group.title} className="mb-8">
-            <h2 className="mb-4 text-xl font-semibold text-[#2c3e50]">{group.title}</h2>
-            <div className="flex flex-wrap gap-2">
-              {group.links.map((item, index) => (
-                <Link
-                  key={`${item.href}-${index}`}
-                  href={item.href}
-                  className="rounded-lg border border-teal-700/20 px-3 py-1.5 text-[13px] text-teal-800 transition-colors hover:border-lime-600 hover:bg-lime-600 hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
+      <FooterSiteLinks />
       <footer className="bg-ink text-slate-300">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
           <div>
@@ -106,6 +91,44 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+            <div className="mt-6 flex flex-wrap items-center gap-3 pl-7">
+              <a
+                href="https://www.youtube.com/channel/UCYIC6L3qmaEJk695xwbQ0-g"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className={socialIconClass}
+              >
+                <FaYoutube size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/skgtravelsind/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className={socialIconClass}
+              >
+                <FaInstagram size={18} />
+              </a>
+              <a
+                href="https://x.com/skgtravelsInd"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X"
+                className={socialIconClass}
+              >
+                <FaXTwitter size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/skg-travels/about/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className={socialIconClass}
+              >
+                <FaLinkedinIn size={18} />
+              </a>
+            </div>
           </div>
         </div>
         <div className="border-t border-white/10 px-4 py-5 text-center text-xs">

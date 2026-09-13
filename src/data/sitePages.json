@@ -721,8 +721,13 @@
         "images": []
       }
     ],
-    "image": null,
-    "images": [],
+    "image": "/blog-monsoon-getaways.webp",
+    "images": [
+      {
+        "src": "/blog-monsoon-getaways.webp",
+        "alt": "Misty green Western Ghats and a winding road during the monsoon"
+      }
+    ],
     "links": [
       "/",
       "/services",
@@ -1078,8 +1083,13 @@
         "images": []
       }
     ],
-    "image": null,
-    "images": [],
+    "image": "/blog-mumbai-rajkot-road-trip.webp",
+    "images": [
+      {
+        "src": "/blog-mumbai-rajkot-road-trip.webp",
+        "alt": "White taxi on a highway through western India toward Rajkot"
+      }
+    ],
     "links": [
       "/",
       "/services",
