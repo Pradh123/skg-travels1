@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 
@@ -8,6 +8,19 @@ export default function FaqItem({ question, answers }) {
   const [open, setOpen] = useState(false);
   const answerId = useId();
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const closeWhenAnotherOpens = (event) => {
+      if (event.detail !== answerId) setOpen(false);
+    };
+    window.addEventListener("skg:faq-open", closeWhenAnotherOpens);
+    return () => window.removeEventListener("skg:faq-open", closeWhenAnotherOpens);
+  }, [answerId]);
+
+  function toggle() {
+    if (!open) window.dispatchEvent(new CustomEvent("skg:faq-open", { detail: answerId }));
+    setOpen(!open);
+  }
 
   return (
     <div
@@ -18,7 +31,7 @@ export default function FaqItem({ question, answers }) {
           type="button"
           aria-expanded={open}
           aria-controls={answerId}
-          onClick={() => setOpen((current) => !current)}
+          onClick={toggle}
           className="text-ink focus-visible:outline-brand flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-[16px] leading-6 font-semibold transition-colors hover:bg-lime-50/50 focus-visible:outline-2 focus-visible:outline-offset-[-3px] sm:px-6 sm:py-5 sm:text-[18px]"
         >
           <span>{question}</span>

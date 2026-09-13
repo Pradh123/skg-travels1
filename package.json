@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "qr:generate": "node scripts/generate-booking-qr.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -25,6 +26,7 @@
     "eslint-config-next": "16.3.4",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4"
   }
 }

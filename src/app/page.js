@@ -1,8 +1,10 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import { Check, Star } from "lucide-react";
+import { AlarmClock, BadgeIndianRupee, CarFront, Check, Clock3, HeartHandshake, MapPin, MousePointerClick, PackageOpen, ShieldCheck, SlidersHorizontal, Sparkles, UserRoundCheck, WalletCards } from "lucide-react";
 import BookingForm from "@/components/BookingForm";
 import FaqItem from "@/components/FaqItem";
+import MobileBookingPromo from "@/components/MobileBookingPromo";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import { getPage } from "@/data/site";
 import { benefits, fleet } from "@/data/siteMeta";
 
@@ -39,6 +41,9 @@ const testimonials = [
   },
 ];
 
+const benefitIcons = [WalletCards, CarFront, HeartHandshake, ShieldCheck, AlarmClock, PackageOpen];
+const whyIcons = [Sparkles, CarFront, UserRoundCheck, BadgeIndianRupee, SlidersHorizontal, Clock3, MousePointerClick, MapPin];
+
 function CopySection({ section }) {
   if (!section) return null;
   return (
@@ -65,25 +70,25 @@ export default function HomePage() {
   );
   return (
     <main>
-      <section className="overflow-hidden bg-gradient-to-r from-cyan-800 via-teal-700 to-lime-700 text-white">
-        <div className="mx-auto grid max-w-[1170px] items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[390px_minmax(0,1fr)] lg:gap-14 lg:py-14">
-          <div className="order-2 mx-auto w-full max-w-[500px] lg:order-1">
-            <BookingForm />
+      <section className="home-hero">
+        <div className="home-hero-inner">
+          <div className="home-hero-booking">
+            <BookingForm hero />
           </div>
-          <div className="order-1 text-center lg:order-2 lg:text-left">
-            <h1 className="text-[34px] leading-[1.12] font-extrabold sm:text-[48px]">
+          <div className="home-hero-content">
+            <h1 className="home-hero-title">
               Best Car Rental Company in Mumbai
             </h1>
-            <p className="mt-3 font-[cursive] text-2xl leading-tight font-bold text-lime-100 sm:text-[25px]">
+            <p className="home-hero-offer">
               ☂ Best Deals on Outstation Taxi - Save Up to 30% ☂
             </p>
-            <p className="mt-1 text-base font-bold">Outstation Taxi Starts from @Rs.11/KM</p>
-            <div className="mt-5 grid items-center gap-3 sm:grid-cols-[.65fr_1fr]">
-              <div>
-                <h2 className="font-[cursive] text-2xl leading-none font-bold text-lime-100">
+            <p className="home-hero-starting">Outstation Taxi Starts from @Rs.11/KM</p>
+            <div className="home-hero-lower">
+              <div className="home-hero-rates">
+                <h2>
                   Taxi Rates from Mumbai
                 </h2>
-                <ul className="mt-4 inline-block space-y-2 text-left text-[15px] font-semibold lg:block">
+                <ul>
                   <li className="flex items-center gap-2">
                     <Check size={17} /> Etios at Rs.12 per KM
                   </li>
@@ -98,13 +103,13 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
-              <div className="relative h-[200px] sm:h-[290px]">
+              <div className="home-hero-car">
                 <Image
                   src="/site-media/94f7564f26808bafe8a8.png"
                   alt="Innova Taxi for Outstation Tour"
                   fill
                   priority
-                  sizes="(max-width: 768px) 90vw, 400px"
+                  sizes="(max-width: 768px) 90vw, 460px"
                   className="object-contain object-center"
                 />
               </div>
@@ -161,43 +166,49 @@ export default function HomePage() {
         <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">
           Top Benefits - Book Outstation Cab with SKG Travel
         </h2>
-        <div className="mt-8 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {benefits.map((item) => (
-            <article key={item.title} className="theme-card border-t-brand border-t-4 p-6">
-              <h3 className="text-ink text-lg font-bold">{item.title}</h3>
-              <p className="mt-2 text-[15px] leading-7 text-slate-700">{item.detail}</p>
-            </article>
-          ))}
+        <div className="benefits-grid">
+          {benefits.map((item, index) => {
+            const Icon = benefitIcons[index];
+            return (
+              <article key={item.title} className="benefit-item">
+                <Icon className="benefit-icon" size={56} strokeWidth={1.8} aria-hidden="true" />
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.detail}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
       <section className="bg-[#f2f7f4] px-4 py-14">
         <div className="mx-auto max-w-[1140px]">
           <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">Testimonials</h2>
-          <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {testimonials.map((item) => (
-              <blockquote key={item.name} className="theme-card p-6">
-                <div className="flex text-yellow-500">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Star key={i} size={14} fill="currentColor" />
-                  ))}
-                </div>
-                <h3 className="mt-3 font-bold">{item.trip}</h3>
-                <p className="mt-2 text-sm leading-6">“{item.quote}”</p>
-                <cite className="text-ink mt-3 block text-sm font-bold not-italic">
-                  {item.name}
-                </cite>
-              </blockquote>
-            ))}
-          </div>
+          <TestimonialsCarousel items={testimonials} />
         </div>
       </section>
+      <MobileBookingPromo />
       {why && (
-        <section className="mx-auto max-w-[900px] px-4 py-14">
-          <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">{why.heading}</h2>
-          <div className="mt-6 space-y-4 text-[15px] leading-7 text-slate-700">
-            {why.paragraphs.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
+        <section className="why-section">
+          <div className="why-inner">
+            <h2>{why.heading}</h2>
+            <div className="why-heading-rule" />
+            <div className="why-grid">
+              {why.paragraphs.slice(0, -1).map((paragraph, index) => {
+                const separator = paragraph.indexOf(":");
+                const Icon = whyIcons[index];
+                return (
+                  <article className="why-card" key={paragraph}>
+                    <Icon size={22} strokeWidth={2} aria-hidden="true" />
+                    <div>
+                      <h3>{paragraph.slice(0, separator)}</h3>
+                      <p>{paragraph.slice(separator + 1).trim()}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <p className="why-conclusion">{why.paragraphs.at(-1)}</p>
           </div>
         </section>
       )}
