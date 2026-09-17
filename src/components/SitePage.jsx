@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ArrowLeft, Phone } from "lucide-react";
 import BookingForm from "./BookingForm";
+import ServiceBooking from "./ServiceBooking";
 import FaqItem from "./FaqItem";
 import QuickQuote from "./QuickQuote";
 import { getPage, sitePages } from "@/data/site";
@@ -264,12 +265,7 @@ function ServicePage({ page }) {
             </div>
             <div className="sm:col-span-2 xl:col-span-1 xl:text-right">
               <p className="font-bold">Rs.{car.rate} per KM</p>
-              <Link
-                href="/#book"
-                className="bg-brand hover:bg-brand-dark mt-3 inline-block rounded-lg px-4 py-2 text-sm font-bold text-white"
-              >
-                Book Now
-              </Link>
+              <ServiceBooking carName={car.name} />
             </div>
           </article>
         ))}

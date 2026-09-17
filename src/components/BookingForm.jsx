@@ -283,6 +283,8 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
 export default function BookingForm({ compact = false, hero = false }) {
   const [error, setError] = useState("");
   const [tripType, setTripType] = useState("outstation");
+  const [mobileTripOptionsOpen, setMobileTripOptionsOpen] = useState(false);
+  const mobileTripOptionsId = useId();
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState("");
@@ -342,13 +344,37 @@ export default function BookingForm({ compact = false, hero = false }) {
               key={id}
               type="button"
               aria-pressed={tripType === id}
-              className={tripType === id ? "home-hero-tab is-active" : "home-hero-tab"}
-              onClick={() => setTripType(id)}
+              className={`home-hero-tab${tripType === id ? " is-active" : ""}${id !== "outstation" ? " home-hero-tab-desktop" : ""}${id === "outstation" && mobileTripOptionsOpen ? " mobile-options-open" : ""}`}
+              onClick={() => { setTripType(id); setMobileTripOptionsOpen(false); }}
             >
               <Icon size={20} aria-hidden="true" />
               <span>{label}</span>
             </button>
           ))}
+          <button
+            type="button"
+            className={`home-hero-tab home-hero-tab-mobile${mobileTripOptionsOpen || tripType !== "outstation" ? " is-active" : ""}`}
+            aria-expanded={mobileTripOptionsOpen}
+            aria-controls={mobileTripOptionsId}
+            onClick={() => setMobileTripOptionsOpen((open) => !open)}
+          >
+            <span>Local / Airport</span>
+            <ChevronDown size={16} aria-hidden="true" />
+          </button>
+          <div id={mobileTripOptionsId} className="home-hero-mobile-options" hidden={!mobileTripOptionsOpen}>
+            {tripTypes.slice(1).map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                type="button"
+                className={`home-hero-tab${tripType === id ? " is-active" : ""}`}
+                aria-pressed={tripType === id}
+                onClick={() => setTripType(id)}
+              >
+                <Icon size={20} aria-hidden="true" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
       <label className="block">
