@@ -67,10 +67,7 @@ export default function Header() {
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
-      <nav
-        aria-label="Main navigation"
-        className="border-t border-slate-100 bg-white text-slate-950"
-      >
+      <nav aria-label="Main navigation" className="border-t border-slate-100 bg-white text-slate-950">
         <div className="mx-auto hidden h-11 max-w-[1140px] items-center justify-center gap-7 px-4 lg:flex">
           {navLinks.map((item) => (
             <Link
@@ -86,25 +83,39 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        {open && (
-          <div className="grid gap-1 px-4 py-2 lg:hidden">
+      </nav>
+      <div className={`mobile-nav-drawer${open ? " is-open" : ""}`} aria-hidden={!open}>
+        <button
+          type="button"
+          className="mobile-nav-backdrop"
+          aria-label="Close menu"
+          tabIndex={open ? 0 : -1}
+          onClick={() => setOpen(false)}
+        />
+        <aside className="mobile-nav-panel" inert={!open}>
+          <div className="mobile-nav-panel-header">
+            <span>Menu</span>
+            <button type="button" aria-label="Close menu" onClick={() => setOpen(false)}>
+              <X size={22} />
+            </button>
+          </div>
+          <nav aria-label="Mobile navigation" className="grid gap-1 p-4">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded px-3 py-2.5 text-sm hover:bg-lime-50"
+                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-900 transition-colors hover:bg-lime-50"
               >
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+917506222999" className="rounded px-3 py-2.5 text-sm">
+            <a href="tel:+917506222999" className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-900">
               +91 750-6222-999
             </a>
-          </div>
-        )}
-        {!open && <div className="h-1 lg:hidden" />}
-      </nav>
+          </nav>
+        </aside>
+      </div>
     </header>
   );
 }

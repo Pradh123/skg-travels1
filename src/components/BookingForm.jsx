@@ -282,16 +282,16 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
 
 export default function BookingForm({ compact = false, hero = false }) {
   const [error, setError] = useState("");
-  const [tripType, setTripType] = useState("outstation");
+  const [tripType, setTripType] = useState("local");
   const [mobileTripOptionsOpen, setMobileTripOptionsOpen] = useState(false);
   const mobileTripOptionsId = useId();
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState("");
   const tripTypes = [
-    { id: "outstation", label: "Outstation", Icon: MapPin },
-    { id: "local", label: "Local", Icon: Clock3 },
+    { id: "local", label: "Rental", Icon: Clock3 },
     { id: "airport", label: "Airport", Icon: Plane },
+    { id: "outstation", label: "Outstation", Icon: MapPin },
   ];
   const tripLabel = tripTypes.find((type) => type.id === tripType).label;
   function submit(event) {
@@ -344,7 +344,7 @@ export default function BookingForm({ compact = false, hero = false }) {
               key={id}
               type="button"
               aria-pressed={tripType === id}
-              className={`home-hero-tab${tripType === id ? " is-active" : ""}${id !== "outstation" ? " home-hero-tab-desktop" : ""}${id === "outstation" && mobileTripOptionsOpen ? " mobile-options-open" : ""}`}
+              className={`home-hero-tab${tripType === id && !(id === "local" && mobileTripOptionsOpen) ? " is-active" : ""}${id !== "local" ? " home-hero-tab-mobile-option" : ""}`}
               onClick={() => { setTripType(id); setMobileTripOptionsOpen(false); }}
             >
               <Icon size={20} aria-hidden="true" />
@@ -353,16 +353,16 @@ export default function BookingForm({ compact = false, hero = false }) {
           ))}
           <button
             type="button"
-            className={`home-hero-tab home-hero-tab-mobile${mobileTripOptionsOpen || tripType !== "outstation" ? " is-active" : ""}`}
+            className={`home-hero-tab home-hero-tab-mobile${mobileTripOptionsOpen ? " is-active mobile-options-open" : ""}`}
             aria-expanded={mobileTripOptionsOpen}
             aria-controls={mobileTripOptionsId}
             onClick={() => setMobileTripOptionsOpen((open) => !open)}
           >
-            <span>Local / Airport</span>
+            <span>Airport / Outstation</span>
             <ChevronDown size={16} aria-hidden="true" />
           </button>
           <div id={mobileTripOptionsId} className="home-hero-mobile-options" hidden={!mobileTripOptionsOpen}>
-            {tripTypes.slice(1).map(({ id, label, Icon }) => (
+            {tripTypes.filter(({ id }) => id !== "local").map(({ id, label, Icon }) => (
               <button
                 key={id}
                 type="button"
