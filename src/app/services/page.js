@@ -1,4 +1,4 @@
-import SitePage from "@/components/SitePage";
+import SitePage from "@/components/content/SitePage";
 import { getPage } from "@/data/site";
 
 const page = getPage("/services");

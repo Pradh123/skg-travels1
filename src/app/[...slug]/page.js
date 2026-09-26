@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import SitePage from "@/components/SitePage";
+import SitePage from "@/components/content/SitePage";
 import { getPage, sitePages } from "@/data/site";
 
 const dedicatedPages = new Set([

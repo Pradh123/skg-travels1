@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Clock3, Mail, Menu, Phone, Search, X } from "lucide-react";
 import { navLinks } from "@/data/siteMeta";
 
@@ -25,6 +26,7 @@ function SiteSearch({ id }) {
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const mobileSearchInputRef = useRef(null);
@@ -132,6 +134,14 @@ export default function Header() {
             <div className="hidden lg:block"><SiteSearch id="desktop-site-search" /></div>
           </div>
         </div>
+      </nav>
+      <nav className="mobile-business-switcher" aria-label="Choose service">
+        <Link href="/" aria-current={pathname === "/hotel" ? undefined : "page"} className={`mobile-business-tab${pathname === "/hotel" ? "" : " is-active"}`}>
+          Rental
+        </Link>
+        <Link href="/hotel" aria-current={pathname === "/hotel" ? "page" : undefined} className={`mobile-business-tab${pathname === "/hotel" ? " is-active" : ""}`}>
+          Hotel
+        </Link>
       </nav>
       <div className={`mobile-nav-drawer${open ? " is-open" : ""}`} aria-hidden={!open}>
         <button

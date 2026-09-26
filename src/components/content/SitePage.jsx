@@ -1,10 +1,10 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Phone } from "lucide-react";
-import BookingForm from "./BookingForm";
-import ServiceBooking from "./ServiceBooking";
+import BookingForm from "../booking/BookingForm";
+import ServiceBooking from "../booking/ServiceBooking";
+import QuickQuote from "../booking/QuickQuote";
 import FaqItem from "./FaqItem";
-import QuickQuote from "./QuickQuote";
 import { getPage, sitePages } from "@/data/site";
 import { serviceFleet } from "@/data/siteMeta";
 import siteAssets from "@/data/siteAssets.json";

@@ -1,10 +1,10 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import { AlarmClock, BadgeIndianRupee, CarFront, Check, Clock3, HeartHandshake, MapPin, MousePointerClick, PackageOpen, ShieldCheck, SlidersHorizontal, Sparkles, UserRoundCheck, WalletCards } from "lucide-react";
-import BookingForm from "@/components/BookingForm";
-import FaqItem from "@/components/FaqItem";
-import MobileBookingPromo from "@/components/MobileBookingPromo";
-import TestimonialsCarousel from "@/components/TestimonialsCarousel";
+import BookingForm from "@/components/booking/BookingForm";
+import MobileBookingPromo from "@/components/booking/MobileBookingPromo";
+import FaqItem from "@/components/content/FaqItem";
+import TestimonialsCarousel from "@/components/content/TestimonialsCarousel";
 import { getPage } from "@/data/site";
 import { benefits, fleet } from "@/data/siteMeta";
 
