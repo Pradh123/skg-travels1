@@ -895,15 +895,17 @@ button {
   transition: background-color 160ms ease;
 }
 .site-search button:hover { background: #4d7c0f; }
-.header-contact-list { align-items: center; justify-content: flex-end; gap: clamp(14px, 1.7vw, 24px); }
+.header-main-row { background: linear-gradient(180deg, #fff 0%, #fcfdf9 100%); }
+.header-contact-list { align-items: center; justify-content: flex-end; gap: clamp(10px, 1.25vw, 17px); }
 .header-contact-item { display: flex; min-width: 0; align-items: center; gap: 9px; color: #102c42; text-decoration: none; }
+.header-contact-item + .header-contact-item { margin-left: 2px; padding-left: clamp(10px, 1.2vw, 16px); border-left: 1px solid #e2e8f0; }
 .header-contact-icon { display: grid; width: 34px; height: 34px; flex: none; place-items: center; border: 1px solid #dce9ca; border-radius: 10px; background: #f4f9eb; color: #65a30d; }
 .header-contact-copy { display: flex; flex-direction: column; gap: 3px; white-space: nowrap; }
-.header-contact-copy strong { color: #102c42; font-size: 12px; font-weight: 700; line-height: 1.25; }
-.header-contact-copy small { color: #53742d; font-size: 10px; font-weight: 600; line-height: 1.25; }
+.header-contact-copy strong { color: #102c42; font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+.header-contact-copy small { color: #53742d; font-size: 10.5px; font-weight: 600; line-height: 1.25; }
 .header-contact-item:hover .header-contact-copy strong { color: #4d7c0f; }
-.header-contact-cta { flex: none; border-radius: 8px; background: #65a30d; padding: 10px 14px; color: #fff; font-size: 11px; font-weight: 700; white-space: nowrap; transition: background-color 160ms ease; }
-.header-contact-cta:hover { background: #4d7c0f; }
+.header-contact-cta { display: inline-flex; min-height: 40px; flex: none; align-items: center; justify-content: center; gap: 7px; margin-left: 3px; border: 1px solid #65a30d; border-radius: 9px; background: #65a30d; padding: 0 14px; color: #fff; font-size: 11px; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 10px rgb(77 124 15 / 16%); transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+.header-contact-cta:hover { transform: translateY(-1px); border-color: #4d7c0f; background: #4d7c0f; box-shadow: 0 6px 14px rgb(77 124 15 / 24%); }
 .header-utility-tools { display: flex; flex: none; align-items: center; gap: 7px; }
 .site-search-header { width: min(44vw, 238px); flex: none; }
 .site-search-header .site-search { width: 100%; }

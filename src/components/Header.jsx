@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock3, Mail, Menu, Phone, Search, X } from "lucide-react";
+import { ArrowRight, Clock3, Mail, Menu, Phone, Search, X } from "lucide-react";
 import { navLinks } from "@/data/siteMeta";
 
 function SiteSearch({ id }) {
@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <header className="relative z-40 border-t-[5px] border-lime-500 bg-white shadow-sm">
-      <div className="mx-auto flex min-h-[74px] max-w-[1100px] items-center justify-between gap-4 px-4 py-1">
+      <div className="header-main-row mx-auto flex min-h-[74px] max-w-[1100px] items-center justify-between gap-4 px-4 py-1 lg:min-h-[86px]">
         <Link href="/" aria-label="SKG Travels home" className="shrink-0">
           <Image
             src="/skg-logo-hd.png"
@@ -49,7 +49,7 @@ export default function Header() {
             width={78}
             height={68}
             priority
-            className="h-[60px] w-auto object-contain"
+            className="h-[60px] w-auto object-contain lg:h-[66px]"
           />
         </Link>
         <div className="header-contact-list hidden lg:flex">
@@ -78,7 +78,8 @@ export default function Header() {
             href="/contact"
             className="header-contact-cta"
           >
-            Contact Now
+            <span>Contact Now</span>
+            <ArrowRight size={15} aria-hidden="true" />
           </Link>
         </div>
         <div className="header-utility-tools lg:hidden">
