@@ -294,6 +294,11 @@ export default function BookingForm({ compact = false, hero = false }) {
     { id: "outstation", label: "Outstation", Icon: MapPin },
   ];
   const tripLabel = tripTypes.find((type) => type.id === tripType).label;
+  const showReturnDate = !hero || tripType === "outstation";
+  function selectTripType(id) {
+    setTripType(id);
+    if (id !== "outstation") setReturnDate("");
+  }
   function submit(event) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -345,7 +350,7 @@ export default function BookingForm({ compact = false, hero = false }) {
               type="button"
               aria-pressed={tripType === id}
               className={`home-hero-tab${tripType === id && !(id === "local" && mobileTripOptionsOpen) ? " is-active" : ""}${id !== "local" ? " home-hero-tab-mobile-option" : ""}`}
-              onClick={() => { setTripType(id); setMobileTripOptionsOpen(false); }}
+              onClick={() => { selectTripType(id); setMobileTripOptionsOpen(false); }}
             >
               <Icon size={20} aria-hidden="true" />
               <span>{label}</span>
@@ -368,7 +373,7 @@ export default function BookingForm({ compact = false, hero = false }) {
                 type="button"
                 className={`home-hero-tab${tripType === id ? " is-active" : ""}`}
                 aria-pressed={tripType === id}
-                onClick={() => setTripType(id)}
+                onClick={() => selectTripType(id)}
               >
                 <Icon size={20} aria-hidden="true" />
                 <span>{label}</span>
@@ -389,7 +394,7 @@ export default function BookingForm({ compact = false, hero = false }) {
         <span>Travelling to :</span>
         <CityAutocomplete label="Drop location" name="to" placeholder="Drop Location" />
       </div>
-      <div className="booking-form-pair mt-3">
+      <div className={`booking-form-pair mt-3${showReturnDate ? "" : " booking-form-pair-single"}`}>
         <div>
           <span>Travel Date :</span>
           <BookingCalendar label="Travel date" placeholder="Select date" value={pickupDate} onChange={(date) => {
@@ -398,11 +403,13 @@ export default function BookingForm({ compact = false, hero = false }) {
           }} />
           <input type="hidden" name="pickupDate" value={pickupDate} />
         </div>
-        <div>
-          <span>Return Date :</span>
-          <BookingCalendar label="Return date" placeholder="Select date" value={returnDate} onChange={setReturnDate} minDate={pickupDate} alignEnd />
-          <input type="hidden" name="returnDate" value={returnDate} />
-        </div>
+        {showReturnDate && (
+          <div>
+            <span>Return Date :</span>
+            <BookingCalendar label="Return date" placeholder="Select date" value={returnDate} onChange={setReturnDate} minDate={pickupDate} alignEnd />
+            <input type="hidden" name="returnDate" value={returnDate} />
+          </div>
+        )}
       </div>
       <div className="booking-form-pair booking-form-pair-contact mt-3">
         <label>

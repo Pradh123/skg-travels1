@@ -1,13 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock3, Mail, Menu, Phone, X } from "lucide-react";
+import { Clock3, Mail, Menu, Phone, Search, X } from "lucide-react";
 import { navLinks } from "@/data/siteMeta";
+
+function SiteSearch({ id }) {
+  return (
+    <form action="/search" method="get" role="search" className="site-search">
+      <label className="sr-only" htmlFor={id}>Search SKG Travels</label>
+      <input
+        id={id}
+        type="search"
+        name="q"
+        placeholder="Search routes, cities..."
+        autoComplete="off"
+      />
+      <button type="submit" aria-label="Search">
+        <Search size={17} aria-hidden="true" />
+      </button>
+    </form>
+  );
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const mobileSearchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!mobileSearchOpen) return;
+    mobileSearchInputRef.current?.focus();
+    function closeOnEscape(event) {
+      if (event.key === "Escape") setMobileSearchOpen(false);
+    }
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [mobileSearchOpen]);
+
   return (
     <header className="relative z-40 border-t-[5px] border-lime-500 bg-white shadow-sm">
       <div className="mx-auto flex min-h-[74px] max-w-[1100px] items-center justify-between gap-4 px-4 py-1">
@@ -21,67 +52,84 @@ export default function Header() {
             className="h-[60px] w-auto object-contain"
           />
         </Link>
-        <div className="hidden items-center gap-7 text-sm text-slate-900 lg:flex lg:gap-9">
-          <a href="tel:+917506222999" className="flex items-start gap-1.5 hover:text-blue-700">
-            <Phone size={15} className="mt-0.5 text-lime-600" />
-            <span>
-              +91 750-6222-999
-              <small className="block text-[11px] font-bold text-teal-800">
-                For Outstation Taxi Booking
-              </small>
+        <div className="header-contact-list hidden lg:flex">
+          <a href="tel:+917506222999" className="header-contact-item">
+            <span className="header-contact-icon"><Phone size={16} aria-hidden="true" /></span>
+            <span className="header-contact-copy">
+              <strong>+91 750-6222-999</strong>
+              <small>For Outstation Taxi Booking</small>
             </span>
           </a>
-          <a
-            href="mailto:skgtravels123@gmail.com"
-            className="flex items-start gap-1.5 hover:text-blue-700"
-          >
-            <Mail size={15} className="mt-0.5 text-lime-600" />
-            <span>
-              skgtravels123@gmail.com
-              <small className="block text-[11px] font-bold text-teal-800">
-                Send us Your Tour Plan
-              </small>
+          <a href="mailto:skgtravels123@gmail.com" className="header-contact-item">
+            <span className="header-contact-icon"><Mail size={16} aria-hidden="true" /></span>
+            <span className="header-contact-copy">
+              <strong>skgtravels123@gmail.com</strong>
+              <small>Send us Your Tour Plan</small>
             </span>
           </a>
-          <span className="flex items-start gap-1.5">
-            <Clock3 size={15} className="mt-0.5 text-lime-600" />
-            <span>
-              24X7 Open
-              <small className="block text-[11px] font-bold text-teal-800">365 Days Open</small>
+          <span className="header-contact-item">
+            <span className="header-contact-icon"><Clock3 size={16} aria-hidden="true" /></span>
+            <span className="header-contact-copy">
+              <strong>24X7 Open</strong>
+              <small>365 Days Open</small>
             </span>
           </span>
           <Link
             href="/contact"
-            className="bg-brand hover:bg-brand-dark rounded-lg px-4 py-2.5 text-xs font-bold text-white transition-colors"
+            className="header-contact-cta"
           >
             Contact Now
           </Link>
         </div>
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen(!open)}
-          className="rounded-lg border border-slate-300 p-2 text-slate-800 lg:hidden"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="header-utility-tools lg:hidden">
+          <div className="site-search-header">
+            <SiteSearch id="compact-site-search" />
+          </div>
+          <button
+            type="button"
+            className="header-icon-button mobile-search-trigger"
+            aria-label="Open search"
+            onClick={() => setMobileSearchOpen(true)}
+          >
+            <Search size={20} aria-hidden="true" />
+          </button>
+          <a className="header-icon-button" href="tel:+917506222999" aria-label="Call SKG Travels" title="Call SKG Travels">
+            <Phone size={19} aria-hidden="true" />
+          </a>
+          <a className="header-icon-button" href="mailto:skgtravels123@gmail.com" aria-label="Email SKG Travels" title="Email SKG Travels">
+            <Mail size={19} aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen(!open)}
+            className="header-icon-button header-menu-button"
+          >
+            {open ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
       </div>
       <nav aria-label="Main navigation" className="border-t border-slate-100 bg-white text-slate-950">
-        <div className="mx-auto hidden h-11 max-w-[1140px] items-center justify-center gap-7 px-4 lg:flex">
-          {navLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-semibold transition-colors hover:text-lime-600"
-            >
-              {item.label === "Services"
-                ? "Service"
-                : item.label === "Contact"
-                  ? "Contact us"
-                  : item.label}
-            </Link>
-          ))}
+        <div className="mx-auto flex h-1 max-w-[1140px] items-center px-4 lg:h-auto lg:min-h-12">
+          <div className="hidden flex-1 items-center justify-center gap-7 lg:flex">
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-semibold transition-colors hover:text-lime-600"
+              >
+                {item.label === "Services"
+                  ? "Service"
+                  : item.label === "Contact"
+                    ? "Contact us"
+                    : item.label}
+              </Link>
+            ))}
+          </div>
+          <div className="ml-auto">
+            <div className="hidden lg:block"><SiteSearch id="desktop-site-search" /></div>
+          </div>
         </div>
       </nav>
       <div className={`mobile-nav-drawer${open ? " is-open" : ""}`} aria-hidden={!open}>
@@ -115,6 +163,36 @@ export default function Header() {
             </a>
           </nav>
         </aside>
+      </div>
+      <div className={`mobile-search-screen${mobileSearchOpen ? " is-open" : ""}`} aria-hidden={!mobileSearchOpen}>
+        <div className="mobile-search-screen-header">
+          <Image
+            src="/skg-logo-hd.png"
+            alt="SKG Travels"
+            width={78}
+            height={68}
+            className="mobile-search-logo"
+          />
+          <span>Search SKG Travels</span>
+          <button type="button" aria-label="Close search" onClick={() => setMobileSearchOpen(false)}>
+            <X size={23} />
+          </button>
+        </div>
+        <form action="/search" method="get" role="search" className="mobile-search-screen-form" inert={!mobileSearchOpen}>
+          <label className="sr-only" htmlFor="mobile-screen-search">Search routes, cities, or services</label>
+          <input
+            ref={mobileSearchInputRef}
+            id="mobile-screen-search"
+            type="search"
+            name="q"
+            placeholder="Search routes, cities, services..."
+            autoComplete="off"
+          />
+          <button type="submit" aria-label="Search">
+            <Search size={20} aria-hidden="true" />
+          </button>
+        </form>
+        <p className="mobile-search-hint">Find taxi routes, cities, and services.</p>
       </div>
     </header>
   );
