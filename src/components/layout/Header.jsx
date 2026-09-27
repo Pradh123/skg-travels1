@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Clock3, Mail, Menu, Phone, Search, X } from "lucide-react";
+import { ArrowRight, Clock3, Mail, Menu, Search, X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { navLinks } from "@/data/siteMeta";
 
 function SiteSearch({ id }) {
@@ -55,11 +56,11 @@ export default function Header() {
           />
         </Link>
         <div className="header-contact-list hidden lg:flex">
-          <a href="tel:+917506222999" className="header-contact-item">
-            <span className="header-contact-icon"><Phone size={16} aria-hidden="true" /></span>
+          <a href="https://wa.me/917506222999" className="header-contact-item" target="_blank" rel="noopener noreferrer">
+            <span className="header-contact-icon"><FaWhatsapp size={17} aria-hidden="true" /></span>
             <span className="header-contact-copy">
               <strong>+91 750-6222-999</strong>
-              <small>For Outstation Taxi Booking</small>
+              <small>WhatsApp for Taxi Booking</small>
             </span>
           </a>
           <a href="mailto:skgtravels123@gmail.com" className="header-contact-item">
@@ -96,8 +97,8 @@ export default function Header() {
           >
             <Search size={20} aria-hidden="true" />
           </button>
-          <a className="header-icon-button" href="tel:+917506222999" aria-label="Call SKG Travels" title="Call SKG Travels">
-            <Phone size={19} aria-hidden="true" />
+          <a className="header-icon-button" href="https://wa.me/917506222999" aria-label="WhatsApp SKG Travels" title="WhatsApp SKG Travels" target="_blank" rel="noopener noreferrer">
+            <FaWhatsapp size={20} aria-hidden="true" />
           </a>
           <a className="header-icon-button" href="mailto:skgtravels123@gmail.com" aria-label="Email SKG Travels" title="Email SKG Travels">
             <Mail size={19} aria-hidden="true" />
@@ -136,8 +137,11 @@ export default function Header() {
         </div>
       </nav>
       <nav className="mobile-business-switcher" aria-label="Choose service">
-        <Link href="/" aria-current={pathname === "/hotel" ? undefined : "page"} className={`mobile-business-tab${pathname === "/hotel" ? "" : " is-active"}`}>
-          Rental
+        <Link href="/" aria-current={pathname === "/hotel" || pathname === "/events" ? undefined : "page"} className={`mobile-business-tab${pathname === "/hotel" || pathname === "/events" ? "" : " is-active"}`}>
+          Taxi Services
+        </Link>
+        <Link href="/events" aria-current={pathname === "/events" ? "page" : undefined} className={`mobile-business-tab${pathname === "/events" ? " is-active" : ""}`}>
+          Events
         </Link>
         <Link href="/hotel" aria-current={pathname === "/hotel" ? "page" : undefined} className={`mobile-business-tab${pathname === "/hotel" ? " is-active" : ""}`}>
           Hotel

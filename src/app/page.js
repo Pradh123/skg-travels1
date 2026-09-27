@@ -5,6 +5,7 @@ import BookingForm from "@/components/booking/BookingForm";
 import MobileBookingPromo from "@/components/booking/MobileBookingPromo";
 import FaqItem from "@/components/content/FaqItem";
 import TestimonialsCarousel from "@/components/content/TestimonialsCarousel";
+import PopularCities from "@/components/content/PopularCities";
 import { getPage } from "@/data/site";
 import { benefits, fleet } from "@/data/siteMeta";
 
@@ -117,7 +118,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+      <PopularCities />
       <div className="py-4">
         <CopySection section={copy[0]} />
         <CopySection section={copy[1]} />

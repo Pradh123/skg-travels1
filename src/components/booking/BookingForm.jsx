@@ -282,22 +282,28 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
 
 export default function BookingForm({ compact = false, hero = false }) {
   const [error, setError] = useState("");
-  const [tripType, setTripType] = useState("local");
+  const [tripType, setTripType] = useState("airport");
+  const [airportType, setAirportType] = useState("rental");
+  const [outstationType, setOutstationType] = useState("one-way");
   const [mobileTripOptionsOpen, setMobileTripOptionsOpen] = useState(false);
   const mobileTripOptionsId = useId();
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState("");
   const tripTypes = [
-    { id: "local", label: "Rental", Icon: Clock3 },
     { id: "airport", label: "Airport", Icon: Plane },
     { id: "outstation", label: "Outstation", Icon: MapPin },
   ];
-  const tripLabel = tripTypes.find((type) => type.id === tripType).label;
-  const showReturnDate = !hero || tripType === "outstation";
+  const tripLabel = tripTypes.find((type) => type.id === tripType)?.label || "Airport";
+  const bookingTypeLabel = tripType === "airport"
+    ? `Airport ${airportType === "rental" ? "Rental" : "Local"}`
+    : tripType === "outstation"
+      ? `Outstation ${outstationType === "one-way" ? "One Way" : "Round Trip"}`
+      : tripLabel;
+  const showReturnDate = !hero || (tripType === "outstation" && outstationType === "round-trip");
   function selectTripType(id) {
     setTripType(id);
-    if (id !== "outstation") setReturnDate("");
+    if (id !== "outstation" || outstationType === "one-way") setReturnDate("");
   }
   function submit(event) {
     event.preventDefault();
@@ -320,8 +326,8 @@ export default function BookingForm({ compact = false, hero = false }) {
     }
     setError("");
     const message = [
-      `Hello SKG Travels, I would like to check ${tripLabel.toLowerCase()} taxi rates.`,
-      `Trip type: ${tripLabel}`,
+      `Hello SKG Travels, I would like to check ${bookingTypeLabel.toLowerCase()} taxi rates.`,
+      `Trip type: ${bookingTypeLabel}`,
       `Name: ${form.get("name")}`,
       `Pickup from: ${form.get("from")}`,
       `Travelling to: ${form.get("to")}`,
@@ -356,6 +362,20 @@ export default function BookingForm({ compact = false, hero = false }) {
               <span>{label}</span>
             </button>
           ))}
+          {tripType === "airport" && (
+            <div className="home-hero-subtabs" aria-label="Airport booking type">
+              {[{ id: "local", label: "Local" }, { id: "rental", label: "Rental" }].map(({ id, label }) => (
+                <button key={id} type="button" className={`home-hero-subtab${airportType === id ? " is-active" : ""}`} aria-pressed={airportType === id} onClick={() => setAirportType(id)}>{label}</button>
+              ))}
+            </div>
+          )}
+          {tripType === "outstation" && (
+            <div className="home-hero-subtabs" aria-label="Outstation trip type">
+              {[{ id: "one-way", label: "One Way" }, { id: "round-trip", label: "Round Trip" }].map(({ id, label }) => (
+                <button key={id} type="button" className={`home-hero-subtab${outstationType === id ? " is-active" : ""}`} aria-pressed={outstationType === id} onClick={() => { setOutstationType(id); if (id === "one-way") setReturnDate(""); }}>{label}</button>
+              ))}
+            </div>
+          )}
           <button
             type="button"
             className={`home-hero-tab home-hero-tab-mobile${mobileTripOptionsOpen ? " is-active mobile-options-open" : ""}`}
@@ -447,7 +467,7 @@ export default function BookingForm({ compact = false, hero = false }) {
         type="submit"
         className="bg-brand hover:bg-brand-dark mt-5 w-full rounded-lg px-3 py-3 font-bold text-white transition-colors"
       >
-        Check {hero ? tripLabel : "Outstation"} Taxi Rates
+        Check {hero ? bookingTypeLabel : "Outstation"} Taxi Rates
       </button>
     </form>
   );

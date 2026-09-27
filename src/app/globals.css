@@ -711,8 +711,8 @@ button {
 .home-hero-form .booking-calendar-popover { border-radius: 0; }
 .home-hero-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
   margin: -15px -15px 22px;
   padding: 4px;
   background: #fff;
@@ -724,10 +724,10 @@ button {
   justify-content: center;
   gap: 6px;
   min-width: 0;
-  min-height: 50px;
-  padding: 5px;
+  min-height: 42px;
+  padding: 6px 10px;
   border-radius: 0;
-  background: #111;
+  background: #dc2528;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -830,20 +830,39 @@ button {
   .service-booking-fields { padding-top: 18px; padding-bottom: 18px; gap: 14px; }
 }
 .home-hero-tab svg { flex: none; }
+.home-hero-subtabs {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 10px;
+}
+.home-hero-subtab {
+  min-height: 42px;
+  padding: 6px 10px;
+  border: 1px solid #dc2528;
+  background: #dc2528;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.home-hero-subtab:hover,
+.home-hero-subtab.is-active { border-color: #111; background: #111; color: #fff; }
 .home-hero-tab-mobile,
 .home-hero-mobile-options { display: none; }
 @media (max-width: 640px) {
-  .home-hero-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-hero-tabs { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .home-hero-tab-mobile-option { display: none; }
-  .home-hero-tab-mobile { display: flex; }
+  .home-hero-tab-mobile { display: flex; grid-column: 1 / -1; width: 100%; }
   .home-hero-tab.mobile-options-open { background: #111; color: #fff; }
   .home-hero-tab.mobile-options-open::after { display: block; }
   .home-hero-mobile-options:not([hidden]) {
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px;
-    margin-top: 15px;
+    gap: 8px;
+    margin-top: 8px;
   }
 }
 .home-hero-form button[type="submit"] {

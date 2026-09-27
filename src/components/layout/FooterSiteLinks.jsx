@@ -21,7 +21,7 @@ export default function FooterSiteLinks() {
       className="mx-auto max-w-[1170px] px-4 py-10"
       aria-label="Travel destinations and routes"
     >
-      {siteLinks.map((group) => (
+      {siteLinks.filter((group) => pathname !== "/" || group.title !== "Popular Cities").map((group) => (
         <div key={group.title} className="mb-8">
           <h2 className="mb-4 text-xl font-semibold text-[#2c3e50]">{group.title}</h2>
           <div className="flex flex-wrap gap-2">
