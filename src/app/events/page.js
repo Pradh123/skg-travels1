@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ArrowLeft, CalendarDays, Sparkles } from "lucide-react";
 
 export const metadata = {
-  title: "Events Coming Soon | SKG Travels",
+  title: "Events Coming Soon",
   description: "SKG Travels event transportation services are coming soon.",
+  alternates: { canonical: "/events" },
+  robots: { index: false, follow: true },
 };
 
 export default function EventsComingSoonPage() {

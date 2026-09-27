@@ -5,6 +5,7 @@ import { sitePages } from "@/data/site";
 export const metadata = {
   title: "Search SKG Travels",
   description: "Search SKG Travels services, cities and taxi routes.",
+  robots: { index: false, follow: true },
 };
 
 function getPageText(page) {

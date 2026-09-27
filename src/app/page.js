@@ -7,7 +7,10 @@ import FaqItem from "@/components/content/FaqItem";
 import TestimonialsCarousel from "@/components/content/TestimonialsCarousel";
 import PopularCities from "@/components/content/PopularCities";
 import { getPage } from "@/data/site";
+import { createPageMetadata } from "@/data/seo";
 import { benefits, fleet } from "@/data/siteMeta";
+
+export const metadata = createPageMetadata(getPage("/"));
 
 const copyHeadings = [
   "SKG Travels: The Best Car Rental Company in Mumbai",
@@ -71,6 +74,32 @@ export default function HomePage() {
   );
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "@id": "https://skgtravels.com/#taxi-service",
+            name: "SKG Travels",
+            url: "https://skgtravels.com/",
+            image: "https://skgtravels.com/skg-logo-hd.png",
+            telephone: "+91-7506222999",
+            email: "skgtravels123@gmail.com",
+            areaServed: { "@type": "City", name: "Mumbai" },
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Office No. 170, 1st Floor, Evershine Mall, Link Road, Chincholi Bunder",
+              addressLocality: "Malad West, Mumbai",
+              addressRegion: "Maharashtra",
+              postalCode: "400064",
+              addressCountry: "IN",
+            },
+            provider: { "@id": "https://skgtravels.com/#organization" },
+            knowsAbout: ["Local taxi service", "Airport transfers", "Outstation taxi service"],
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="home-hero">
         <div className="home-hero-inner">
           <div className="home-hero-booking">

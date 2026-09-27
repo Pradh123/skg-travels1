@@ -4,6 +4,8 @@ import { ArrowLeft, Building2, Sparkles } from "lucide-react";
 export const metadata = {
   title: "Hotel Bookings Coming Soon",
   description: "SKG Travels hotel booking service is coming soon.",
+  alternates: { canonical: "/hotel" },
+  robots: { index: false, follow: true },
 };
 
 export default function HotelComingSoonPage() {

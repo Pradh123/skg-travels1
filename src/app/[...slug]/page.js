@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import SitePage from "@/components/content/SitePage";
 import { getPage, sitePages } from "@/data/site";
+import { createPageMetadata } from "@/data/seo";
 
 const dedicatedPages = new Set([
   "/services",
@@ -23,11 +24,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const page = getPage(`/${slug.join("/")}`);
   if (!page) return {};
-  return {
-    title: page.title,
-    description: page.description || `${page.heading}. Plan your cab journey with SKG Travels.`,
-    alternates: { canonical: page.pathname },
-  };
+  return createPageMetadata(page, { type: page.pathname.startsWith("/blogs/") ? "article" : "website" });
 }
 
 export default async function CatchAllPage({ params }) {
