@@ -282,21 +282,19 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
 
 export default function BookingForm({ compact = false, hero = false }) {
   const [error, setError] = useState("");
-  const [tripType, setTripType] = useState("airport");
-  const [airportType, setAirportType] = useState("rental");
+  const [tripType, setTripType] = useState("local");
+  const [localType, setLocalType] = useState("rental");
   const [outstationType, setOutstationType] = useState("one-way");
-  const [mobileTripOptionsOpen, setMobileTripOptionsOpen] = useState(false);
-  const mobileTripOptionsId = useId();
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState("");
   const tripTypes = [
-    { id: "airport", label: "Airport", Icon: Plane },
-    { id: "outstation", label: "Outstation", Icon: MapPin },
+    { id: "local", label: "Local" },
+    { id: "outstation", label: "Outstation" },
   ];
-  const tripLabel = tripTypes.find((type) => type.id === tripType)?.label || "Airport";
-  const bookingTypeLabel = tripType === "airport"
-    ? `Airport ${airportType === "rental" ? "Rental" : "Local"}`
+  const tripLabel = tripTypes.find((type) => type.id === tripType)?.label || "Local";
+  const bookingTypeLabel = tripType === "local"
+    ? `Local ${localType === "rental" ? "Rental" : "Airport Transfer"}`
     : tripType === "outstation"
       ? `Outstation ${outstationType === "one-way" ? "One Way" : "Round Trip"}`
       : tripLabel;
@@ -346,26 +344,25 @@ export default function BookingForm({ compact = false, hero = false }) {
     <form
       id="book"
       onSubmit={submit}
-      className={hero ? "booking-form home-hero-form" : `booking-form text-ink rounded-2xl border border-t-4 border-white/70 border-t-lime-500 bg-white p-5 text-[14px] font-medium shadow-[0_16px_40px_rgba(15,44,66,.16)] sm:p-6 ${compact ? "w-full max-w-md" : "w-full max-w-[390px] lg:max-w-none"}`}
+      className={hero ? "booking-form home-hero-form" : `booking-form text-ink rounded-2xl border border-t-4 border-white/70 border-t-lime-500 bg-white p-5 text-[14px] font-medium shadow-[0_16px_40px_rgba(15,44,66,.16)] sm:p-6 ${compact ? "w-full max-w-none" : "w-full max-w-[390px] lg:max-w-none"}`}
     >
       {hero && (
         <div className="home-hero-tabs" aria-label="Booking type">
-          {tripTypes.map(({ id, label, Icon }) => (
+          {tripTypes.map(({ id, label }) => (
             <button
               key={id}
               type="button"
               aria-pressed={tripType === id}
-              className={`home-hero-tab${tripType === id && !(id === "local" && mobileTripOptionsOpen) ? " is-active" : ""}${id !== "local" ? " home-hero-tab-mobile-option" : ""}`}
-              onClick={() => { selectTripType(id); setMobileTripOptionsOpen(false); }}
+              className={`home-hero-tab${tripType === id ? " is-active" : ""}`}
+              onClick={() => selectTripType(id)}
             >
-              <Icon size={20} aria-hidden="true" />
               <span>{label}</span>
             </button>
           ))}
-          {tripType === "airport" && (
-            <div className="home-hero-subtabs" aria-label="Airport booking type">
-              {[{ id: "local", label: "Local" }, { id: "rental", label: "Rental" }].map(({ id, label }) => (
-                <button key={id} type="button" className={`home-hero-subtab${airportType === id ? " is-active" : ""}`} aria-pressed={airportType === id} onClick={() => setAirportType(id)}>{label}</button>
+          {tripType === "local" && (
+            <div className="home-hero-subtabs" aria-label="Local booking type">
+              {[{ id: "rental", label: "Rental" }, { id: "airport-transfer", label: "Airport Transfer" }].map(({ id, label }) => (
+                <button key={id} type="button" className={`home-hero-subtab${localType === id ? " is-active" : ""}`} aria-pressed={localType === id} onClick={() => setLocalType(id)}>{label}</button>
               ))}
             </div>
           )}
@@ -376,30 +373,6 @@ export default function BookingForm({ compact = false, hero = false }) {
               ))}
             </div>
           )}
-          <button
-            type="button"
-            className={`home-hero-tab home-hero-tab-mobile${mobileTripOptionsOpen ? " is-active mobile-options-open" : ""}`}
-            aria-expanded={mobileTripOptionsOpen}
-            aria-controls={mobileTripOptionsId}
-            onClick={() => setMobileTripOptionsOpen((open) => !open)}
-          >
-            <span>Airport / Outstation</span>
-            <ChevronDown size={16} aria-hidden="true" />
-          </button>
-          <div id={mobileTripOptionsId} className="home-hero-mobile-options" hidden={!mobileTripOptionsOpen}>
-            {tripTypes.filter(({ id }) => id !== "local").map(({ id, label, Icon }) => (
-              <button
-                key={id}
-                type="button"
-                className={`home-hero-tab${tripType === id ? " is-active" : ""}`}
-                aria-pressed={tripType === id}
-                onClick={() => selectTripType(id)}
-              >
-                <Icon size={20} aria-hidden="true" />
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
         </div>
       )}
       <label className="block">

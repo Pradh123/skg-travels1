@@ -140,11 +140,11 @@ export default function Header() {
         <Link href="/" aria-current={pathname === "/hotel" || pathname === "/events" ? undefined : "page"} className={`mobile-business-tab${pathname === "/hotel" || pathname === "/events" ? "" : " is-active"}`}>
           Taxi Services
         </Link>
-        <Link href="/events" aria-current={pathname === "/events" ? "page" : undefined} className={`mobile-business-tab${pathname === "/events" ? " is-active" : ""}`}>
-          Events
-        </Link>
         <Link href="/hotel" aria-current={pathname === "/hotel" ? "page" : undefined} className={`mobile-business-tab${pathname === "/hotel" ? " is-active" : ""}`}>
           Hotel
+        </Link>
+        <Link href="/events" aria-current={pathname === "/events" ? "page" : undefined} className={`mobile-business-tab${pathname === "/events" ? " is-active" : ""}`}>
+          Events
         </Link>
       </nav>
       <div className={`mobile-nav-drawer${open ? " is-open" : ""}`} aria-hidden={!open}>

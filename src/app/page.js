@@ -13,9 +13,9 @@ import { benefits, fleet } from "@/data/siteMeta";
 export const metadata = createPageMetadata(getPage("/"));
 
 const copyHeadings = [
-  "SKG Travels: The Best Car Rental Company in Mumbai",
+  "SKG Travels: Best Car Rental in India",
   "Mumbai: A dream city",
-  "Hire the Best car Rental Company in Mumbai for a trip",
+  "Best Car Rental in India for a trip",
   "Online taxi booking Mumbai for outstation tour",
   "Hire car rental in Mumbai for local visit",
   "The process of online taxi booking in Mumbai with SKG Travels",
@@ -107,7 +107,7 @@ export default function HomePage() {
           </div>
           <div className="home-hero-content">
             <h1 className="home-hero-title">
-              Best Car Rental Company in Mumbai
+              Best Car Rental in India
             </h1>
             <p className="home-hero-offer">
               ☂ Best Deals on Outstation Taxi - Save Up to 30% ☂

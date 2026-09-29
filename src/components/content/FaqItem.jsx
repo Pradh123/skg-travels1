@@ -32,9 +32,9 @@ export default function FaqItem({ question, answers }) {
           aria-expanded={open}
           aria-controls={answerId}
           onClick={toggle}
-          className="text-ink focus-visible:outline-brand flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-[16px] leading-6 font-semibold transition-colors hover:bg-lime-50/50 focus-visible:outline-2 focus-visible:outline-offset-[-3px] sm:px-6 sm:py-5 sm:text-[18px]"
+          className="text-ink focus-visible:outline-brand flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-center text-[16px] leading-6 font-semibold transition-colors hover:bg-lime-50/50 focus-visible:outline-2 focus-visible:outline-offset-[-3px] sm:px-6 sm:py-5 sm:text-left sm:text-[18px]"
         >
-          <span>{question}</span>
+          <span className="flex-1">{question}</span>
           <span className="text-brand-dark grid h-8 w-8 shrink-0 place-items-center rounded-full bg-lime-50">
             {open ? <Minus size={18} aria-hidden="true" /> : <Plus size={18} aria-hidden="true" />}
           </span>
@@ -50,7 +50,7 @@ export default function FaqItem({ question, answers }) {
             transition={{ duration: reduceMotion ? 0 : 0.28, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="border-brand/10 border-t px-5 pt-4 pb-5 text-[15px] leading-7 text-[#34485a] sm:px-6">
+            <div className="border-brand/10 border-t px-5 pt-4 pb-5 text-center text-[15px] leading-7 text-[#34485a] sm:px-6 sm:text-left">
               {answers.map((answer, index) => (
                 <p key={index} className={index ? "mt-3" : undefined}>
                   {answer}

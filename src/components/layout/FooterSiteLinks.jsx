@@ -9,6 +9,7 @@ export default function FooterSiteLinks() {
 
   if (
     pathname === "/about" ||
+    pathname === "/contact" ||
     pathname === "/cities" ||
     pathname.startsWith("/cities/") ||
     pathname === "/blogs" ||

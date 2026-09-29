@@ -1,10 +1,10 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Phone } from "lucide-react";
-import BookingForm from "../booking/BookingForm";
+import { ArrowLeft, Mail, Phone } from "lucide-react";
 import ServiceBooking from "../booking/ServiceBooking";
 import QuickQuote from "../booking/QuickQuote";
 import FaqItem from "./FaqItem";
+import ContactBranches from "./ContactBranches";
 import { getPage, sitePages } from "@/data/site";
 import { serviceFleet } from "@/data/siteMeta";
 import siteAssets from "@/data/siteAssets.json";
@@ -15,10 +15,10 @@ const adImages = [
   siteAssets["https://skgtravels.com/images/outstationoffer.png"],
 ];
 
-function Sidebar({ quote = false, familyTours = false }) {
+function Sidebar({ familyTours = false }) {
   return (
     <aside className="space-y-6 pb-10 text-center lg:text-left">
-      {quote && <QuickQuote />}
+      <QuickQuote />
       <div className="theme-card p-5">
         <h2 className="font-serif text-base text-slate-800">Need Experts Help?</h2>
         <p className="mt-3 text-xs text-slate-500 uppercase">WE WOULD BE HAPPY TO HELP YOU!</p>
@@ -35,22 +35,22 @@ function Sidebar({ quote = false, familyTours = false }) {
           skgtravels123@gmail.com
         </a>
       </div>
-      <div className="theme-card mx-auto max-w-[300px] p-4">
+      <div className="theme-card w-full overflow-hidden p-3 sm:p-4">
         {adImages.map((src, i) => (
           <Link key={src} href="/#book" className="block">
             <Image
               src={src}
               alt={i === 0 ? "Car rental offer" : "Outstation car rental discount"}
-              width={222}
-              height={i === 0 ? 225 : 240}
-              sizes="222px"
-              className="h-auto w-full"
+              width={800}
+              height={i === 0 ? 943 : 860}
+              sizes="(max-width: 1023px) 100vw, 340px"
+              className="block h-auto w-full max-w-full"
             />
           </Link>
         ))}
       </div>
       {familyTours && (
-        <div className="theme-card mx-auto max-w-[300px] overflow-hidden bg-white p-4 text-center">
+        <div className="theme-card w-full overflow-hidden bg-white p-4 text-center">
           <h2 className="text-ink mb-3 text-lg font-medium">Experts in Family Tours</h2>
           <Link href="/#book" aria-label="Book a family tour with SKG Travels">
             <Image
@@ -68,11 +68,11 @@ function Sidebar({ quote = false, familyTours = false }) {
   );
 }
 
-function Shell({ children, quote = false, familyTours = false }) {
+function Shell({ children, familyTours = false }) {
   return (
-    <main className="mx-auto grid max-w-[1170px] gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-6 xl:grid-cols-[minmax(0,878px)_263px] xl:px-0">
-      <div className="min-w-0">{children}</div>
-      <Sidebar quote={quote} familyTours={familyTours} />
+    <main className="mx-auto grid max-w-[1320px] gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-7 xl:grid-cols-[minmax(0,940px)_340px] xl:px-0">
+      <div className="w-full min-w-0">{children}</div>
+      <Sidebar familyTours={familyTours} />
     </main>
   );
 }
@@ -87,11 +87,11 @@ function PageTitle({ children, large = false }) {
   );
 }
 
-function ContentSection({ section, first = false }) {
+function ContentSection({ section, first = false, centerHeadings = false }) {
   if (!section.paragraphs.length && !section.images?.length) return null;
   if (/^Q[.\s:-]*\d/i.test(section.heading)) {
     return (
-      <div className="mb-3">
+      <div className="mb-3 w-full max-w-none">
         <FaqItem question={section.heading} answers={section.paragraphs} />
       </div>
     );
@@ -99,24 +99,24 @@ function ContentSection({ section, first = false }) {
   return (
     <section className="mb-10">
       <h2
-        className={`leading-snug text-balance text-teal-800 ${first ? "text-center text-[25px] font-bold sm:text-[30px]" : "text-[23px] font-semibold"}`}
+        className={`leading-snug text-balance text-teal-800 ${first ? "text-center text-[25px] font-bold sm:text-[30px]" : `text-center text-[23px] font-semibold ${centerHeadings ? "" : "sm:text-left"}`}`}
       >
         {section.heading}
       </h2>
       {first && <div className="bg-brand mx-auto mt-3 h-1 w-16 rounded-full" />}
       {section.paragraphs.map((text, i) => (
-        <p key={i} className="mt-4 text-[16px] leading-7 text-[#293848]">
+        <p key={i} className="mt-4 text-center text-[16px] leading-7 text-[#293848] sm:text-left">
           {text}
         </p>
       ))}
       {section.images?.map((image) => (
-        <div key={image.src} className="relative mt-5 h-52 max-w-lg sm:h-72">
+        <div key={image.src} className="relative mx-auto mt-5 h-52 max-w-lg sm:mx-0 sm:h-72">
           <Image
             src={image.src}
             alt={image.alt || section.heading}
             fill
             sizes="(max-width: 640px) 100vw, 600px"
-            className="object-contain object-left"
+            className="object-contain object-center sm:object-left"
           />
         </div>
       ))}
@@ -156,7 +156,7 @@ function PageLinks({ paths, title = "Popular Routes", cityStyle = false }) {
             <Link
               key={item.pathname}
               href={item.pathname}
-              className="hover:border-brand hover:text-brand rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-teal-800 transition-colors"
+              className="hover:border-brand hover:text-brand rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base text-teal-800 transition-colors"
             >
               {item.heading || item.title}
             </Link>
@@ -169,9 +169,9 @@ function PageLinks({ paths, title = "Popular Routes", cityStyle = false }) {
 
 function CityList({ page }) {
   return (
-    <Shell quote familyTours>
+    <Shell familyTours>
       <PageTitle>Popular Cities</PageTitle>
-      <p className="mt-7 text-[16px] leading-7">
+      <p className="mt-7 text-[19px] leading-[1.8] text-slate-700">
         {page.sections.find((section) => section.paragraphs.length)?.paragraphs[0]}
       </p>
       <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -223,7 +223,7 @@ function BlogList({ page }) {
             )}
             <div>
               <h2 className="text-[24px] leading-tight text-teal-800">{blog.heading}</h2>
-              <p className="mt-1 line-clamp-3 text-[16px] leading-6 text-slate-900">
+              <p className="mt-1 line-clamp-3 text-[17px] leading-7 text-slate-900">
                 {page.sections.find((section) => section.heading === blog.heading)?.paragraphs[0] ||
                   blog.description}
               </p>
@@ -239,10 +239,11 @@ function ServicePage({ page }) {
   const leading = page.sections.filter((section) => section.paragraphs.length).slice(0, 4);
   const trailing = page.sections.filter((section) => section.paragraphs.length).slice(4);
   return (
+    <>
     <Shell>
       <div className="pt-3">
         {leading.map((section, i) => (
-          <ContentSection key={section.heading} section={section} first={i === 0} />
+          <ContentSection key={section.heading} section={section} first={i === 0} centerHeadings />
         ))}
       </div>
       <PageTitle>Outstation Taxi Fare in Mumbai</PageTitle>
@@ -251,78 +252,141 @@ function ServicePage({ page }) {
         {serviceFleet.map((car) => (
           <article
             key={car.name}
-            className="theme-card grid gap-5 p-5 sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center xl:grid-cols-[180px_minmax(0,1fr)_auto]"
+            className="theme-card grid gap-5 p-5 text-center sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center sm:text-left xl:grid-cols-[180px_minmax(0,1fr)_auto]"
           >
             <div className="relative h-32">
               <Image src={car.image} alt={car.name} fill sizes="180px" className="object-contain" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-teal-800">{car.name}</h3>
+              <h3 className="text-center text-lg font-bold text-teal-800">{car.name}</h3>
               <p className="mt-1 text-sm">{car.seats}</p>
               <p className="mt-1 text-xs text-slate-500">
                 Driver DA, Toll & Parking Charges are Additional
               </p>
             </div>
-            <div className="sm:col-span-2 xl:col-span-1 xl:text-right">
+            <div className="text-center sm:col-span-2 sm:text-left xl:col-span-1 xl:text-right">
               <p className="font-bold">Rs.{car.rate} per KM</p>
               <ServiceBooking carName={car.name} />
             </div>
           </article>
         ))}
       </div>
+    </Shell>
+    <section className="mx-auto w-full max-w-[1120px] px-4 py-8 sm:px-6">
       <div className="mt-10">
         {trailing.map((section, index) => (
           <div key={section.heading}>
             {/^Q[.\s:-]*\d/i.test(section.heading) &&
               (index === 0 || !/^Q[.\s:-]*\d/i.test(trailing[index - 1].heading)) && (
-                <h2 className="mb-5 text-2xl text-teal-800">FAQ&apos;s</h2>
+                <h2 className="mb-5 text-center text-2xl text-teal-800">FAQ&apos;s</h2>
               )}
-            <ContentSection section={section} />
+            <ContentSection section={section} centerHeadings />
           </div>
         ))}
       </div>
       <PageLinks paths={page.links.filter((path) => path !== page.pathname).slice(0, 18)} />
-    </Shell>
+    </section>
+    </>
   );
 }
 
 function ContactPage({ page }) {
   return (
-    <Shell>
-      <PageTitle>Contact us</PageTitle>
-      <div className="mt-8">
-        {page.sections
-          .filter((section) => section.paragraphs.length)
-          .map((section) => (
-            <ContentSection key={section.heading} section={section} />
-          ))}
-      </div>
-      <div className="mt-7 grid gap-8 sm:grid-cols-2">
-        <div>
-          <h2 className="text-2xl text-teal-800">Get In Touch</h2>
-          <p className="mt-3 leading-7">
-            Office No.170, 1st Floor, Evershine Mall, Link Road, Chincholi Bunder, Malad (W), Mumbai
-            400 064.
+    <main className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 lg:py-14">
+      <section className="relative overflow-hidden rounded-3xl border border-lime-100 bg-gradient-to-br from-[#f1f8e8] via-white to-[#f3f8fa] px-6 py-9 shadow-[0_18px_50px_rgba(15,44,66,.07)] sm:px-10 sm:py-12">
+        <div className="pointer-events-none absolute -top-20 -right-14 h-56 w-56 rounded-full bg-lime-100/60 blur-3xl" />
+        <div className="relative">
+          <p className="mb-2 text-center text-xs font-bold tracking-[0.2em] text-lime-700 uppercase">
+            We’re here to help
           </p>
-          <a href="tel:+917506222999" className="mt-3 block text-blue-700">
-            +91 750-6222-999
-          </a>
-          <a href="mailto:skgtravels123@gmail.com" className="mt-2 block text-blue-700">
-            skgtravels123@gmail.com
-          </a>
+          <PageTitle>Contact us</PageTitle>
+          <div className="mx-auto mt-5 max-w-3xl space-y-2 text-center text-base leading-7 text-slate-700 sm:text-lg">
+            <p>SKG Travels provides cab services for local travel and outstation tours.</p>
+            <p>
+              Choose a vehicle that suits your journey and group size. Share your trip details and
+              our team will help with your enquiry.
+            </p>
+          </div>
         </div>
-        <BookingForm compact />
+      </section>
+      <div className="mt-8 grid min-w-0 grid-cols-1 gap-6 sm:mt-10 sm:grid-cols-2 sm:items-start lg:gap-8">
+        <section className="theme-card min-w-0 rounded-2xl p-5 sm:p-7">
+          <div className="mb-5">
+            <p className="text-xs font-bold tracking-[0.16em] text-lime-700 uppercase">
+              Talk to our team
+            </p>
+            <h2 className="mt-1 text-2xl font-bold text-teal-950">Get in touch</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Reach us directly for booking help and travel questions.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-1 xl:grid-cols-2">
+            <a
+              href="tel:+917506222999"
+              className="flex min-w-0 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm font-semibold text-teal-900 transition hover:border-lime-300 hover:bg-lime-50"
+            >
+              <span className="grid h-10 w-10 flex-none place-items-center rounded-xl bg-lime-100 text-lime-700">
+                <Phone size={18} />
+              </span>
+              <span>+91 750-6222-999</span>
+            </a>
+            <a
+              href="mailto:skgtravels123@gmail.com"
+              className="flex min-w-0 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm font-semibold text-teal-900 transition hover:border-lime-300 hover:bg-lime-50"
+            >
+              <span className="grid h-10 w-10 flex-none place-items-center rounded-xl bg-lime-100 text-lime-700">
+                <Mail size={18} />
+              </span>
+              <span className="break-all">skgtravels123@gmail.com</span>
+            </a>
+          </div>
+          <div className="mt-7 border-t border-slate-100 pt-1">
+            <ContactBranches />
+          </div>
+        </section>
+        <aside className="space-y-6">
+          <div className="relative overflow-hidden rounded-2xl bg-[#102f45] p-6 text-white shadow-[0_16px_36px_rgba(15,44,66,.16)] sm:p-7">
+            <div className="pointer-events-none absolute -top-12 -right-10 h-40 w-40 rounded-full bg-lime-400/20 blur-2xl" />
+            <div className="relative">
+              <p className="text-xs font-bold tracking-[0.16em] text-lime-300 uppercase">
+                Personal assistance
+              </p>
+              <h2 className="mt-2 text-2xl font-bold">Need expert help?</h2>
+              <p className="mt-2 text-sm leading-6 text-white/75">
+                Our travel team is happy to help with your booking.
+              </p>
+              <a
+                href="tel:+917506222999"
+                className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-lg font-semibold text-white transition hover:bg-white/15"
+              >
+                <Phone size={18} className="text-lime-300" /> +91 750-6222-999
+              </a>
+              <a
+                href="mailto:skgtravels123@gmail.com"
+                className="mt-3 block text-sm break-all text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+              >
+                skgtravels123@gmail.com
+              </a>
+            </div>
+          </div>
+          <QuickQuote />
+        </aside>
       </div>
-    </Shell>
+    </main>
   );
 }
-
 function ArticlePage({ page }) {
   const isBlog = page.pathname.startsWith("/blogs/");
   const isCity = cityPaths.includes(page.pathname);
   const sections = page.sections.filter(
     (section) =>
       section.paragraphs.length || section.images?.length || /^FAQ/i.test(section.heading)
+  );
+  const faqSections = sections.filter(
+    (section) => /^FAQ/i.test(section.heading) || /^Q[.\s:-]*\d/i.test(section.heading)
+  );
+  const articleSections = sections.filter(
+    (section) => !/^FAQ/i.test(section.heading) && !/^Q[.\s:-]*\d/i.test(section.heading)
   );
   const related = page.links.filter((path) => path !== page.pathname && path !== "/");
   const cityRoutes = isCity
@@ -332,45 +396,43 @@ function ArticlePage({ page }) {
       )
     : [];
   return (
-    <Shell familyTours={isBlog || isCity}>
-      {isCity && (
-        <Link
-          href="/cities"
-          className="text-ink hover:text-brand-dark mb-5 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-        >
-          <ArrowLeft size={17} aria-hidden="true" /> Back to Cities
-        </Link>
-      )}
-      <PageTitle large={isBlog}>{page.heading}</PageTitle>
-      {page.date && <p className="mt-4 text-center text-sm text-slate-500">{page.date}</p>}
-      {page.image && (
-        <div
-          className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
-        >
-          <Image
-            src={page.image}
-            alt={page.images?.[0]?.alt || page.heading}
-            fill
-            priority={isBlog}
-            sizes="(max-width: 1024px) 100vw, 850px"
-            className="object-contain object-top"
-          />
-        </div>
-      )}
-      <div className="site-copy mt-7">
-        {sections.map((section, i) => (
-          <section key={`${section.heading}-${i}`} className="mb-8">
-            {/^FAQ/i.test(section.heading) ? (
-              <h2 className="text-2xl text-teal-800">{section.heading}</h2>
-            ) : /^Q[.\s:-]*\d/i.test(section.heading) ? (
-              <FaqItem question={section.heading} answers={section.paragraphs} />
-            ) : (
+    <>
+      <Shell familyTours={isBlog || isCity}>
+        {isCity && (
+          <Link
+            href="/cities"
+            className="text-ink hover:text-brand-dark mb-5 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+          >
+            <ArrowLeft size={17} aria-hidden="true" /> Back to Cities
+          </Link>
+        )}
+        <PageTitle large={isBlog}>{page.heading}</PageTitle>
+        {page.date && <p className="mt-4 text-center text-sm text-slate-500">{page.date}</p>}
+        {page.image && (
+          <div
+            className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
+          >
+            <Image
+              src={page.image}
+              alt={page.images?.[0]?.alt || page.heading}
+              fill
+              priority={isBlog}
+              sizes="(max-width: 1024px) 100vw, 850px"
+              className="object-contain object-top"
+            />
+          </div>
+        )}
+        <div className="site-copy mt-7">
+          {articleSections.map((section, i) => (
+            <section key={`${section.heading}-${i}`} className="mb-8">
               <>
                 {section.heading !== page.heading && (
-                  <h2 className="text-[23px]">{section.heading}</h2>
+                  <h2 className="text-center text-[23px] sm:text-left">{section.heading}</h2>
                 )}
                 {section.paragraphs.map((text, j) => (
-                  <p key={j}>{text}</p>
+                  <p key={j} className="text-center text-[19px] leading-[1.8] sm:text-left">
+                    {text}
+                  </p>
                 ))}
                 {section.images
                   ?.filter((image) => image.src !== page.image)
@@ -386,15 +448,42 @@ function ArticlePage({ page }) {
                     </div>
                   ))}
               </>
-            )}
-          </section>
-        ))}
-      </div>
-      {isCity && <PageLinks paths={cityRoutes} cityStyle />}
-      {!isCity && page.pathname !== "/about" && related.length > 0 && (
-        <PageLinks paths={related.slice(0, 12)} title={isBlog ? "More Blogs" : "Popular Routes"} />
+            </section>
+          ))}
+        </div>
+        {isCity && <PageLinks paths={cityRoutes} cityStyle />}
+        {!isCity && page.pathname !== "/about" && related.length > 0 && (
+          <PageLinks
+            paths={related.slice(0, 12)}
+            title={isBlog ? "More Blogs" : "Popular Routes"}
+          />
+        )}
+      </Shell>
+      {faqSections.length > 0 && (
+        <section
+          className="mx-auto w-full  px-4 pb-10 sm:px-6 xl:px-0"
+          aria-labelledby="page-faq-heading"
+        >
+          <h2
+            id="page-faq-heading"
+            className="mb-6 text-center text-2xl font-semibold text-teal-800 sm:text-3xl"
+          >
+            Frequently Asked Questions
+          </h2>
+          <div className="w-full space-y-3">
+            {faqSections
+              .filter((section) => /^Q[.\s:-]*\d/i.test(section.heading))
+              .map((section, index) => (
+                <FaqItem
+                  key={`${section.heading}-${index}`}
+                  question={section.heading}
+                  answers={section.paragraphs}
+                />
+              ))}
+          </div>
+        </section>
       )}
-    </Shell>
+    </>
   );
 }
 
