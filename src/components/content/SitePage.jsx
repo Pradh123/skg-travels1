@@ -104,11 +104,35 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
         {section.heading}
       </h2>
       {first && <div className="bg-brand mx-auto mt-3 h-1 w-16 rounded-full" />}
-      {section.paragraphs.map((text, i) => (
-        <p key={i} className="mt-4 text-center text-[16px] leading-7 text-[#293848] sm:text-left">
-          {text}
-        </p>
-      ))}
+      {section.paragraphs.map((text, i) => {
+        const numberedSections = [
+          "Why SKG Travels is the best outstation cab service in Mumbai",
+          "How to book cheapest taxi service in Mumbai",
+        ];
+        const isNumberedSection = section.heading && numberedSections.includes(section.heading);
+        const matches = isNumberedSection ? [...text.matchAll(/(?:^|\s)(\d+)\.\s+([\s\S]*?)(?=\s+\d+\.\s+|$)/g)] : [];
+
+        if (matches.length) {
+          const intro = text.slice(0, matches[0].index).trim();
+          return (
+            <div key={i} className="mt-4 text-[#293848]">
+              {intro && <p className="text-center text-[16px] leading-7 sm:text-left">{intro}</p>}
+              <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[16px] leading-7">
+                {matches.map((match, index) => {
+                  const titleAndBody = match[2].trim().split(/(?<=[.!?])\s+(?=[A-Z])/);
+                  return <li key={index}>{titleAndBody.map((part, partIndex) => <span key={partIndex}>{part}{partIndex < titleAndBody.length - 1 ? " " : ""}</span>)}</li>;
+                })}
+              </ol>
+            </div>
+          );
+        }
+
+        return (
+          <p key={i} className="mt-4 text-center text-[16px] leading-7 text-[#293848] sm:text-left">
+            {text}
+          </p>
+        );
+      })}
       {section.images?.map((image) => (
         <div key={image.src} className="relative mx-auto mt-5 h-52 max-w-lg sm:mx-0 sm:h-72">
           <Image
@@ -429,11 +453,78 @@ function ArticlePage({ page }) {
                 {section.heading !== page.heading && (
                   <h2 className="text-center text-[23px] sm:text-left">{section.heading}</h2>
                 )}
-                {section.paragraphs.map((text, j) => (
-                  <p key={j} className="text-center text-[19px] leading-[1.8] sm:text-left">
-                    {text}
-                  </p>
-                ))}
+                {section.paragraphs.map((text, j) => {
+                  if (isBlog) {
+                    const pointPattern = /^(?:Best for|Travel style|Ideal duration|Ideal for|Good option for):/i;
+                    const isPoint = (value) => pointPattern.test(value.trim());
+                    if (isPoint(text)) {
+                      const previousIsPoint = j > 0 && isPoint(section.paragraphs[j - 1]);
+                      if (previousIsPoint) return null;
+                      const remaining = section.paragraphs.slice(j);
+                      const nextNonPoint = remaining.findIndex((value) => !isPoint(value));
+                      const group = nextNonPoint < 0 ? remaining : remaining.slice(0, nextNonPoint);
+                      return (
+                        <ul key={j} className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-[17px] leading-7 text-[#293848]">
+                          {group.map((point, index) => {
+                            const [label, ...detail] = point.split(":");
+                            return <li key={index}><strong>{label}:</strong>{detail.join(":")}</li>;
+                          })}
+                        </ul>
+                      );
+                    }
+                  }
+
+                  const bookingProcess = page.pathname === "/about" && section.heading === "The process of Taxi booking with SKG Travels";
+                  const steps = bookingProcess ? text.match(/\d+\.\s+[^\n]+/g) : null;
+
+                  if (steps?.length) {
+                    return (
+                      <div key={j} className="mt-[18px]">
+                        <p className="text-center text-[19px] leading-[1.8] sm:text-left">
+                          Getting a taxi from SKG Travels is easy and quick. Follow these three steps to book your ride:
+                        </p>
+                        <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                          {steps.map((step, index) => (
+                            <li key={index}>{step.replace(/^\d+\.\s+/, "")}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    );
+                  }
+
+                  if (isBlog) {
+                    const numberedPoints = [...text.matchAll(/(?:^|\s)(\d+)[.)]\s+([\s\S]*?)(?=\s+\d+[.)]\s+|$)/g)];
+                    const bulletPoints = text.split(/\s+(?=[•●▪-]\s+)/).map((part) => part.replace(/^[•●▪-]\s+/, "").trim()).filter(Boolean);
+
+                    if (numberedPoints.length > 1) {
+                      const intro = text.slice(0, numberedPoints[0].index).trim();
+                      return (
+                        <div key={j} className="mt-[18px]">
+                          {intro && <p className="text-center text-[19px] leading-[1.8] sm:text-left">{intro}</p>}
+                          <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                            {numberedPoints.map((point, index) => (
+                              <li key={index}>{point[2].trim()}</li>
+                            ))}
+                          </ol>
+                        </div>
+                      );
+                    }
+
+                    if (bulletPoints.length > 1) {
+                      return (
+                        <ul key={j} className="mt-[18px] list-disc space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                          {bulletPoints.map((point, index) => <li key={index}>{point}</li>)}
+                        </ul>
+                      );
+                    }
+                  }
+
+                  return (
+                    <p key={j} className="text-center text-[19px] leading-[1.8] sm:text-left">
+                      {text}
+                    </p>
+                  );
+                })}
                 {section.images
                   ?.filter((image) => image.src !== page.image)
                   .map((image) => (
@@ -461,7 +552,7 @@ function ArticlePage({ page }) {
       </Shell>
       {faqSections.length > 0 && (
         <section
-          className="mx-auto w-full  px-4 pb-10 sm:px-6 xl:px-0"
+          className={`mx-auto w-full px-4 pb-10 sm:px-6 xl:px-0 ${page.pathname === "/about" ? "max-w-4xl" : ""}`}
           aria-labelledby="page-faq-heading"
         >
           <h2

@@ -2,14 +2,9 @@
 
 import Image from "next/image";
 
-const bookingUrl = "https://skgtravels.com/#book";
+const appUrl = "https://play.google.com/store/apps/details?id=com.skg.user";
 
 export default function MobileBookingPromo() {
-  function requestPlayLink() {
-    const message = "Hello SKG Travels, please share the customer app link on Google Play.";
-    window.open(`https://wa.me/917506222999?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-  }
-
   function requestLink(event) {
     event.preventDefault();
     const mobile = new FormData(event.currentTarget).get("mobile");
@@ -42,7 +37,7 @@ export default function MobileBookingPromo() {
           </form>
         </div>
         <div className="mobile-booking-actions">
-          <button className="mobile-booking-open" type="button" onClick={requestPlayLink} aria-label="Request SKG Travels Google Play app link on WhatsApp">
+          <a className="mobile-booking-open" href={appUrl} target="_blank" rel="noopener noreferrer" aria-label="Download SKG Travels on Google Play">
             <svg className="mobile-booking-play-mark" viewBox="0 0 48 52" aria-hidden="true">
               <path fill="#00d3ff" d="M4 3v46l24-23z" />
               <path fill="#00e07a" d="m4 3 29 18-5 5z" />
@@ -50,9 +45,9 @@ export default function MobileBookingPromo() {
               <path fill="#ff5260" d="M4 49 33 33l-5-7z" />
             </svg>
             <span><small>GET IT ON</small><strong>Google Play</strong></span>
-          </button>
-          <a className="mobile-booking-qr" href={bookingUrl} target="_blank" rel="noopener noreferrer" aria-label="Open SKG Travels mobile booking page">
-            <Image src="/mobile-booking-qr.svg" alt="Scan to open SKG Travels booking page" width={160} height={160} />
+          </a>
+          <a className="mobile-booking-qr" href={appUrl} target="_blank" rel="noopener noreferrer" aria-label="Open SKG Travels on Google Play">
+            <Image src="/mobile-booking-qr.svg" alt="Scan to open SKG Travels on Google Play" width={160} height={160} />
           </a>
         </div>
       </div>
