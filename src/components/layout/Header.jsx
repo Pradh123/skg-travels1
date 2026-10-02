@@ -1,28 +1,81 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Clock3, Mail, Menu, Search, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { navLinks } from "@/data/siteMeta";
+import { sitePages } from "@/data/site";
 
-function SiteSearch({ id }) {
+function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert = false }) {
+  const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const suggestions = useMemo(() => {
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    return sitePages
+      .map((page) => {
+        const path = page.pathname === "/" ? "home" : page.pathname.replaceAll("/", " / ").replaceAll("-", " ");
+        const title = `${page.heading || ""} ${page.title || ""}`;
+        const text = `${title} ${path} ${page.description || ""}`.toLowerCase();
+        if (!terms.every((term) => text.includes(term))) return null;
+        const score = terms.reduce((sum, term) => sum + (title.toLowerCase().includes(term) ? 4 : 0) + (path.includes(term) ? 3 : 0), 0);
+        return { page, score };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 7);
+  }, [query]);
+  const showSuggestions = isFocused && query.trim().length > 0;
+
   return (
-    <form action="/search" method="get" role="search" className="site-search">
-      <label className="sr-only" htmlFor={id}>Search SKG Travels</label>
-      <input
-        id={id}
-        type="search"
-        name="q"
-        placeholder="Search routes, cities..."
-        autoComplete="off"
-      />
-      <button type="submit" aria-label="Search">
-        <Search size={17} aria-hidden="true" />
-      </button>
-    </form>
+    <div
+      className="site-search-live-wrap"
+      inert={inert}
+      onFocus={() => setIsFocused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+      }}
+    >
+      <form id={id} action="/search" method="get" role="search" className={className}>
+        <label className="sr-only" htmlFor={id}>Search SKG Travels</label>
+        <input
+          ref={inputRef}
+          id={id}
+          type="search"
+          name="q"
+          placeholder="Search routes, cities..."
+          autoComplete="off"
+          value={query}
+          aria-expanded={showSuggestions}
+          aria-controls={`${id}-suggestions`}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <button type="submit" aria-label="Search">
+          <Search size={17} aria-hidden="true" />
+        </button>
+      </form>
+      {showSuggestions && (
+        <div id={`${id}-suggestions`} className="site-search-suggestions" role="listbox">
+          {suggestions.length ? suggestions.map(({ page }) => (
+            <Link
+              key={page.pathname}
+              href={page.pathname}
+              role="option"
+              aria-selected="false"
+              onClick={() => onNavigate?.()}
+              className="site-search-suggestion"
+            >
+              <span>{page.pathname === "/" ? "Home" : page.pathname.replaceAll("/", " / ").replaceAll("-", " ")}</span>
+              <strong>{page.heading || page.title}</strong>
+            </Link>
+          )) : <p className="site-search-no-suggestions">No matching pages found.</p>}
+          <button type="submit" form={id} className="site-search-all-results">View all search results</button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -193,20 +246,13 @@ export default function Header() {
             <X size={23} />
           </button>
         </div>
-        <form action="/search" method="get" role="search" className="mobile-search-screen-form" inert={!mobileSearchOpen}>
-          <label className="sr-only" htmlFor="mobile-screen-search">Search routes, cities, or services</label>
-          <input
-            ref={mobileSearchInputRef}
-            id="mobile-screen-search"
-            type="search"
-            name="q"
-            placeholder="Search routes, cities, services..."
-            autoComplete="off"
-          />
-          <button type="submit" aria-label="Search">
-            <Search size={20} aria-hidden="true" />
-          </button>
-        </form>
+        <SiteSearch
+          id="mobile-screen-search"
+          inputRef={mobileSearchInputRef}
+          className="mobile-search-screen-form"
+          onNavigate={() => setMobileSearchOpen(false)}
+          inert={!mobileSearchOpen}
+        />
         <p className="mobile-search-hint">Find taxi routes, cities, and services.</p>
       </div>
     </header>
