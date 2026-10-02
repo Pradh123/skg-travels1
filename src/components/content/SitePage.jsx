@@ -99,7 +99,7 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
   return (
     <section className="mb-10">
       <h2
-        className={`leading-snug text-balance text-teal-800 ${first ? "text-center text-[25px] font-bold sm:text-[30px]" : `text-center text-[23px] font-semibold ${centerHeadings ? "" : "sm:text-left"}`}`}
+        className={`leading-snug text-balance text-teal-800 ${first ? "text-center text-2xl font-bold" : `text-center text-2xl font-semibold ${centerHeadings ? "" : "sm:text-left"}`}`}
       >
         {section.heading}
       </h2>
@@ -116,8 +116,8 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
           const intro = text.slice(0, matches[0].index).trim();
           return (
             <div key={i} className="mt-4 text-[#293848]">
-              {intro && <p className="text-center text-[16px] leading-7 sm:text-left">{intro}</p>}
-              <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[16px] leading-7">
+              {intro && <p className="text-center text-base leading-7 sm:text-left">{intro}</p>}
+              <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                 {matches.map((match, index) => {
                   const titleAndBody = match[2].trim().split(/(?<=[.!?])\s+(?=[A-Z])/);
                   return <li key={index}>{titleAndBody.map((part, partIndex) => <span key={partIndex}>{part}{partIndex < titleAndBody.length - 1 ? " " : ""}</span>)}</li>;
@@ -128,7 +128,7 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
         }
 
         return (
-          <p key={i} className="mt-4 text-center text-[16px] leading-7 text-[#293848] sm:text-left">
+          <p key={i} className="mt-4 text-center text-base leading-7 text-[#293848] sm:text-left">
             {text}
           </p>
         );
@@ -195,7 +195,7 @@ function CityList({ page }) {
   return (
     <Shell familyTours>
       <PageTitle>Popular Cities</PageTitle>
-      <p className="mt-7 text-[19px] leading-[1.8] text-slate-700">
+      <p className="mt-7 text-base leading-7 text-slate-700">
         {page.sections.find((section) => section.paragraphs.length)?.paragraphs[0]}
       </p>
       <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -247,7 +247,7 @@ function BlogList({ page }) {
             )}
             <div>
               <h2 className="text-[24px] leading-tight text-teal-800">{blog.heading}</h2>
-              <p className="mt-1 line-clamp-3 text-[17px] leading-7 text-slate-900">
+              <p className="mt-1 line-clamp-3 text-base leading-7 text-slate-900">
                 {page.sections.find((section) => section.heading === blog.heading)?.paragraphs[0] ||
                   blog.description}
               </p>
@@ -324,7 +324,7 @@ function ContactPage({ page }) {
             We’re here to help
           </p>
           <PageTitle>Contact us</PageTitle>
-          <div className="mx-auto mt-5 max-w-3xl space-y-2 text-center text-base leading-7 text-slate-700 sm:text-lg">
+          <div className="mx-auto mt-5 max-w-3xl space-y-2 text-center text-base leading-7 text-slate-700">
             <p>SKG Travels provides cab services for local travel and outstation tours.</p>
             <p>
               Choose a vehicle that suits your journey and group size. Share your trip details and
@@ -451,7 +451,7 @@ function ArticlePage({ page }) {
             <section key={`${section.heading}-${i}`} className="mb-8">
               <>
                 {section.heading !== page.heading && (
-                  <h2 className="text-center text-[23px] sm:text-left">{section.heading}</h2>
+                  <h2 className="text-center text-2xl sm:text-left">{section.heading}</h2>
                 )}
                 {section.paragraphs.map((text, j) => {
                   if (isBlog) {
@@ -464,7 +464,7 @@ function ArticlePage({ page }) {
                       const nextNonPoint = remaining.findIndex((value) => !isPoint(value));
                       const group = nextNonPoint < 0 ? remaining : remaining.slice(0, nextNonPoint);
                       return (
-                        <ul key={j} className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-[17px] leading-7 text-[#293848]">
+                        <ul key={j} className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-base leading-7 text-[#293848]">
                           {group.map((point, index) => {
                             const [label, ...detail] = point.split(":");
                             return <li key={index}><strong>{label}:</strong>{detail.join(":")}</li>;
@@ -480,10 +480,10 @@ function ArticlePage({ page }) {
                   if (steps?.length) {
                     return (
                       <div key={j} className="mt-[18px]">
-                        <p className="text-center text-[19px] leading-[1.8] sm:text-left">
+                        <p className="text-center text-base leading-7 sm:text-left">
                           Getting a taxi from SKG Travels is easy and quick. Follow these three steps to book your ride:
                         </p>
-                        <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                        <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                           {steps.map((step, index) => (
                             <li key={index}>{step.replace(/^\d+\.\s+/, "")}</li>
                           ))}
@@ -500,8 +500,8 @@ function ArticlePage({ page }) {
                       const intro = text.slice(0, numberedPoints[0].index).trim();
                       return (
                         <div key={j} className="mt-[18px]">
-                          {intro && <p className="text-center text-[19px] leading-[1.8] sm:text-left">{intro}</p>}
-                          <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                          {intro && <p className="text-center text-base leading-7 sm:text-left">{intro}</p>}
+                          <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                             {numberedPoints.map((point, index) => (
                               <li key={index}>{point[2].trim()}</li>
                             ))}
@@ -512,7 +512,7 @@ function ArticlePage({ page }) {
 
                     if (bulletPoints.length > 1) {
                       return (
-                        <ul key={j} className="mt-[18px] list-disc space-y-2 pl-7 text-left text-[19px] leading-[1.8]">
+                        <ul key={j} className="mt-[18px] list-disc space-y-2 pl-7 text-left text-base leading-7">
                           {bulletPoints.map((point, index) => <li key={index}>{point}</li>)}
                         </ul>
                       );
@@ -520,7 +520,7 @@ function ArticlePage({ page }) {
                   }
 
                   return (
-                    <p key={j} className="text-center text-[19px] leading-[1.8] sm:text-left">
+                    <p key={j} className="text-center text-base leading-7 sm:text-left">
                       {text}
                     </p>
                   );

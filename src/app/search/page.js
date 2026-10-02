@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { sitePages } from "@/data/site";
+import { matchesSearchCategory, searchCategories } from "@/data/search";
 
 export const metadata = {
   title: "Search SKG Travels",
@@ -33,9 +34,12 @@ function getExcerpt(page, terms) {
 export default async function SearchPage({ searchParams }) {
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q.trim().slice(0, 100) : "";
+  const category = searchCategories.some(({ value }) => value === params.category) ? params.category : "all";
+  const categoryLabel = searchCategories.find(({ value }) => value === category)?.label;
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   const results = terms.length
     ? sitePages
+        .filter((page) => matchesSearchCategory(page, category))
         .map((page) => {
           const text = getPageText(page);
           const allText = `${text.title} ${text.description} ${text.pathname} ${text.content}`;
@@ -55,7 +59,7 @@ export default async function SearchPage({ searchParams }) {
   return (
     <main className="search-page">
       <div className="search-page-inner">
-        <p className="search-page-eyebrow">SKG TRAVELS</p>
+        <p className="search-page-eyebrow">SKG TRAVELS · {categoryLabel}</p>
         <h1>{query ? `Search results for "${query}"` : "Search our website"}</h1>
         {query && <p className="search-page-count">Showing {results.length} {results.length === 1 ? "result" : "results"}</p>}
         {!query ? (

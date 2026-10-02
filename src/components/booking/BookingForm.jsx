@@ -147,7 +147,7 @@ function CityAutocomplete({ label, name, placeholder }) {
   );
 }
 
-function BookingCalendar({ label, value, onChange, placeholder, minDate, alignEnd = false }) {
+export function BookingCalendar({ label, value, onChange, placeholder, minDate, alignEnd = false, className = "" }) {
   const [open, setOpen] = useState(false);
   const [visibleMonth, setVisibleMonth] = useState(null);
   const [placement, setPlacement] = useState({ up: false, maxHeight: 300 });
@@ -167,7 +167,7 @@ function BookingCalendar({ label, value, onChange, placeholder, minDate, alignEn
 
   return (
     <div
-      className={`booking-calendar${alignEnd ? " is-end" : ""}${placement.up ? " is-up" : ""}`}
+      className={`booking-calendar${className ? ` ${className}` : ""}${alignEnd ? " is-end" : ""}${placement.up ? " is-up" : ""}`}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}

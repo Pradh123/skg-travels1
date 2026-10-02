@@ -1,8 +1,18 @@
 "use client";
 
+import { useState } from "react";
+import { BookingCalendar } from "@/components/booking/BookingForm";
+
 export default function QuickQuote() {
+  const [travelDate, setTravelDate] = useState("");
+  const [dateError, setDateError] = useState("");
+
   function submit(event) {
     event.preventDefault();
+    if (!travelDate) {
+      setDateError("Please select a travel date.");
+      return;
+    }
     const data = new FormData(event.currentTarget);
     const message = `Hello SKG Travels, I would like a free quote.\nName: ${data.get("name")}\nMobile: ${data.get("mobile")}\nPickup from: ${data.get("from")}\nTravelling to: ${data.get("to")}\nTravel date: ${data.get("date")}\nTrip: ${data.get("note") || "Not specified"}`;
     window.open(
@@ -24,7 +34,6 @@ export default function QuickQuote() {
           ["mobile", "10 digit mobile number", "tel"],
           ["from", "Pickup from", "text"],
           ["to", "Travelling to", "text"],
-          ["date", "Travel date", "date"],
         ].map(([name, placeholder, type]) => (
           <label key={name} className="block">
             <span className="sr-only">{placeholder}</span>
@@ -40,6 +49,21 @@ export default function QuickQuote() {
             />
           </label>
         ))}
+        <div>
+          <span className="sr-only">Travel date</span>
+          <BookingCalendar
+            label="Travel date"
+            placeholder="Travel date"
+            value={travelDate}
+            onChange={(date) => {
+              setTravelDate(date);
+              setDateError("");
+            }}
+            className="quick-quote-calendar"
+          />
+          <input type="hidden" name="date" value={travelDate} />
+          {dateError && <p className="mt-1 text-xs text-red-600" role="alert">{dateError}</p>}
+        </div>
         <label className="block">
           <span className="sr-only">Tell us about your trip</span>
           <textarea

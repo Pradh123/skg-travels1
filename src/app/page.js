@@ -52,9 +52,9 @@ function CopySection({ section }) {
   if (!section) return null;
   return (
     <section className="mx-auto max-w-4xl px-4 py-8 text-center sm:py-10">
-      <h2 className="text-ink text-2xl font-bold sm:text-[29px]">{section.heading}</h2>
+      <h2 className="text-ink text-2xl font-bold">{section.heading}</h2>
       <div className="bg-brand mx-auto mt-5 h-1 w-16 rounded-full" />
-      <div className="mt-5 space-y-4 text-[16px] leading-8 text-slate-700">
+      <div className="mt-5 space-y-4 text-base leading-7 text-slate-700">
         {section.paragraphs.map((text, i) => (
           <p key={i}>{text}</p>
         ))}
@@ -153,7 +153,7 @@ export default function HomePage() {
         <CopySection section={copy[1]} />
       </div>
       <section className="mx-auto max-w-[1170px] px-4 py-12 sm:px-6">
-        <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">
+        <h2 className="text-ink text-center text-2xl font-bold">
           Outstation Car Rental Mumbai
         </h2>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -193,7 +193,7 @@ export default function HomePage() {
       </div>
 
       <section className="mx-auto max-w-[1170px] px-4 py-12 sm:px-6">
-        <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">
+        <h2 className="text-ink text-center text-2xl font-bold">
           Top Benefits - Book Outstation Cab with SKG Travel
         </h2>
         <div className="benefits-grid">
@@ -213,7 +213,7 @@ export default function HomePage() {
       </section>
       <section className="bg-[#f2f7f4] px-4 py-14">
         <div className="mx-auto max-w-[1140px]">
-          <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">Testimonials</h2>
+          <h2 className="text-ink text-center text-2xl font-bold">Testimonials</h2>
           <TestimonialsCarousel items={testimonials} />
         </div>
       </section>
@@ -257,7 +257,7 @@ export default function HomePage() {
         </Link>
       </section>
       <section className="mx-auto max-w-[900px] px-4 py-14">
-        <h2 className="text-ink text-center text-2xl font-bold sm:text-[30px]">FAQ&apos;s</h2>
+        <h2 className="text-ink text-center text-2xl font-bold">FAQ&apos;s</h2>
         <div className="mt-6 space-y-3">
           {faqs.map((item) => (
             <FaqItem key={item.heading} question={item.heading} answers={item.paragraphs} />

@@ -4,18 +4,23 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Clock3, Mail, Menu, Search, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Clock3, Mail, Menu, Search, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { navLinks } from "@/data/siteMeta";
 import { sitePages } from "@/data/site";
+import { matchesSearchCategory, searchCategories } from "@/data/search";
 
 function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert = false }) {
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [category, setCategory] = useState("all");
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const categoryTriggerRef = useRef(null);
   const suggestions = useMemo(() => {
     const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
     if (!terms.length) return [];
     return sitePages
+      .filter((page) => matchesSearchCategory(page, category))
       .map((page) => {
         const path = page.pathname === "/" ? "home" : page.pathname.replaceAll("/", " / ").replaceAll("-", " ");
         const title = `${page.heading || ""} ${page.title || ""}`;
@@ -27,8 +32,8 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
       .filter(Boolean)
       .sort((a, b) => b.score - a.score)
       .slice(0, 7);
-  }, [query]);
-  const showSuggestions = isFocused && query.trim().length > 0;
+  }, [query, category]);
+  const showSuggestions = isFocused && !isCategoryOpen && query.trim().length > 0;
 
   return (
     <div
@@ -36,11 +41,31 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
       inert={inert}
       onFocus={() => setIsFocused(true)}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setIsFocused(false);
+          setIsCategoryOpen(false);
+        }
       }}
     >
       <form id={id} action="/search" method="get" role="search" className={className}>
         <label className="sr-only" htmlFor={id}>Search SKG Travels</label>
+        <input type="hidden" name="category" value={category} />
+        <button
+          ref={categoryTriggerRef}
+          type="button"
+          className="site-search-category"
+          aria-label={`Search category: ${searchCategories.find(({ value }) => value === category)?.label}`}
+          aria-haspopup="listbox"
+          aria-expanded={isCategoryOpen}
+          aria-controls={`${id}-category-options`}
+          onClick={() => setIsCategoryOpen((value) => !value)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") setIsCategoryOpen(false);
+          }}
+        >
+          {searchCategories.find(({ value }) => value === category)?.label}
+          <ChevronDown size={13} aria-hidden="true" />
+        </button>
         <input
           ref={inputRef}
           id={id}
@@ -57,6 +82,36 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
           <Search size={17} aria-hidden="true" />
         </button>
       </form>
+      {isCategoryOpen && (
+        <div
+          id={`${id}-category-options`}
+          className="site-search-category-menu"
+          role="listbox"
+          aria-label="Search category"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setIsCategoryOpen(false);
+              categoryTriggerRef.current?.focus();
+            }
+          }}
+        >
+          {searchCategories.map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              role="option"
+              aria-selected={category === value}
+              className={`site-search-category-option${category === value ? " is-selected" : ""}`}
+              onClick={() => {
+                setCategory(value);
+                setIsCategoryOpen(false);
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       {showSuggestions && (
         <div id={`${id}-suggestions`} className="site-search-suggestions" role="listbox">
           {suggestions.length ? suggestions.map(({ page }) => (
