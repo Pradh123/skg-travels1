@@ -1,19 +1,43 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Clock3, MapPin, Navigation2, Plane } from "lucide-react";
-import { citySuggestions } from "@/data/citySuggestions";
+import {
+  CalendarDays,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock3,
+  MapPin,
+  Navigation2,
+  Plane,
+} from "lucide-react";
+import { usePublicContent } from "@/components/content/PublicContentProvider";
+import useLeadSubmission from "@/hooks/useLeadSubmission";
+
+import LeadSubmissionStatus from "./LeadSubmissionStatus";
 
 const inputClass =
   "mt-1.5 h-10 w-full min-w-0 rounded-lg border border-[#d6deda] bg-white px-3 text-sm text-slate-700 outline-none transition-colors focus:border-brand";
 
 const passengerOptions = [
-  ...Array.from({ length: 6 }, (_, i) => ({ value: String(i + 1), label: `${i + 1} ${i === 0 ? "Passenger" : "Passengers"}` })),
+  ...Array.from({ length: 6 }, (_, i) => ({
+    value: String(i + 1),
+    label: `${i + 1} ${i === 0 ? "Passenger" : "Passengers"}`,
+  })),
   { value: "More than 7", label: "More than 7" },
 ];
 const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-const monthFormatter = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" });
-const dateFormatter = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const monthFormatter = new Intl.DateTimeFormat("en-IN", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+const dateFormatter = new Intl.DateTimeFormat("en-IN", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 function localDateString(date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
@@ -28,6 +52,9 @@ function panelPlacement(trigger, preferredHeight) {
 }
 
 function CityAutocomplete({ label, name, placeholder }) {
+  const citySuggestions = usePublicContent()
+    .filter((page) => page.cmsResource === "cities")
+    .map((page) => page.cityName);
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -39,9 +66,12 @@ function CityAutocomplete({ label, name, placeholder }) {
   const FieldIcon = name === "from" ? MapPin : Navigation2;
   const query = value.trim().toLowerCase();
   const localMatches = query
-    ? citySuggestions.filter((city) => city.toLowerCase().includes(query)).sort((a, b) =>
-        Number(b.toLowerCase().startsWith(query)) - Number(a.toLowerCase().startsWith(query))
-      )
+    ? citySuggestions
+        .filter((city) => city.toLowerCase().includes(query))
+        .sort(
+          (a, b) =>
+            Number(b.toLowerCase().startsWith(query)) - Number(a.toLowerCase().startsWith(query))
+        )
     : [];
   const remoteMatches = remote.query === query ? remote.places : [];
   const matches = [...new Set([...remoteMatches, ...localMatches])].slice(0, 8);
@@ -53,7 +83,9 @@ function CityAutocomplete({ label, name, placeholder }) {
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/places?q=${encodeURIComponent(value.trim())}`, { signal: controller.signal });
+        const response = await fetch(`/api/places?q=${encodeURIComponent(value.trim())}`, {
+          signal: controller.signal,
+        });
         if (!response.ok) return;
         const data = await response.json();
         setRemote({ query, places: data.places || [] });
@@ -77,7 +109,7 @@ function CityAutocomplete({ label, name, placeholder }) {
 
   return (
     <div
-      className={`booking-city${placement.up ? " is-up" : ""}`}
+      className={["booking-city", placement.up && "is-up"].filter(Boolean).join(" ")}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
@@ -113,13 +145,25 @@ function CityAutocomplete({ label, name, placeholder }) {
         onKeyDown={(event) => {
           if (event.key === "Escape") setOpen(false);
           if (!showList) return;
-          if (event.key === "ArrowDown") { event.preventDefault(); setActive((current) => (current + 1) % matches.length); }
-          if (event.key === "ArrowUp") { event.preventDefault(); setActive((current) => (current - 1 + matches.length) % matches.length); }
-          if (event.key === "Enter") { event.preventDefault(); choose(matches[safeActive]); }
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setActive((current) => (current + 1) % matches.length);
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setActive((current) => (current - 1 + matches.length) % matches.length);
+          }
+          if (event.key === "Enter") {
+            event.preventDefault();
+            choose(matches[safeActive]);
+          }
         }}
       />
       {showList && (
-        <div className="booking-city-list" style={{ "--booking-panel-space": `${placement.maxHeight}px` }}>
+        <div
+          className="booking-city-list"
+          style={{ "--booking-panel-space": `${placement.maxHeight}px` }}
+        >
           <div id={listId} role="listbox" aria-label={`${label} suggestions`}>
             {matches.map((city, index) => (
               <button
@@ -137,7 +181,12 @@ function CityAutocomplete({ label, name, placeholder }) {
             ))}
           </div>
           {remoteMatches.length > 0 && (
-            <a className="booking-city-credit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
+            <a
+              className="booking-city-credit"
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               © OpenStreetMap contributors
             </a>
           )}
@@ -147,7 +196,15 @@ function CityAutocomplete({ label, name, placeholder }) {
   );
 }
 
-export function BookingCalendar({ label, value, onChange, placeholder, minDate, alignEnd = false, className = "" }) {
+export function BookingCalendar({
+  label,
+  value,
+  onChange,
+  placeholder,
+  minDate,
+  alignEnd = false,
+  className = "",
+}) {
   const [open, setOpen] = useState(false);
   const [visibleMonth, setVisibleMonth] = useState(null);
   const [placement, setPlacement] = useState({ up: false, maxHeight: 300 });
@@ -167,7 +224,9 @@ export function BookingCalendar({ label, value, onChange, placeholder, minDate, 
 
   return (
     <div
-      className={`booking-calendar${className ? ` ${className}` : ""}${alignEnd ? " is-end" : ""}${placement.up ? " is-up" : ""}`}
+      className={["booking-calendar", className, alignEnd && "is-end", placement.up && "is-up"]
+        .filter(Boolean)
+        .join(" ")}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
@@ -196,15 +255,30 @@ export function BookingCalendar({ label, value, onChange, placeholder, minDate, 
         <CalendarDays size={17} aria-hidden="true" />
       </button>
       {open && month && (
-        <div className="booking-calendar-popover" role="dialog" aria-label={label} style={{ "--booking-panel-space": `${placement.maxHeight}px` }}>
+        <div
+          className="booking-calendar-popover"
+          role="dialog"
+          aria-label={label}
+          style={{ "--booking-panel-space": `${placement.maxHeight}px` }}
+        >
           <div className="booking-calendar-header">
-            <button type="button" aria-label="Previous month" onClick={() => changeMonth(-1)}><ChevronLeft size={18} /></button>
+            <button type="button" aria-label="Previous month" onClick={() => changeMonth(-1)}>
+              <ChevronLeft size={18} />
+            </button>
             <strong>{monthFormatter.format(month)}</strong>
-            <button type="button" aria-label="Next month" onClick={() => changeMonth(1)}><ChevronRight size={18} /></button>
+            <button type="button" aria-label="Next month" onClick={() => changeMonth(1)}>
+              <ChevronRight size={18} />
+            </button>
           </div>
           <div className="booking-calendar-grid">
-            {weekdays.map((day) => <span key={day} className="booking-calendar-weekday">{day}</span>)}
-            {Array.from({ length: leadingDays }, (_, i) => <span key={`empty-${i}`} />)}
+            {weekdays.map((day) => (
+              <span key={day} className="booking-calendar-weekday">
+                {day}
+              </span>
+            ))}
+            {Array.from({ length: leadingDays }, (_, i) => (
+              <span key={`empty-${i}`} />
+            ))}
             {Array.from({ length: daysInMonth }, (_, i) => {
               const date = new Date(Date.UTC(year, monthIndex, i + 1)).toISOString().slice(0, 10);
               return (
@@ -214,7 +288,10 @@ export function BookingCalendar({ label, value, onChange, placeholder, minDate, 
                   disabled={date < earliestDate}
                   aria-label={dateFormatter.format(new Date(`${date}T00:00:00Z`))}
                   aria-pressed={value === date}
-                  onClick={() => { onChange(date); setOpen(false); }}
+                  onClick={() => {
+                    onChange(date);
+                    setOpen(false);
+                  }}
                 >
                   {i + 1}
                 </button>
@@ -234,7 +311,7 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
   const selected = options.find((option) => option.value === value);
   return (
     <div
-      className={`booking-dropdown${placement.up ? " is-up" : ""}`}
+      className={["booking-dropdown", placement.up && "is-up"].filter(Boolean).join(" ")}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
@@ -250,15 +327,25 @@ function BookingDropdown({ options, value, onChange, placeholder, Icon, label })
         aria-expanded={open}
         aria-haspopup="listbox"
         onClick={() => {
-          if (!open) setPlacement(panelPlacement(triggerRef.current, Math.min(205, options.length * 37 + 2)));
+          if (!open)
+            setPlacement(
+              panelPlacement(triggerRef.current, Math.min(205, options.length * 37 + 2))
+            );
           setOpen(!open);
         }}
       >
-        <span className={selected ? "" : "booking-dropdown-placeholder"}>{selected?.label || placeholder}</span>
+        <span className={selected ? "" : "booking-dropdown-placeholder"}>
+          {selected?.label || placeholder}
+        </span>
         <Icon size={17} aria-hidden="true" />
       </button>
       {open && (
-        <div className="booking-dropdown-list" role="listbox" aria-label={label} style={{ "--booking-panel-space": `${placement.maxHeight}px` }}>
+        <div
+          className="booking-dropdown-list"
+          role="listbox"
+          aria-label={label}
+          style={{ "--booking-panel-space": `${placement.maxHeight}px` }}
+        >
           {options.map((option) => (
             <button
               key={option.value}
@@ -288,23 +375,26 @@ export default function BookingForm({ compact = false, hero = false }) {
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState("");
+  const { clearStatus, isSubmitting, status, submitLead } = useLeadSubmission();
   const tripTypes = [
     { id: "local", label: "Local" },
     { id: "outstation", label: "Outstation" },
   ];
   const tripLabel = tripTypes.find((type) => type.id === tripType)?.label || "Local";
-  const bookingTypeLabel = tripType === "local"
-    ? `Local ${localType === "rental" ? "Rental" : "Airport Transfer"}`
-    : tripType === "outstation"
-      ? `Outstation ${outstationType === "one-way" ? "One Way" : "Round Trip"}`
-      : tripLabel;
+  const bookingTypeLabel =
+    tripType === "local"
+      ? `Local ${localType === "rental" ? "Rental" : "Airport Transfer"}`
+      : tripType === "outstation"
+        ? `Outstation ${outstationType === "one-way" ? "One Way" : "Round Trip"}`
+        : tripLabel;
   const showReturnDate = !hero || (tripType === "outstation" && outstationType === "round-trip");
   function selectTripType(id) {
     setTripType(id);
     if (id !== "outstation" || outstationType === "one-way") setReturnDate("");
   }
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault();
+    clearStatus();
     const form = new FormData(event.currentTarget);
     if (!pickupDate) {
       setError("Please select a travel date.");
@@ -334,17 +424,31 @@ export default function BookingForm({ compact = false, hero = false }) {
       `Mobile no: ${form.get("mobile")}`,
       `Passengers: ${form.get("passengers")}`,
     ].join("\n");
-    window.open(
-      `https://wa.me/917506222999?text=${encodeURIComponent(message)}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+
+    await submitLead({
+      name: form.get("name"),
+      mobile: form.get("mobile"),
+      from: form.get("from"),
+      to: form.get("to"),
+      pickupDate,
+      returnDate,
+      passengers,
+      tripType: bookingTypeLabel,
+      service: bookingTypeLabel,
+      message,
+      source: "skg-website",
+      formType: "booking",
+    });
   }
   return (
     <form
       id="book"
       onSubmit={submit}
-      className={hero ? "booking-form home-hero-form" : `booking-form text-ink rounded-2xl border border-t-4 border-white/70 border-t-lime-500 bg-white p-5 text-[14px] font-medium shadow-[0_16px_40px_rgba(15,44,66,.16)] sm:p-6 ${compact ? "w-full max-w-none" : "w-full max-w-[390px] lg:max-w-none"}`}
+      className={
+        hero
+          ? "booking-form home-hero-form"
+          : `booking-form text-ink rounded-2xl border border-t-4 border-white/70 border-t-lime-500 bg-white p-5 text-[14px] font-medium shadow-[0_16px_40px_rgba(15,44,66,.16)] sm:p-6 ${compact ? "w-full max-w-none" : "w-full max-w-[390px] lg:max-w-none"}`
+      }
     >
       {hero && (
         <div className="home-hero-tabs" aria-label="Booking type">
@@ -353,7 +457,9 @@ export default function BookingForm({ compact = false, hero = false }) {
               key={id}
               type="button"
               aria-pressed={tripType === id}
-              className={`home-hero-tab${tripType === id ? " is-active" : ""}`}
+              className={["home-hero-tab", tripType === id && "is-active"]
+                .filter(Boolean)
+                .join(" ")}
               onClick={() => selectTripType(id)}
             >
               <span>{label}</span>
@@ -361,15 +467,44 @@ export default function BookingForm({ compact = false, hero = false }) {
           ))}
           {tripType === "local" && (
             <div className="home-hero-subtabs" aria-label="Local booking type">
-              {[{ id: "rental", label: "Rental" }, { id: "airport-transfer", label: "Airport Transfer" }].map(({ id, label }) => (
-                <button key={id} type="button" className={`home-hero-subtab${localType === id ? " is-active" : ""}`} aria-pressed={localType === id} onClick={() => setLocalType(id)}>{label}</button>
+              {[
+                { id: "rental", label: "Rental" },
+                { id: "airport-transfer", label: "Airport Transfer" },
+              ].map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={["home-hero-subtab", localType === id && "is-active"]
+                    .filter(Boolean)
+                    .join(" ")}
+                  aria-pressed={localType === id}
+                  onClick={() => setLocalType(id)}
+                >
+                  {label}
+                </button>
               ))}
             </div>
           )}
           {tripType === "outstation" && (
             <div className="home-hero-subtabs" aria-label="Outstation trip type">
-              {[{ id: "one-way", label: "One Way" }, { id: "round-trip", label: "Round Trip" }].map(({ id, label }) => (
-                <button key={id} type="button" className={`home-hero-subtab${outstationType === id ? " is-active" : ""}`} aria-pressed={outstationType === id} onClick={() => { setOutstationType(id); if (id === "one-way") setReturnDate(""); }}>{label}</button>
+              {[
+                { id: "one-way", label: "One Way" },
+                { id: "round-trip", label: "Round Trip" },
+              ].map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={["home-hero-subtab", outstationType === id && "is-active"]
+                    .filter(Boolean)
+                    .join(" ")}
+                  aria-pressed={outstationType === id}
+                  onClick={() => {
+                    setOutstationType(id);
+                    if (id === "one-way") setReturnDate("");
+                  }}
+                >
+                  {label}
+                </button>
               ))}
             </div>
           )}
@@ -387,19 +522,35 @@ export default function BookingForm({ compact = false, hero = false }) {
         <span>Travelling to :</span>
         <CityAutocomplete label="Drop location" name="to" placeholder="Drop Location" />
       </div>
-      <div className={`booking-form-pair mt-3${showReturnDate ? "" : " booking-form-pair-single"}`}>
+      <div
+        className={["booking-form-pair", "mt-3", !showReturnDate && "booking-form-pair-single"]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <div>
           <span>Travel Date :</span>
-          <BookingCalendar label="Travel date" placeholder="Select date" value={pickupDate} onChange={(date) => {
-            setPickupDate(date);
-            if (returnDate && returnDate < date) setReturnDate("");
-          }} />
+          <BookingCalendar
+            label="Travel date"
+            placeholder="Select date"
+            value={pickupDate}
+            onChange={(date) => {
+              setPickupDate(date);
+              if (returnDate && returnDate < date) setReturnDate("");
+            }}
+          />
           <input type="hidden" name="pickupDate" value={pickupDate} />
         </div>
         {showReturnDate && (
           <div>
             <span>Return Date :</span>
-            <BookingCalendar label="Return date" placeholder="Select date" value={returnDate} onChange={setReturnDate} minDate={pickupDate} alignEnd />
+            <BookingCalendar
+              label="Return date"
+              placeholder="Select date"
+              value={returnDate}
+              onChange={setReturnDate}
+              minDate={pickupDate}
+              alignEnd
+            />
             <input type="hidden" name="returnDate" value={returnDate} />
           </div>
         )}
@@ -438,10 +589,14 @@ export default function BookingForm({ compact = false, hero = false }) {
       )}
       <button
         type="submit"
-        className="bg-brand hover:bg-brand-dark mt-5 w-full rounded-lg px-3 py-3 font-bold text-white transition-colors"
+        disabled={isSubmitting}
+        className="bg-brand hover:bg-brand-dark mt-5 w-full rounded-lg px-3 py-3 font-bold text-white transition-colors disabled:cursor-wait disabled:opacity-70"
       >
-        Check {hero ? bookingTypeLabel : "Outstation"} Taxi Rates
+        {isSubmitting
+          ? "Saving Enquiry..."
+          : `Check ${hero ? bookingTypeLabel : "Outstation"} Taxi Rates`}
       </button>
+      <LeadSubmissionStatus status={status} className="mt-2" />
     </form>
   );
 }

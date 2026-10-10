@@ -5,11 +5,10 @@ import ServiceBooking from "../booking/ServiceBooking";
 import QuickQuote from "../booking/QuickQuote";
 import FaqItem from "./FaqItem";
 import ContactBranches from "./ContactBranches";
-import { getPage, sitePages } from "@/data/site";
+import { getPage } from "@/data/site";
 import { serviceFleet } from "@/data/siteMeta";
 import siteAssets from "@/data/siteAssets.json";
 
-const cityPaths = ["/cities/lucknow", "/cities/mumbai", "/cities/varanasi"];
 const adImages = [
   siteAssets["https://skgtravels.com/Budget-Car-Hire-Cairns.jpg"],
   siteAssets["https://skgtravels.com/images/outstationoffer.png"],
@@ -87,6 +86,17 @@ function PageTitle({ children, large = false }) {
   );
 }
 
+function PublicImage({ src, alt, sizes, className }) {
+  if (/^(?:https?:|data:image\/)/i.test(src || "")) {
+    // CMS media is validated by the API but can use a customer-controlled remote host.
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={src} alt={alt} className={`h-full w-full ${className || ""}`} loading="lazy" />
+    );
+  }
+  return <Image src={src} alt={alt} fill sizes={sizes} className={className} />;
+}
+
 function ContentSection({ section, first = false, centerHeadings = false }) {
   if (!section.paragraphs.length && !section.images?.length) return null;
   if (/^Q[.\s:-]*\d/i.test(section.heading)) {
@@ -110,7 +120,9 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
           "How to book cheapest taxi service in Mumbai",
         ];
         const isNumberedSection = section.heading && numberedSections.includes(section.heading);
-        const matches = isNumberedSection ? [...text.matchAll(/(?:^|\s)(\d+)\.\s+([\s\S]*?)(?=\s+\d+\.\s+|$)/g)] : [];
+        const matches = isNumberedSection
+          ? [...text.matchAll(/(?:^|\s)(\d+)\.\s+([\s\S]*?)(?=\s+\d+\.\s+|$)/g)]
+          : [];
 
         if (matches.length) {
           const intro = text.slice(0, matches[0].index).trim();
@@ -120,7 +132,16 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
               <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                 {matches.map((match, index) => {
                   const titleAndBody = match[2].trim().split(/(?<=[.!?])\s+(?=[A-Z])/);
-                  return <li key={index}>{titleAndBody.map((part, partIndex) => <span key={partIndex}>{part}{partIndex < titleAndBody.length - 1 ? " " : ""}</span>)}</li>;
+                  return (
+                    <li key={index}>
+                      {titleAndBody.map((part, partIndex) => (
+                        <span key={partIndex}>
+                          {part}
+                          {partIndex < titleAndBody.length - 1 ? " " : ""}
+                        </span>
+                      ))}
+                    </li>
+                  );
                 })}
               </ol>
             </div>
@@ -160,8 +181,10 @@ function routeCardLabel(item) {
   return `${name(route[1])} to ${name(route[2])} Cab`;
 }
 
-function PageLinks({ paths, title = "Popular Routes", cityStyle = false }) {
-  const items = [...new Set(paths)].map(getPage).filter(Boolean);
+function PageLinks({ paths, publicPages = [], title = "Popular Routes", cityStyle = false }) {
+  const items = [...new Set(paths)]
+    .map((path) => publicPages.find((page) => page.pathname === path))
+    .filter(Boolean);
   if (!items.length) return null;
   return (
     <section className="my-9">
@@ -191,22 +214,20 @@ function PageLinks({ paths, title = "Popular Routes", cityStyle = false }) {
   );
 }
 
-function CityList({ page }) {
+function CityList({ publicPages = [] }) {
+  const cities = publicPages
+    .filter((page) => page.cmsResource === "cities")
+    .sort((a, b) => a.displayOrder - b.displayOrder);
   return (
     <Shell familyTours>
       <PageTitle>Popular Cities</PageTitle>
-      <p className="mt-7 text-base leading-7 text-slate-700">
-        {page.sections.find((section) => section.paragraphs.length)?.paragraphs[0]}
-      </p>
+      {!cities.length && (
+        <p className="mt-7 text-center text-slate-500">No cities published yet.</p>
+      )}
       <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {cityPaths.map((path) => (
-          <Link key={path} href={path} className="city-route-card self-start">
-            <h2>
-              {path
-                .split("/")
-                .at(-1)
-                .replace(/^./, (char) => char.toUpperCase())}
-            </h2>
+        {cities.map((city) => (
+          <Link key={city.pathname} href={city.pathname} className="city-route-card self-start">
+            <h2>{city.cityName || city.heading}</h2>
           </Link>
         ))}
       </div>
@@ -214,12 +235,13 @@ function CityList({ page }) {
   );
 }
 
-function BlogList({ page }) {
+function BlogList({ page, publicPages = [] }) {
+  const publicPageMap = new Map(publicPages.map((item) => [item.pathname, item]));
   const ordered = page.links
     .filter((path) => path.startsWith("/blogs/"))
-    .map(getPage)
+    .map((path) => publicPageMap.get(path))
     .filter(Boolean);
-  const extra = sitePages.filter(
+  const extra = publicPages.filter(
     (item) =>
       item.pathname.startsWith("/blogs/") &&
       !ordered.some((blog) => blog.pathname === item.pathname)
@@ -228,6 +250,9 @@ function BlogList({ page }) {
     <Shell familyTours>
       <h1 className="py-1 text-center text-2xl text-teal-800">SKG Travels Blogs</h1>
       <div className="mt-9 space-y-5">
+        {!ordered.length && !extra.length && (
+          <p className="text-center text-slate-500">No blogs published yet.</p>
+        )}
         {[...ordered, ...extra].map((blog) => (
           <Link
             href={blog.pathname}
@@ -236,10 +261,9 @@ function BlogList({ page }) {
           >
             {blog.image && (
               <div className="relative h-44 overflow-hidden rounded-lg bg-slate-50">
-                <Image
+                <PublicImage
                   src={blog.image}
                   alt={blog.heading}
-                  fill
                   sizes="(max-width: 640px) 100vw, 260px"
                   className="object-cover object-left"
                 />
@@ -248,8 +272,7 @@ function BlogList({ page }) {
             <div>
               <h2 className="text-[24px] leading-tight text-teal-800">{blog.heading}</h2>
               <p className="mt-1 line-clamp-3 text-base leading-7 text-slate-900">
-                {page.sections.find((section) => section.heading === blog.heading)?.paragraphs[0] ||
-                  blog.description}
+                {blog.description}
               </p>
             </div>
           </Link>
@@ -264,52 +287,63 @@ function ServicePage({ page }) {
   const trailing = page.sections.filter((section) => section.paragraphs.length).slice(4);
   return (
     <>
-    <Shell>
-      <div className="pt-3">
-        {leading.map((section, i) => (
-          <ContentSection key={section.heading} section={section} first={i === 0} centerHeadings />
-        ))}
-      </div>
-      <PageTitle>Outstation Taxi Fare in Mumbai</PageTitle>
-      <h2 className="my-4 text-center text-2xl text-teal-800">Best Taxi Fare in Mumbai</h2>
-      <div className="space-y-4">
-        {serviceFleet.map((car) => (
-          <article
-            key={car.name}
-            className="theme-card grid gap-5 p-5 text-center sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center sm:text-left xl:grid-cols-[180px_minmax(0,1fr)_auto]"
-          >
-            <div className="relative h-32">
-              <Image src={car.image} alt={car.name} fill sizes="180px" className="object-contain" />
+      <Shell>
+        <div className="pt-3">
+          {leading.map((section, i) => (
+            <ContentSection
+              key={section.heading}
+              section={section}
+              first={i === 0}
+              centerHeadings
+            />
+          ))}
+        </div>
+        <PageTitle>Outstation Taxi Fare in Mumbai</PageTitle>
+        <h2 className="my-4 text-center text-2xl text-teal-800">Best Taxi Fare in Mumbai</h2>
+        <div className="space-y-4">
+          {serviceFleet.map((car) => (
+            <article
+              key={car.name}
+              className="theme-card grid gap-5 p-5 text-center sm:grid-cols-[150px_minmax(0,1fr)] sm:items-center sm:text-left xl:grid-cols-[180px_minmax(0,1fr)_auto]"
+            >
+              <div className="relative h-32">
+                <Image
+                  src={car.image}
+                  alt={car.name}
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-center text-lg font-bold text-teal-800">{car.name}</h3>
+                <p className="mt-1 text-sm">{car.seats}</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Driver DA, Toll & Parking Charges are Additional
+                </p>
+              </div>
+              <div className="text-center sm:col-span-2 sm:text-left xl:col-span-1 xl:text-right">
+                <p className="font-bold">Rs.{car.rate} per KM</p>
+                <ServiceBooking carName={car.name} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </Shell>
+      <section className="mx-auto w-full max-w-[1120px] px-4 py-8 sm:px-6">
+        <div className="mt-10">
+          {trailing.map((section, index) => (
+            <div key={section.heading}>
+              {/^Q[.\s:-]*\d/i.test(section.heading) &&
+                (index === 0 || !/^Q[.\s:-]*\d/i.test(trailing[index - 1].heading)) && (
+                  <h2 className="mb-5 text-center text-2xl text-teal-800">FAQ&apos;s</h2>
+                )}
+              <ContentSection section={section} centerHeadings />
             </div>
-            <div>
-              <h3 className="text-center text-lg font-bold text-teal-800">{car.name}</h3>
-              <p className="mt-1 text-sm">{car.seats}</p>
-              <p className="mt-1 text-xs text-slate-500">
-                Driver DA, Toll & Parking Charges are Additional
-              </p>
-            </div>
-            <div className="text-center sm:col-span-2 sm:text-left xl:col-span-1 xl:text-right">
-              <p className="font-bold">Rs.{car.rate} per KM</p>
-              <ServiceBooking carName={car.name} />
-            </div>
-          </article>
-        ))}
-      </div>
-    </Shell>
-    <section className="mx-auto w-full max-w-[1120px] px-4 py-8 sm:px-6">
-      <div className="mt-10">
-        {trailing.map((section, index) => (
-          <div key={section.heading}>
-            {/^Q[.\s:-]*\d/i.test(section.heading) &&
-              (index === 0 || !/^Q[.\s:-]*\d/i.test(trailing[index - 1].heading)) && (
-                <h2 className="mb-5 text-center text-2xl text-teal-800">FAQ&apos;s</h2>
-              )}
-            <ContentSection section={section} centerHeadings />
-          </div>
-        ))}
-      </div>
-      <PageLinks paths={page.links.filter((path) => path !== page.pathname).slice(0, 18)} />
-    </section>
+          ))}
+        </div>
+        <PageLinks paths={page.links.filter((path) => path !== page.pathname).slice(0, 18)} />
+      </section>
     </>
   );
 }
@@ -399,20 +433,30 @@ function ContactPage({ page }) {
     </main>
   );
 }
-function ArticlePage({ page }) {
+function ArticlePage({ page, publicPages = [] }) {
   const isBlog = page.pathname.startsWith("/blogs/");
-  const isCity = cityPaths.includes(page.pathname);
+  const isCity = page.cmsResource === "cities";
   const sections = page.sections.filter(
     (section) =>
       section.paragraphs.length || section.images?.length || /^FAQ/i.test(section.heading)
   );
   const faqSections = sections.filter(
-    (section) => /^FAQ/i.test(section.heading) || /^Q[.\s:-]*\d/i.test(section.heading)
+    (section) =>
+      section.isFaq || /^FAQ/i.test(section.heading) || /^Q[.\s:-]*\d/i.test(section.heading)
   );
   const articleSections = sections.filter(
-    (section) => !/^FAQ/i.test(section.heading) && !/^Q[.\s:-]*\d/i.test(section.heading)
+    (section) =>
+      !section.isFaq && !/^FAQ/i.test(section.heading) && !/^Q[.\s:-]*\d/i.test(section.heading)
   );
-  const related = page.links.filter((path) => path !== page.pathname && path !== "/");
+  const related = publicPages
+    .filter(
+      (item) =>
+        item.pathname !== page.pathname &&
+        (isBlog
+          ? item.cmsResource === "blogs"
+          : ["area-seo", "route-seo"].includes(item.cmsResource))
+    )
+    .map((item) => item.pathname);
   const cityRoutes = isCity
     ? related.filter(
         (path) =>
@@ -436,11 +480,9 @@ function ArticlePage({ page }) {
           <div
             className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
           >
-            <Image
+            <PublicImage
               src={page.image}
               alt={page.images?.[0]?.alt || page.heading}
-              fill
-              priority={isBlog}
               sizes="(max-width: 1024px) 100vw, 850px"
               className="object-contain object-top"
             />
@@ -455,7 +497,8 @@ function ArticlePage({ page }) {
                 )}
                 {section.paragraphs.map((text, j) => {
                   if (isBlog) {
-                    const pointPattern = /^(?:Best for|Travel style|Ideal duration|Ideal for|Good option for):/i;
+                    const pointPattern =
+                      /^(?:Best for|Travel style|Ideal duration|Ideal for|Good option for):/i;
                     const isPoint = (value) => pointPattern.test(value.trim());
                     if (isPoint(text)) {
                       const previousIsPoint = j > 0 && isPoint(section.paragraphs[j - 1]);
@@ -464,24 +507,35 @@ function ArticlePage({ page }) {
                       const nextNonPoint = remaining.findIndex((value) => !isPoint(value));
                       const group = nextNonPoint < 0 ? remaining : remaining.slice(0, nextNonPoint);
                       return (
-                        <ul key={j} className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-base leading-7 text-[#293848]">
+                        <ul
+                          key={j}
+                          className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-base leading-7 text-[#293848]"
+                        >
                           {group.map((point, index) => {
                             const [label, ...detail] = point.split(":");
-                            return <li key={index}><strong>{label}:</strong>{detail.join(":")}</li>;
+                            return (
+                              <li key={index}>
+                                <strong>{label}:</strong>
+                                {detail.join(":")}
+                              </li>
+                            );
                           })}
                         </ul>
                       );
                     }
                   }
 
-                  const bookingProcess = page.pathname === "/about" && section.heading === "The process of Taxi booking with SKG Travels";
+                  const bookingProcess =
+                    page.pathname === "/about" &&
+                    section.heading === "The process of Taxi booking with SKG Travels";
                   const steps = bookingProcess ? text.match(/\d+\.\s+[^\n]+/g) : null;
 
                   if (steps?.length) {
                     return (
                       <div key={j} className="mt-[18px]">
                         <p className="text-center text-base leading-7 sm:text-left">
-                          Getting a taxi from SKG Travels is easy and quick. Follow these three steps to book your ride:
+                          Getting a taxi from SKG Travels is easy and quick. Follow these three
+                          steps to book your ride:
                         </p>
                         <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                           {steps.map((step, index) => (
@@ -493,14 +547,21 @@ function ArticlePage({ page }) {
                   }
 
                   if (isBlog) {
-                    const numberedPoints = [...text.matchAll(/(?:^|\s)(\d+)[.)]\s+([\s\S]*?)(?=\s+\d+[.)]\s+|$)/g)];
-                    const bulletPoints = text.split(/\s+(?=[•●▪-]\s+)/).map((part) => part.replace(/^[•●▪-]\s+/, "").trim()).filter(Boolean);
+                    const numberedPoints = [
+                      ...text.matchAll(/(?:^|\s)(\d+)[.)]\s+([\s\S]*?)(?=\s+\d+[.)]\s+|$)/g),
+                    ];
+                    const bulletPoints = text
+                      .split(/\s+(?=[•●▪-]\s+)/)
+                      .map((part) => part.replace(/^[•●▪-]\s+/, "").trim())
+                      .filter(Boolean);
 
                     if (numberedPoints.length > 1) {
                       const intro = text.slice(0, numberedPoints[0].index).trim();
                       return (
                         <div key={j} className="mt-[18px]">
-                          {intro && <p className="text-center text-base leading-7 sm:text-left">{intro}</p>}
+                          {intro && (
+                            <p className="text-center text-base leading-7 sm:text-left">{intro}</p>
+                          )}
                           <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
                             {numberedPoints.map((point, index) => (
                               <li key={index}>{point[2].trim()}</li>
@@ -512,8 +573,13 @@ function ArticlePage({ page }) {
 
                     if (bulletPoints.length > 1) {
                       return (
-                        <ul key={j} className="mt-[18px] list-disc space-y-2 pl-7 text-left text-base leading-7">
-                          {bulletPoints.map((point, index) => <li key={index}>{point}</li>)}
+                        <ul
+                          key={j}
+                          className="mt-[18px] list-disc space-y-2 pl-7 text-left text-base leading-7"
+                        >
+                          {bulletPoints.map((point, index) => (
+                            <li key={index}>{point}</li>
+                          ))}
                         </ul>
                       );
                     }
@@ -542,10 +608,11 @@ function ArticlePage({ page }) {
             </section>
           ))}
         </div>
-        {isCity && <PageLinks paths={cityRoutes} cityStyle />}
+        {isCity && <PageLinks paths={cityRoutes} publicPages={publicPages} cityStyle />}
         {!isCity && page.pathname !== "/about" && related.length > 0 && (
           <PageLinks
             paths={related.slice(0, 12)}
+            publicPages={publicPages}
             title={isBlog ? "More Blogs" : "Popular Routes"}
           />
         )}
@@ -563,7 +630,7 @@ function ArticlePage({ page }) {
           </h2>
           <div className="w-full space-y-3">
             {faqSections
-              .filter((section) => /^Q[.\s:-]*\d/i.test(section.heading))
+              .filter((section) => section.isFaq || /^Q[.\s:-]*\d/i.test(section.heading))
               .map((section, index) => (
                 <FaqItem
                   key={`${section.heading}-${index}`}
@@ -578,11 +645,11 @@ function ArticlePage({ page }) {
   );
 }
 
-export default function SitePage({ page }) {
+export default function SitePage({ page, publicPages = [] }) {
   if (page.pathname === "/privacy") return <ArticlePage page={getPage("/privacy-policy")} />;
-  if (page.pathname === "/cities") return <CityList page={page} />;
-  if (page.pathname === "/blogs") return <BlogList page={page} />;
+  if (page.pathname === "/cities") return <CityList publicPages={publicPages} />;
+  if (page.pathname === "/blogs") return <BlogList page={page} publicPages={publicPages} />;
   if (page.pathname === "/contact") return <ContactPage page={page} />;
   if (page.pathname === "/services") return <ServicePage page={page} />;
-  return <ArticlePage page={page} />;
+  return <ArticlePage page={page} publicPages={publicPages} />;
 }

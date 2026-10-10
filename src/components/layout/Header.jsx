@@ -7,10 +7,11 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Clock3, Mail, Menu, Search, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { navLinks } from "@/data/siteMeta";
-import { sitePages } from "@/data/site";
+import { usePublicContent } from "@/components/content/PublicContentProvider";
 import { matchesSearchCategory, searchCategories } from "@/data/search";
 
 function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert = false }) {
+  const sitePages = usePublicContent();
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [category, setCategory] = useState("all");
@@ -22,17 +23,24 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
     return sitePages
       .filter((page) => matchesSearchCategory(page, category))
       .map((page) => {
-        const path = page.pathname === "/" ? "home" : page.pathname.replaceAll("/", " / ").replaceAll("-", " ");
+        const path =
+          page.pathname === "/"
+            ? "home"
+            : page.pathname.replaceAll("/", " / ").replaceAll("-", " ");
         const title = `${page.heading || ""} ${page.title || ""}`;
         const text = `${title} ${path} ${page.description || ""}`.toLowerCase();
         if (!terms.every((term) => text.includes(term))) return null;
-        const score = terms.reduce((sum, term) => sum + (title.toLowerCase().includes(term) ? 4 : 0) + (path.includes(term) ? 3 : 0), 0);
+        const score = terms.reduce(
+          (sum, term) =>
+            sum + (title.toLowerCase().includes(term) ? 4 : 0) + (path.includes(term) ? 3 : 0),
+          0
+        );
         return { page, score };
       })
       .filter(Boolean)
       .sort((a, b) => b.score - a.score)
       .slice(0, 7);
-  }, [query, category]);
+  }, [query, category, sitePages]);
   const showSuggestions = isFocused && !isCategoryOpen && query.trim().length > 0;
 
   return (
@@ -48,7 +56,9 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
       }}
     >
       <form id={id} action="/search" method="get" role="search" className={className}>
-        <label className="sr-only" htmlFor={id}>Search SKG Travels</label>
+        <label className="sr-only" htmlFor={id}>
+          Search SKG Travels
+        </label>
         <input type="hidden" name="category" value={category} />
         <button
           ref={categoryTriggerRef}
@@ -74,6 +84,8 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
           placeholder="Search routes, cities..."
           autoComplete="off"
           value={query}
+          role="combobox"
+          aria-autocomplete="list"
           aria-expanded={showSuggestions}
           aria-controls={`${id}-suggestions`}
           onChange={(event) => setQuery(event.target.value)}
@@ -101,7 +113,7 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
               type="button"
               role="option"
               aria-selected={category === value}
-              className={`site-search-category-option${category === value ? " is-selected" : ""}`}
+              className={`site-search-category-option${category === value ? "is-selected" : ""}`}
               onClick={() => {
                 setCategory(value);
                 setIsCategoryOpen(false);
@@ -114,20 +126,30 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
       )}
       {showSuggestions && (
         <div id={`${id}-suggestions`} className="site-search-suggestions" role="listbox">
-          {suggestions.length ? suggestions.map(({ page }) => (
-            <Link
-              key={page.pathname}
-              href={page.pathname}
-              role="option"
-              aria-selected="false"
-              onClick={() => onNavigate?.()}
-              className="site-search-suggestion"
-            >
-              <span>{page.pathname === "/" ? "Home" : page.pathname.replaceAll("/", " / ").replaceAll("-", " ")}</span>
-              <strong>{page.heading || page.title}</strong>
-            </Link>
-          )) : <p className="site-search-no-suggestions">No matching pages found.</p>}
-          <button type="submit" form={id} className="site-search-all-results">View all search results</button>
+          {suggestions.length ? (
+            suggestions.map(({ page }) => (
+              <Link
+                key={page.pathname}
+                href={page.pathname}
+                role="option"
+                aria-selected="false"
+                onClick={() => onNavigate?.()}
+                className="site-search-suggestion"
+              >
+                <span>
+                  {page.pathname === "/"
+                    ? "Home"
+                    : page.pathname.replaceAll("/", " / ").replaceAll("-", " ")}
+                </span>
+                <strong>{page.heading || page.title}</strong>
+              </Link>
+            ))
+          ) : (
+            <p className="site-search-no-suggestions">No matching pages found.</p>
+          )}
+          <button type="submit" form={id} className="site-search-all-results">
+            View all search results
+          </button>
         </div>
       )}
     </div>
@@ -164,31 +186,39 @@ export default function Header() {
           />
         </Link>
         <div className="header-contact-list hidden lg:flex">
-          <a href="https://wa.me/917506222999" className="header-contact-item" target="_blank" rel="noopener noreferrer">
-            <span className="header-contact-icon"><FaWhatsapp size={17} aria-hidden="true" /></span>
+          <a
+            href="https://wa.me/917506222999"
+            className="header-contact-item"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="header-contact-icon">
+              <FaWhatsapp size={17} aria-hidden="true" />
+            </span>
             <span className="header-contact-copy">
               <strong>+91 750-6222-999</strong>
               <small>WhatsApp for Taxi Booking</small>
             </span>
           </a>
           <a href="mailto:skgtravels123@gmail.com" className="header-contact-item">
-            <span className="header-contact-icon"><Mail size={16} aria-hidden="true" /></span>
+            <span className="header-contact-icon">
+              <Mail size={16} aria-hidden="true" />
+            </span>
             <span className="header-contact-copy">
               <strong>skgtravels123@gmail.com</strong>
               <small>Send us Your Tour Plan</small>
             </span>
           </a>
           <span className="header-contact-item">
-            <span className="header-contact-icon"><Clock3 size={16} aria-hidden="true" /></span>
+            <span className="header-contact-icon">
+              <Clock3 size={16} aria-hidden="true" />
+            </span>
             <span className="header-contact-copy">
               <strong>24X7 Open</strong>
               <small>365 Days Open</small>
             </span>
           </span>
-          <Link
-            href="/contact"
-            className="header-contact-cta"
-          >
+          <Link href="/contact" className="header-contact-cta">
             <span>Contact Now</span>
             <ArrowRight size={15} aria-hidden="true" />
           </Link>
@@ -205,10 +235,22 @@ export default function Header() {
           >
             <Search size={20} aria-hidden="true" />
           </button>
-          <a className="header-icon-button" href="https://wa.me/917506222999" aria-label="WhatsApp SKG Travels" title="WhatsApp SKG Travels" target="_blank" rel="noopener noreferrer">
+          <a
+            className="header-icon-button"
+            href="https://wa.me/917506222999"
+            aria-label="WhatsApp SKG Travels"
+            title="WhatsApp SKG Travels"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaWhatsapp size={20} aria-hidden="true" />
           </a>
-          <a className="header-icon-button" href="mailto:skgtravels123@gmail.com" aria-label="Email SKG Travels" title="Email SKG Travels">
+          <a
+            className="header-icon-button"
+            href="mailto:skgtravels123@gmail.com"
+            aria-label="Email SKG Travels"
+            title="Email SKG Travels"
+          >
             <Mail size={19} aria-hidden="true" />
           </a>
           <button
@@ -222,7 +264,10 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <nav aria-label="Main navigation" className="border-t border-slate-100 bg-white text-slate-950">
+      <nav
+        aria-label="Main navigation"
+        className="border-t border-slate-100 bg-white text-slate-950"
+      >
         <div className="mx-auto flex h-1 max-w-[1140px] items-center px-4 lg:h-auto lg:min-h-12">
           <div className="hidden flex-1 items-center justify-center gap-7 lg:flex">
             {navLinks.map((item) => (
@@ -240,22 +285,36 @@ export default function Header() {
             ))}
           </div>
           <div className="ml-auto">
-            <div className="hidden lg:block"><SiteSearch id="desktop-site-search" /></div>
+            <div className="hidden lg:block">
+              <SiteSearch id="desktop-site-search" />
+            </div>
           </div>
         </div>
       </nav>
       <nav className="mobile-business-switcher" aria-label="Choose service">
-        <Link href="/" aria-current={pathname === "/hotel" || pathname === "/events" ? undefined : "page"} className={`mobile-business-tab${pathname === "/hotel" || pathname === "/events" ? "" : " is-active"}`}>
+        <Link
+          href="/"
+          aria-current={pathname === "/hotel" || pathname === "/events" ? undefined : "page"}
+          className={`mobile-business-tab${pathname === "/hotel" || pathname === "/events" ? "" : "is-active"}`}
+        >
           Taxi Services
         </Link>
-        <Link href="/hotel" aria-current={pathname === "/hotel" ? "page" : undefined} className={`mobile-business-tab${pathname === "/hotel" ? " is-active" : ""}`}>
+        <Link
+          href="/hotel"
+          aria-current={pathname === "/hotel" ? "page" : undefined}
+          className={`mobile-business-tab${pathname === "/hotel" ? "is-active" : ""}`}
+        >
           Hotel
         </Link>
-        <Link href="/events" aria-current={pathname === "/events" ? "page" : undefined} className={`mobile-business-tab${pathname === "/events" ? " is-active" : ""}`}>
+        <Link
+          href="/events"
+          aria-current={pathname === "/events" ? "page" : undefined}
+          className={`mobile-business-tab${pathname === "/events" ? "is-active" : ""}`}
+        >
           Events
         </Link>
       </nav>
-      <div className={`mobile-nav-drawer${open ? " is-open" : ""}`} aria-hidden={!open}>
+      <div className={`mobile-nav-drawer${open ? "is-open" : ""}`} aria-hidden={!open}>
         <button
           type="button"
           className="mobile-nav-backdrop"
@@ -281,13 +340,19 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+917506222999" className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-900">
+            <a
+              href="tel:+917506222999"
+              className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-900"
+            >
               +91 750-6222-999
             </a>
           </nav>
         </aside>
       </div>
-      <div className={`mobile-search-screen${mobileSearchOpen ? " is-open" : ""}`} aria-hidden={!mobileSearchOpen}>
+      <div
+        className={`mobile-search-screen${mobileSearchOpen ? "is-open" : ""}`}
+        aria-hidden={!mobileSearchOpen}
+      >
         <div className="mobile-search-screen-header">
           <Image
             src="/skg-logo-hd.png"
@@ -297,7 +362,11 @@ export default function Header() {
             className="mobile-search-logo"
           />
           <span>Search SKG Travels</span>
-          <button type="button" aria-label="Close search" onClick={() => setMobileSearchOpen(false)}>
+          <button
+            type="button"
+            aria-label="Close search"
+            onClick={() => setMobileSearchOpen(false)}
+          >
             <X size={23} />
           </button>
         </div>

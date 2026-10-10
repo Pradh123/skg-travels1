@@ -1,35 +1,35 @@
 import { notFound } from "next/navigation";
 import SitePage from "@/components/content/SitePage";
-import { getPage, sitePages } from "@/data/site";
+import JsonLd from "@/components/seo/JsonLd";
+import CmsScripts from "@/components/seo/CmsScripts";
 import { createPageMetadata } from "@/data/seo";
+import { pageGraph } from "@/lib/seo/schemas";
+import { getPublicSitePage, getPublicSitePages } from "@/lib/server/publicCms";
 
-const dedicatedPages = new Set([
-  "/services",
-  "/about",
-  "/cities",
-  "/blogs",
-  "/contact",
-  "/privacy-policy",
-]);
-
-export function generateStaticParams() {
-  return sitePages
-    .filter((page) => page.pathname !== "/" && !dedicatedPages.has(page.pathname))
-    .map((page) => ({ slug: page.pathname.slice(1).split("/") }));
-}
-
-export const dynamicParams = false;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const page = getPage(`/${slug.join("/")}`);
+  const page = await getPublicSitePage(`/${slug.join("/")}`);
   if (!page) return {};
-  return createPageMetadata(page, { type: page.pathname.startsWith("/blogs/") ? "article" : "website" });
+  return createPageMetadata(page, {
+    type: page.pathname.startsWith("/blogs/") ? "article" : "website",
+  });
 }
 
 export default async function CatchAllPage({ params }) {
   const { slug } = await params;
-  const page = getPage(`/${slug.join("/")}`);
+  const pathname = `/${slug.join("/")}`;
+  const [page, publicPages] = await Promise.all([
+    getPublicSitePage(pathname),
+    getPublicSitePages(),
+  ]);
   if (!page) notFound();
-  return <SitePage page={page} />;
+  return (
+    <>
+      <JsonLd graph={pageGraph(page)} />
+      <CmsScripts page={page} />
+      <SitePage page={page} publicPages={publicPages} />
+    </>
+  );
 }

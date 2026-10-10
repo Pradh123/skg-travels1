@@ -5,11 +5,16 @@ import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { navLinks } from "@/data/siteMeta";
 import FooterSiteLinks from "./FooterSiteLinks";
+import { getPublicCmsPages } from "@/lib/server/publicCms";
 
 const socialIconClass =
   "grid p-2 shrink-0 place-items-center rounded-full border border-white/40 text-white transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-ink focus-visible:border-brand focus-visible:bg-brand focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400";
 
-export default function Footer() {
+export default async function Footer() {
+  const journeys = (await getPublicCmsPages())
+    .filter((page) => ["cities", "route-seo"].includes(page.cmsResource))
+    .sort((a, b) => a.displayOrder - b.displayOrder)
+    .slice(0, 4);
   return (
     <>
       <FooterSiteLinks />
@@ -50,26 +55,14 @@ export default function Footer() {
           <div>
             <h2 className="mb-5 text-lg font-bold text-white">Popular journeys</h2>
             <ul className="space-y-3 text-sm">
-              <li>
-                <Link href="/cities/mumbai" className="hover:text-lime-300">
-                  Mumbai
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities/lucknow" className="hover:text-lime-300">
-                  Lucknow
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities/varanasi" className="hover:text-lime-300">
-                  Varanasi
-                </Link>
-              </li>
-              <li>
-                <Link href="/mumbai-to-pune-cab" className="hover:text-lime-300">
-                  Mumbai to Pune
-                </Link>
-              </li>
+              {journeys.map((page) => (
+                <li key={page.pathname}>
+                  <Link href={page.pathname} className="hover:text-lime-300">
+                    {page.cityName || page.heading}
+                  </Link>
+                </li>
+              ))}
+              {!journeys.length && <li>No destinations published yet.</li>}
             </ul>
           </div>
           <div>

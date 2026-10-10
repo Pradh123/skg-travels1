@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { sitePages } from "@/data/site";
+import { getPublicSitePages } from "@/lib/server/publicCms";
 import { matchesSearchCategory, searchCategories } from "@/data/search";
 
 export const metadata = {
@@ -25,16 +25,20 @@ function getPageText(page) {
 
 function getExcerpt(page, terms) {
   const paragraphs = (page.sections || []).flatMap((section) => section.paragraphs || []);
-  const excerpt = paragraphs.find((paragraph) => terms.some((term) => paragraph.toLowerCase().includes(term)))
-    || page.description
-    || "Explore this SKG Travels page.";
+  const excerpt =
+    paragraphs.find((paragraph) => terms.some((term) => paragraph.toLowerCase().includes(term))) ||
+    page.description ||
+    "Explore this SKG Travels page.";
   return excerpt.length > 190 ? `${excerpt.slice(0, 187).trimEnd()}...` : excerpt;
 }
 
 export default async function SearchPage({ searchParams }) {
+  const sitePages = await getPublicSitePages();
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q.trim().slice(0, 100) : "";
-  const category = searchCategories.some(({ value }) => value === params.category) ? params.category : "all";
+  const category = searchCategories.some(({ value }) => value === params.category)
+    ? params.category
+    : "all";
   const categoryLabel = searchCategories.find(({ value }) => value === category)?.label;
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   const results = terms.length
@@ -44,11 +48,15 @@ export default async function SearchPage({ searchParams }) {
           const text = getPageText(page);
           const allText = `${text.title} ${text.description} ${text.pathname} ${text.content}`;
           if (!terms.every((term) => allText.includes(term))) return null;
-          const score = terms.reduce((total, term) => total
-            + (text.title.includes(term) ? 5 : 0)
-            + (text.pathname.includes(term) ? 4 : 0)
-            + (text.description.includes(term) ? 2 : 0)
-            + (text.content.includes(term) ? 1 : 0), 0);
+          const score = terms.reduce(
+            (total, term) =>
+              total +
+              (text.title.includes(term) ? 5 : 0) +
+              (text.pathname.includes(term) ? 4 : 0) +
+              (text.description.includes(term) ? 2 : 0) +
+              (text.content.includes(term) ? 1 : 0),
+            0
+          );
           return { page, score };
         })
         .filter(Boolean)
@@ -61,14 +69,24 @@ export default async function SearchPage({ searchParams }) {
       <div className="search-page-inner">
         <p className="search-page-eyebrow">SKG TRAVELS · {categoryLabel}</p>
         <h1>{query ? `Search results for "${query}"` : "Search our website"}</h1>
-        {query && <p className="search-page-count">Showing {results.length} {results.length === 1 ? "result" : "results"}</p>}
+        {query && (
+          <p className="search-page-count">
+            Showing {results.length} {results.length === 1 ? "result" : "results"}
+          </p>
+        )}
         {!query ? (
-          <p className="search-page-empty">Enter a city, route, or service in the search bar above.</p>
+          <p className="search-page-empty">
+            Enter a city, route, or service in the search bar above.
+          </p>
         ) : results.length ? (
           <div className="search-results">
             {results.map(({ page }) => (
               <Link key={page.pathname} href={page.pathname} className="search-result-card">
-                <span>{page.pathname === "/" ? "Home" : page.pathname.replaceAll("-", " ").replaceAll("/", " > ")}</span>
+                <span>
+                  {page.pathname === "/"
+                    ? "Home"
+                    : page.pathname.replaceAll("-", " ").replaceAll("/", " > ")}
+                </span>
                 <h2>{page.heading || page.title}</h2>
                 <p>{getExcerpt(page, terms)}</p>
               </Link>
