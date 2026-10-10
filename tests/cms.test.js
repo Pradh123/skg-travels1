@@ -12,6 +12,15 @@ import {
   publicSitePages,
 } from "../src/lib/api/cms.js";
 
+test("blog display description stays separate from SEO metadata", () => {
+  const record = { title: "Travel guide", slug: "travel-guide", status: "Published", description: "Visible introduction", metaDescription: "Search engine summary", content: "" };
+  const page = normalizeCmsRecord("blogs", record);
+  assert.equal(page.blogDescription, "Visible introduction");
+  assert.equal(page.description, "Search engine summary");
+  assert.deepEqual(page.sections, []);
+  assert.equal(normalizeCmsRecord("blogs", { ...record, description: undefined }).blogDescription, "");
+});
+
 test("CMS collection URLs and public pathnames follow the backend contract", () => {
   assert.equal(
     getCmsCollectionUrl("blogs", { apiBaseUrl: "https://api.example.com/api/v1/", page: 2 }),

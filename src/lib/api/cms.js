@@ -189,7 +189,7 @@ export function normalizeCmsRecord(resource, record) {
   }
 
   const description = cleanText(record.metaDescription);
-  if (!sections.length && description) {
+  if (resource !== "blogs" && !sections.length && description) {
     sections = [{ heading: fallbackHeading, paragraphs: [description], images: [] }];
   }
 
@@ -199,6 +199,7 @@ export function normalizeCmsRecord(resource, record) {
     pathname,
     title: cleanText(record.seoTitle || record.metaTitle || record.title || fallbackHeading),
     description: description || `${fallbackHeading} with SKG Travels.`,
+    blogDescription: resource === "blogs" ? cleanText(record.description) : null,
     heading: fallbackHeading,
     date: record.publishedAt || record.updatedAt || record.createdAt || null,
     sections,

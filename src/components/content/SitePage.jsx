@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+import BlogCities from "./BlogCities";
 import { ArrowLeft, Mail, Phone } from "lucide-react";
 import ServiceBooking from "../booking/ServiceBooking";
 import QuickQuote from "../booking/QuickQuote";
@@ -247,38 +248,41 @@ function BlogList({ page, publicPages = [] }) {
       !ordered.some((blog) => blog.pathname === item.pathname)
   );
   return (
-    <Shell familyTours>
-      <h1 className="py-1 text-center text-2xl text-teal-800">SKG Travels Blogs</h1>
-      <div className="mt-9 space-y-5">
-        {!ordered.length && !extra.length && (
-          <p className="text-center text-slate-500">No blogs published yet.</p>
-        )}
-        {[...ordered, ...extra].map((blog) => (
-          <Link
-            href={blog.pathname}
-            key={blog.pathname}
-            className={`theme-card grid gap-5 p-4 transition-transform hover:-translate-y-0.5 sm:p-5 ${blog.image ? "sm:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)]" : ""}`}
-          >
-            {blog.image && (
-              <div className="relative h-44 overflow-hidden rounded-lg bg-slate-50">
-                <PublicImage
-                  src={blog.image}
-                  alt={blog.heading}
-                  sizes="(max-width: 640px) 100vw, 260px"
-                  className="object-cover object-left"
-                />
+    <>
+      <Shell familyTours>
+        <h1 className="py-1 text-center text-2xl text-teal-800">SKG Travels Blogs</h1>
+        <div className="mt-9 space-y-5">
+          {!ordered.length && !extra.length && (
+            <p className="text-center text-slate-500">No blogs published yet.</p>
+          )}
+          {[...ordered, ...extra].map((blog) => (
+            <Link
+              href={blog.pathname}
+              key={blog.pathname}
+              className={`theme-card grid gap-5 p-4 transition-transform hover:-translate-y-0.5 sm:p-5 ${blog.image ? "sm:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)]" : ""}`}
+            >
+              {blog.image && (
+                <div className="relative h-44 overflow-hidden rounded-lg bg-slate-50">
+                  <PublicImage
+                    src={blog.image}
+                    alt={blog.heading}
+                    sizes="(max-width: 640px) 100vw, 260px"
+                    className="object-cover object-left"
+                  />
+                </div>
+              )}
+              <div>
+                <h2 className="text-[24px] leading-tight text-teal-800">{blog.heading}</h2>
+                <p className="mt-1 line-clamp-3 text-base leading-7 text-slate-900">
+                  {blog.cmsResource === "blogs" ? blog.blogDescription : blog.description}
+                </p>
               </div>
-            )}
-            <div>
-              <h2 className="text-[24px] leading-tight text-teal-800">{blog.heading}</h2>
-              <p className="mt-1 line-clamp-3 text-base leading-7 text-slate-900">
-                {blog.description}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </Shell>
+            </Link>
+          ))}
+        </div>
+      </Shell>
+      <BlogCities publicPages={publicPages} />
+    </>
   );
 }
 
@@ -475,6 +479,9 @@ function ArticlePage({ page, publicPages = [] }) {
           </Link>
         )}
         <PageTitle large={isBlog}>{page.heading}</PageTitle>
+        {isBlog && page.blogDescription && (
+          <p className="mt-4 text-lg leading-relaxed text-slate-700">{page.blogDescription}</p>
+        )}
         {page.image && (
           <div
             className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
@@ -647,6 +654,7 @@ function ArticlePage({ page, publicPages = [] }) {
           </div>
         </section>
       )}
+      {isBlog && <BlogCities publicPages={publicPages} />}
     </>
   );
 }
