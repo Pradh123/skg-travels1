@@ -30,6 +30,7 @@ export default async function CatchAllPage({ params }) {
       <JsonLd graph={pageGraph(page)} />
       <CmsScripts page={page} />
       <SitePage page={page} publicPages={publicPages} />
+      <CmsScripts page={page} placement="body" />
     </>
   );
 }

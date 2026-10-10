@@ -1,3 +1,4 @@
+import { sanitizeRichHtml } from "./richHtml.js";
 const DEFAULT_API_BASE_URL = "http://localhost:4000/api/v1";
 const PAGE_LIMIT = 500;
 const MAX_PAGES_PER_RESOURCE = 50;
@@ -201,10 +202,16 @@ export function normalizeCmsRecord(resource, record) {
     heading: fallbackHeading,
     date: record.publishedAt || record.updatedAt || record.createdAt || null,
     sections,
+    richHtml: sanitizeRichHtml(
+      resource === "area-seo" || resource === "cities"
+        ? [record.introHtml, record.bodyHtml, record.faqHtml].filter(Boolean).join("\n")
+        : record.content
+    ),
     image,
     ogImage,
     keywords: record.keywords || record.metaKeywords || "",
     headScripts: cleanText(record.headScripts),
+    bodyScripts: cleanText(record.bodyScripts),
     cityName: resource === "cities" ? cleanText(record.cityName) : null,
     displayOrder: Number(record.displayOrder) || 0,
     images: image ? [{ src: image, alt: fallbackHeading }] : [],

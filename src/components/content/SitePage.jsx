@@ -475,7 +475,6 @@ function ArticlePage({ page, publicPages = [] }) {
           </Link>
         )}
         <PageTitle large={isBlog}>{page.heading}</PageTitle>
-        {page.date && <p className="mt-4 text-center text-sm text-slate-500">{page.date}</p>}
         {page.image && (
           <div
             className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
@@ -489,124 +488,131 @@ function ArticlePage({ page, publicPages = [] }) {
           </div>
         )}
         <div className="site-copy mt-7">
-          {articleSections.map((section, i) => (
-            <section key={`${section.heading}-${i}`} className="mb-8">
-              <>
-                {section.heading !== page.heading && (
-                  <h2 className="text-center text-2xl sm:text-left">{section.heading}</h2>
-                )}
-                {section.paragraphs.map((text, j) => {
-                  if (isBlog) {
-                    const pointPattern =
-                      /^(?:Best for|Travel style|Ideal duration|Ideal for|Good option for):/i;
-                    const isPoint = (value) => pointPattern.test(value.trim());
-                    if (isPoint(text)) {
-                      const previousIsPoint = j > 0 && isPoint(section.paragraphs[j - 1]);
-                      if (previousIsPoint) return null;
-                      const remaining = section.paragraphs.slice(j);
-                      const nextNonPoint = remaining.findIndex((value) => !isPoint(value));
-                      const group = nextNonPoint < 0 ? remaining : remaining.slice(0, nextNonPoint);
-                      return (
-                        <ul
-                          key={j}
-                          className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-base leading-7 text-[#293848]"
-                        >
-                          {group.map((point, index) => {
-                            const [label, ...detail] = point.split(":");
-                            return (
-                              <li key={index}>
-                                <strong>{label}:</strong>
-                                {detail.join(":")}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      );
+          {page.richHtml && (
+            <div className="cms-rich-content" dangerouslySetInnerHTML={{ __html: page.richHtml }} />
+          )}
+          {!page.richHtml &&
+            articleSections.map((section, i) => (
+              <section key={`${section.heading}-${i}`} className="mb-8">
+                <>
+                  {section.heading !== page.heading && (
+                    <h2 className="text-center text-2xl sm:text-left">{section.heading}</h2>
+                  )}
+                  {section.paragraphs.map((text, j) => {
+                    if (isBlog) {
+                      const pointPattern =
+                        /^(?:Best for|Travel style|Ideal duration|Ideal for|Good option for):/i;
+                      const isPoint = (value) => pointPattern.test(value.trim());
+                      if (isPoint(text)) {
+                        const previousIsPoint = j > 0 && isPoint(section.paragraphs[j - 1]);
+                        if (previousIsPoint) return null;
+                        const remaining = section.paragraphs.slice(j);
+                        const nextNonPoint = remaining.findIndex((value) => !isPoint(value));
+                        const group =
+                          nextNonPoint < 0 ? remaining : remaining.slice(0, nextNonPoint);
+                        return (
+                          <ul
+                            key={j}
+                            className="mt-4 list-disc space-y-2 rounded-xl bg-slate-50 px-6 py-4 pl-11 text-left text-base leading-7 text-[#293848]"
+                          >
+                            {group.map((point, index) => {
+                              const [label, ...detail] = point.split(":");
+                              return (
+                                <li key={index}>
+                                  <strong>{label}:</strong>
+                                  {detail.join(":")}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        );
+                      }
                     }
-                  }
 
-                  const bookingProcess =
-                    page.pathname === "/about" &&
-                    section.heading === "The process of Taxi booking with SKG Travels";
-                  const steps = bookingProcess ? text.match(/\d+\.\s+[^\n]+/g) : null;
+                    const bookingProcess =
+                      page.pathname === "/about" &&
+                      section.heading === "The process of Taxi booking with SKG Travels";
+                    const steps = bookingProcess ? text.match(/\d+\.\s+[^\n]+/g) : null;
 
-                  if (steps?.length) {
-                    return (
-                      <div key={j} className="mt-[18px]">
-                        <p className="text-center text-base leading-7 sm:text-left">
-                          Getting a taxi from SKG Travels is easy and quick. Follow these three
-                          steps to book your ride:
-                        </p>
-                        <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
-                          {steps.map((step, index) => (
-                            <li key={index}>{step.replace(/^\d+\.\s+/, "")}</li>
-                          ))}
-                        </ol>
-                      </div>
-                    );
-                  }
-
-                  if (isBlog) {
-                    const numberedPoints = [
-                      ...text.matchAll(/(?:^|\s)(\d+)[.)]\s+([\s\S]*?)(?=\s+\d+[.)]\s+|$)/g),
-                    ];
-                    const bulletPoints = text
-                      .split(/\s+(?=[•●▪-]\s+)/)
-                      .map((part) => part.replace(/^[•●▪-]\s+/, "").trim())
-                      .filter(Boolean);
-
-                    if (numberedPoints.length > 1) {
-                      const intro = text.slice(0, numberedPoints[0].index).trim();
+                    if (steps?.length) {
                       return (
                         <div key={j} className="mt-[18px]">
-                          {intro && (
-                            <p className="text-center text-base leading-7 sm:text-left">{intro}</p>
-                          )}
+                          <p className="text-center text-base leading-7 sm:text-left">
+                            Getting a taxi from SKG Travels is easy and quick. Follow these three
+                            steps to book your ride:
+                          </p>
                           <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
-                            {numberedPoints.map((point, index) => (
-                              <li key={index}>{point[2].trim()}</li>
+                            {steps.map((step, index) => (
+                              <li key={index}>{step.replace(/^\d+\.\s+/, "")}</li>
                             ))}
                           </ol>
                         </div>
                       );
                     }
 
-                    if (bulletPoints.length > 1) {
-                      return (
-                        <ul
-                          key={j}
-                          className="mt-[18px] list-disc space-y-2 pl-7 text-left text-base leading-7"
-                        >
-                          {bulletPoints.map((point, index) => (
-                            <li key={index}>{point}</li>
-                          ))}
-                        </ul>
-                      );
-                    }
-                  }
+                    if (isBlog) {
+                      const numberedPoints = [
+                        ...text.matchAll(/(?:^|\s)(\d+)[.)]\s+([\s\S]*?)(?=\s+\d+[.)]\s+|$)/g),
+                      ];
+                      const bulletPoints = text
+                        .split(/\s+(?=[•●▪-]\s+)/)
+                        .map((part) => part.replace(/^[•●▪-]\s+/, "").trim())
+                        .filter(Boolean);
 
-                  return (
-                    <p key={j} className="text-center text-base leading-7 sm:text-left">
-                      {text}
-                    </p>
-                  );
-                })}
-                {section.images
-                  ?.filter((image) => image.src !== page.image)
-                  .map((image) => (
-                    <div key={image.src} className="relative my-5 h-56">
-                      <Image
-                        src={image.src}
-                        alt={image.alt || section.heading}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 850px"
-                        className="object-contain object-left"
-                      />
-                    </div>
-                  ))}
-              </>
-            </section>
-          ))}
+                      if (numberedPoints.length > 1) {
+                        const intro = text.slice(0, numberedPoints[0].index).trim();
+                        return (
+                          <div key={j} className="mt-[18px]">
+                            {intro && (
+                              <p className="text-center text-base leading-7 sm:text-left">
+                                {intro}
+                              </p>
+                            )}
+                            <ol className="mt-3 list-decimal space-y-2 pl-7 text-left text-base leading-7">
+                              {numberedPoints.map((point, index) => (
+                                <li key={index}>{point[2].trim()}</li>
+                              ))}
+                            </ol>
+                          </div>
+                        );
+                      }
+
+                      if (bulletPoints.length > 1) {
+                        return (
+                          <ul
+                            key={j}
+                            className="mt-[18px] list-disc space-y-2 pl-7 text-left text-base leading-7"
+                          >
+                            {bulletPoints.map((point, index) => (
+                              <li key={index}>{point}</li>
+                            ))}
+                          </ul>
+                        );
+                      }
+                    }
+
+                    return (
+                      <p key={j} className="text-center text-base leading-7 sm:text-left">
+                        {text}
+                      </p>
+                    );
+                  })}
+                  {section.images
+                    ?.filter((image) => image.src !== page.image)
+                    .map((image) => (
+                      <div key={image.src} className="relative my-5 h-56">
+                        <Image
+                          src={image.src}
+                          alt={image.alt || section.heading}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 850px"
+                          className="object-contain object-left"
+                        />
+                      </div>
+                    ))}
+                </>
+              </section>
+            ))}
         </div>
         {isCity && <PageLinks paths={cityRoutes} publicPages={publicPages} cityStyle />}
         {!isCity && page.pathname !== "/about" && related.length > 0 && (
@@ -617,7 +623,7 @@ function ArticlePage({ page, publicPages = [] }) {
           />
         )}
       </Shell>
-      {faqSections.length > 0 && (
+      {!page.richHtml && faqSections.length > 0 && (
         <section
           className={`mx-auto w-full px-4 pb-10 sm:px-6 xl:px-0 ${page.pathname === "/about" ? "max-w-4xl" : ""}`}
           aria-labelledby="page-faq-heading"

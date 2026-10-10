@@ -4,7 +4,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ChevronDown, Clock3, Mail, Menu, Search, X } from "lucide-react";
+import {
+  ArrowRight,
+  BedDouble,
+  CalendarDays,
+  CarFront,
+  ChevronDown,
+  Clock3,
+  Mail,
+  Menu,
+  Search,
+  X,
+} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { navLinks } from "@/data/siteMeta";
 import { usePublicContent } from "@/components/content/PublicContentProvider";
@@ -158,6 +169,11 @@ function SiteSearch({ id, inputRef, className = "site-search", onNavigate, inert
 
 export default function Header() {
   const pathname = usePathname();
+  const activeBusiness = /^\/hotel(?:\/|$)/.test(pathname || "")
+    ? "hotel"
+    : /^\/events(?:\/|$)/.test(pathname || "")
+      ? "events"
+      : "taxi";
   const [open, setOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const mobileSearchInputRef = useRef(null);
@@ -291,28 +307,33 @@ export default function Header() {
           </div>
         </div>
       </nav>
-      <nav className="mobile-business-switcher" aria-label="Choose service">
-        <Link
-          href="/"
-          aria-current={pathname === "/hotel" || pathname === "/events" ? undefined : "page"}
-          className={`mobile-business-tab${pathname === "/hotel" || pathname === "/events" ? "" : "is-active"}`}
-        >
-          Taxi Services
-        </Link>
-        <Link
-          href="/hotel"
-          aria-current={pathname === "/hotel" ? "page" : undefined}
-          className={`mobile-business-tab${pathname === "/hotel" ? "is-active" : ""}`}
-        >
-          Hotel
-        </Link>
-        <Link
-          href="/events"
-          aria-current={pathname === "/events" ? "page" : undefined}
-          className={`mobile-business-tab${pathname === "/events" ? "is-active" : ""}`}
-        >
-          Events
-        </Link>
+      <nav className="business-switcher" aria-label="Choose service">
+        <div className="business-switcher-inner">
+          <Link
+            href="/"
+            aria-current={activeBusiness === "taxi" ? "page" : undefined}
+            className={`business-tab${activeBusiness === "taxi" ? " is-active" : ""}`}
+          >
+            <CarFront size={16} aria-hidden="true" />
+            <span>Taxi Services</span>
+          </Link>
+          <Link
+            href="/hotel"
+            aria-current={activeBusiness === "hotel" ? "page" : undefined}
+            className={`business-tab${activeBusiness === "hotel" ? " is-active" : ""}`}
+          >
+            <BedDouble size={16} aria-hidden="true" />
+            <span>Hotel</span>
+          </Link>
+          <Link
+            href="/events"
+            aria-current={activeBusiness === "events" ? "page" : undefined}
+            className={`business-tab${activeBusiness === "events" ? " is-active" : ""}`}
+          >
+            <CalendarDays size={16} aria-hidden="true" />
+            <span>Events</span>
+          </Link>
+        </div>
       </nav>
       <div className={`mobile-nav-drawer${open ? "is-open" : ""}`} aria-hidden={!open}>
         <button

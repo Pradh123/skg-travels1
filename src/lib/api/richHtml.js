@@ -1,0 +1,83 @@
+import sanitizeHtml from "sanitize-html";
+export function sanitizeRichHtml(value) {
+  return sanitizeHtml(String(value || ""), {
+    allowedTags: [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "p",
+      "div",
+      "span",
+      "br",
+      "hr",
+      "strong",
+      "b",
+      "em",
+      "i",
+      "u",
+      "s",
+      "blockquote",
+      "ul",
+      "ol",
+      "li",
+      "a",
+      "img",
+      "table",
+      "thead",
+      "tbody",
+      "tr",
+      "td",
+      "th",
+      "pre",
+      "code",
+      "font",
+      "iframe",
+      "video",
+      "source",
+    ],
+    allowedAttributes: {
+      "*": ["style"],
+      a: ["href", "title", "target", "rel"],
+      img: ["src", "alt", "width", "height", "loading"],
+      font: ["face", "color", "size"],
+      td: ["colspan", "rowspan"],
+      th: ["colspan", "rowspan"],
+      div: [{ name: "class", values: ["cms-video"] }],
+      iframe: ["src", "title", "loading", "allowfullscreen", "allow"],
+      video: ["src", "controls", "preload", "aria-label"],
+      source: ["src", "type"],
+    },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedSchemesByTag: { iframe: ["https"], video: ["https"], source: ["https"] },
+    allowProtocolRelative: false,
+    allowedIframeHostnames: ["www.youtube-nocookie.com", "www.youtube.com", "player.vimeo.com"],
+    allowIframeRelativeUrls: false,
+    allowedStyles: {
+      "*": {
+        color: [/^#[0-9a-f]{3,8}$/i, /^rgb\([\d ,]+\)$/i, /^[a-z]+$/i],
+        "background-color": [/^#[0-9a-f]{3,8}$/i, /^rgb\([\d ,]+\)$/i],
+        "text-align": [/^(left|right|center|justify)$/],
+        "font-family": [/^[a-zA-Z ,'-]+$/],
+        "font-weight": [/^(bold|normal|[1-9]00)$/],
+        "font-style": [/^(italic|normal)$/],
+        "text-decoration": [/^(underline|line-through|none)$/],
+        "max-width": [/^100%$/],
+      },
+    },
+    transformTags: {
+      a: (_tag, attrs) => ({ tagName: "a", attribs: { ...attrs, rel: "noopener noreferrer" } }),
+      video: (_tag, attrs) => ({
+        tagName: "video",
+        attribs: { ...attrs, controls: "", preload: "metadata" },
+      }),
+    },
+    exclusiveFilter: (frame) =>
+      frame.tag === "iframe" &&
+      !/^https:\/\/(?:www\.youtube(?:-nocookie)?\.com\/embed\/[A-Za-z0-9_-]{11}|player\.vimeo\.com\/video\/\d+)(?:[?][^ ]*)?$/.test(
+        frame.attribs.src || ""
+      ),
+  });
+}

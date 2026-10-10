@@ -1,5 +1,5 @@
-// Only script elements from the explicit admin Head Scripts field are executable.
-// Content/FAQ HTML continues to be rendered as text.
+// Only script elements in the explicit script fields can execute.
+// Rich body content uses a separate HTML sanitizer.
 export function parseCmsScripts(value) {
   const scripts = [];
   const pattern = /<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi;
