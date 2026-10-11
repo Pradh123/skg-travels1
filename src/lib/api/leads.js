@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE_URL = "http://localhost:4000/api/v1";
+const DEFAULT_API_BASE_URL = "https://skg-backenf.onrender.com/api/v1";
 const DEFAULT_TIMEOUT_MS = 7000;
 
 const cleanText = (value) => {

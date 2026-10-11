@@ -1,10 +1,11 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import BlogCities from "./BlogCities";
+import { cityRoutePaths } from "@/lib/api/cms";
 import { ArrowLeft, Mail, Phone } from "lucide-react";
 import ServiceBooking from "../booking/ServiceBooking";
 import QuickQuote from "../booking/QuickQuote";
-import FaqItem from "./FaqItem";
+import FaqSection from "./FaqSection";
 import ContactBranches from "./ContactBranches";
 import { getPage } from "@/data/site";
 import { serviceFleet } from "@/data/siteMeta";
@@ -101,11 +102,7 @@ function PublicImage({ src, alt, sizes, className }) {
 function ContentSection({ section, first = false, centerHeadings = false }) {
   if (!section.paragraphs.length && !section.images?.length) return null;
   if (/^Q[.\s:-]*\d/i.test(section.heading)) {
-    return (
-      <div className="mb-3 w-full max-w-none">
-        <FaqItem question={section.heading} answers={section.paragraphs} />
-      </div>
-    );
+    return <FaqSection items={[section]} />;
   }
   return (
     <section className="mb-10">
@@ -170,18 +167,6 @@ function ContentSection({ section, first = false, centerHeadings = false }) {
   );
 }
 
-function routeCardLabel(item) {
-  const slug = item.pathname
-    .split("/")
-    .at(-1)
-    .replace(/^cheapest-cab-from-/, "");
-  const route = slug.match(/^(.+?)-to-(.+?)(?:-(?:taxi|cabs?|car|one-way|round-trip)(?:-|$)|$)/);
-  if (!route) return item.heading || item.title;
-  const name = (part) =>
-    part.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-  return `${name(route[1])} to ${name(route[2])} Cab`;
-}
-
 function PageLinks({ paths, publicPages = [], title = "Popular Routes", cityStyle = false }) {
   const items = [...new Set(paths)]
     .map((path) => publicPages.find((page) => page.pathname === path))
@@ -194,7 +179,7 @@ function PageLinks({ paths, publicPages = [], title = "Popular Routes", cityStyl
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {items.map((item) => (
             <Link key={item.pathname} href={item.pathname} className="city-route-card">
-              {routeCardLabel(item)}
+              {item.heading || item.title}
             </Link>
           ))}
         </div>
@@ -336,18 +321,17 @@ function ServicePage({ page }) {
       </Shell>
       <section className="mx-auto w-full max-w-[1120px] px-4 py-8 sm:px-6">
         <div className="mt-10">
-          {trailing.map((section, index) => (
-            <div key={section.heading}>
-              {/^Q[.\s:-]*\d/i.test(section.heading) &&
-                (index === 0 || !/^Q[.\s:-]*\d/i.test(trailing[index - 1].heading)) && (
-                  <h2 className="mb-5 text-center text-2xl text-teal-800">FAQ&apos;s</h2>
-                )}
-              <ContentSection section={section} centerHeadings />
-            </div>
-          ))}
+          {trailing
+            .filter((section) => !/^Q[.\s:-]*\d/i.test(section.heading))
+            .map((section) => (
+              <div key={section.heading}>
+                <ContentSection section={section} centerHeadings />
+              </div>
+            ))}
         </div>
         <PageLinks paths={page.links.filter((path) => path !== page.pathname).slice(0, 18)} />
       </section>
+      <FaqSection items={trailing.filter((section) => /^Q[.\s:-]*\d/i.test(section.heading))} />
     </>
   );
 }
@@ -439,6 +423,7 @@ function ContactPage({ page }) {
 }
 function ArticlePage({ page, publicPages = [] }) {
   const isBlog = page.pathname.startsWith("/blogs/");
+  const isRoute = page.cmsResource === "route-seo";
   const isCity = page.cmsResource === "cities";
   const sections = page.sections.filter(
     (section) =>
@@ -461,12 +446,7 @@ function ArticlePage({ page, publicPages = [] }) {
           : ["area-seo", "route-seo"].includes(item.cmsResource))
     )
     .map((item) => item.pathname);
-  const cityRoutes = isCity
-    ? related.filter(
-        (path) =>
-          path.includes("-to-") && path.toLowerCase().includes(page.pathname.split("/").at(-1))
-      )
-    : [];
+  const cityRoutes = isCity ? cityRoutePaths(page.cityName, publicPages) : [];
   return (
     <>
       <Shell familyTours={isBlog || isCity}>
@@ -478,19 +458,21 @@ function ArticlePage({ page, publicPages = [] }) {
             <ArrowLeft size={17} aria-hidden="true" /> Back to Cities
           </Link>
         )}
-        <PageTitle large={isBlog}>{page.heading}</PageTitle>
+        <PageTitle large={isBlog}>
+          {isCity ? `Popular Routes in ${page.cityName || page.heading}` : page.heading}
+        </PageTitle>
         {isBlog && page.blogDescription && (
           <p className="mt-4 text-lg leading-relaxed text-slate-700">{page.blogDescription}</p>
         )}
         {page.image && (
           <div
-            className={`relative mt-6 w-full overflow-hidden ${isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
+            className={`relative mt-6 w-full overflow-hidden ${isRoute ? "aspect-[16/7] rounded-xl" : isBlog ? "h-[260px] sm:h-[550px]" : "h-[220px] sm:h-[390px]"}`}
           >
             <PublicImage
               src={page.image}
               alt={page.images?.[0]?.alt || page.heading}
               sizes="(max-width: 1024px) 100vw, 850px"
-              className="object-contain object-top"
+              className={isRoute ? "object-cover object-center" : "object-contain object-top"}
             />
           </div>
         )}
@@ -621,8 +603,15 @@ function ArticlePage({ page, publicPages = [] }) {
               </section>
             ))}
         </div>
-        {isCity && <PageLinks paths={cityRoutes} publicPages={publicPages} cityStyle />}
-        {!isCity && page.pathname !== "/about" && related.length > 0 && (
+        {isCity && (
+          <PageLinks
+            paths={cityRoutes}
+            publicPages={publicPages}
+            title={`Popular Routes in ${page.cityName || page.heading}`}
+            cityStyle
+          />
+        )}
+        {!isCity && !isRoute && page.pathname !== "/about" && related.length > 0 && (
           <PageLinks
             paths={related.slice(0, 12)}
             publicPages={publicPages}
@@ -630,31 +619,17 @@ function ArticlePage({ page, publicPages = [] }) {
           />
         )}
       </Shell>
-      {!page.richHtml && faqSections.length > 0 && (
-        <section
-          className={`mx-auto w-full px-4 pb-10 sm:px-6 xl:px-0 ${page.pathname === "/about" ? "max-w-4xl" : ""}`}
-          aria-labelledby="page-faq-heading"
-        >
-          <h2
-            id="page-faq-heading"
-            className="mb-6 text-center text-2xl font-semibold text-teal-800 sm:text-3xl"
-          >
-            Frequently Asked Questions
-          </h2>
-          <div className="w-full space-y-3">
-            {faqSections
-              .filter((section) => section.isFaq || /^Q[.\s:-]*\d/i.test(section.heading))
-              .map((section, index) => (
-                <FaqItem
-                  key={`${section.heading}-${index}`}
-                  question={section.heading}
-                  answers={section.paragraphs}
-                />
-              ))}
-          </div>
-        </section>
+      {!page.richHtml && !page.faqs?.length && (
+        <FaqSection
+          items={faqSections.filter(
+            (section) => section.isFaq || /^Q[.\s:-]*\d/i.test(section.heading)
+          )}
+        />
       )}
-      {isBlog && <BlogCities publicPages={publicPages} />}
+      <FaqSection items={page.faqs || []} />
+      {(isBlog || isRoute || page.cmsResource === "area-seo") && (
+        <BlogCities publicPages={publicPages} />
+      )}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { sanitizeRichHtml } from "./richHtml.js";
-const DEFAULT_API_BASE_URL = "http://localhost:4000/api/v1";
+const DEFAULT_API_BASE_URL = "https://skg-backenf.onrender.com/api/v1";
 const PAGE_LIMIT = 500;
 const MAX_PAGES_PER_RESOURCE = 50;
 
@@ -166,6 +166,16 @@ export function cmsPathname(resource, slugValue) {
   return RESERVED_PATHS.has(pathname) ? null : pathname;
 }
 
+export function cityRoutePaths(cityName, pages = []) {
+  const city = cleanText(cityName).toLowerCase();
+  if (!city) return [];
+  return pages
+    .filter(
+      (page) => page.cmsResource === "route-seo" && cleanText(page.cityName).toLowerCase() === city
+    )
+    .map((page) => page.pathname);
+}
+
 export function normalizeCmsRecord(resource, record) {
   if (!record || typeof record !== "object" || !isPublished(resource, record)) return null;
   const pathname = cmsPathname(resource, record.slug);
@@ -193,6 +203,29 @@ export function normalizeCmsRecord(resource, record) {
     sections = [{ heading: fallbackHeading, paragraphs: [description], images: [] }];
   }
 
+  const faqs = Array.isArray(record.faqs)
+    ? record.faqs
+        .map((faq) => {
+          if (!faq || typeof faq.title !== "string" || typeof faq.description !== "string")
+            return null;
+          const description = sanitizeRichHtml(faq.description);
+          const paragraphs = htmlToSections(description, faq.title).flatMap(
+            (section) => section.paragraphs
+          );
+          return faq.title.trim() && paragraphs.length
+            ? { title: faq.title.trim(), description, paragraphs }
+            : null;
+        })
+        .filter(Boolean)
+    : [];
+  sections.push(
+    ...faqs.map((faq) => ({
+      heading: faq.title,
+      paragraphs: faq.paragraphs,
+      images: [],
+      isFaq: true,
+    }))
+  );
   const image = safeImage(record.heroImage || record.image);
   const ogImage = safeImage(record.ogImage) || null;
   return {
@@ -201,6 +234,7 @@ export function normalizeCmsRecord(resource, record) {
     description: description || `${fallbackHeading} with SKG Travels.`,
     blogDescription: resource === "blogs" ? cleanText(record.description) : null,
     heading: fallbackHeading,
+    faqs,
     date: record.publishedAt || record.updatedAt || record.createdAt || null,
     sections,
     richHtml: sanitizeRichHtml(
@@ -213,7 +247,9 @@ export function normalizeCmsRecord(resource, record) {
     keywords: record.keywords || record.metaKeywords || "",
     headScripts: cleanText(record.headScripts),
     bodyScripts: cleanText(record.bodyScripts),
-    cityName: resource === "cities" ? cleanText(record.cityName) : null,
+    cityName: ["cities", "route-seo", "area-seo"].includes(resource)
+      ? cleanText(record.cityName)
+      : null,
     displayOrder: Number(record.displayOrder) || 0,
     images: image ? [{ src: image, alt: fallbackHeading }] : [],
     links: [],

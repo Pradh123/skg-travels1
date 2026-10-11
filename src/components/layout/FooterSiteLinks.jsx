@@ -18,8 +18,12 @@ export default function FooterSiteLinks() {
     }))
     .filter((group) => group.links.length);
   const pathname = usePathname();
+  const isRoutePage = pages.some(
+    (page) => page.pathname === pathname && ["route-seo", "area-seo"].includes(page.cmsResource)
+  );
 
   if (
+    isRoutePage ||
     pathname === "/about" ||
     pathname === "/contact" ||
     pathname === "/cities" ||

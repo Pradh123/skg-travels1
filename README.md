@@ -12,7 +12,7 @@ npm run dev
 ```
 
 Open `http://localhost:3000`. The default backend API is
-`http://localhost:4000/api/v1`; change `NEXT_PUBLIC_API_URL` in `.env.local` when needed.
+`https://skg-backenf.onrender.com/api/v1`; change `NEXT_PUBLIC_API_URL` in `.env.local` when needed.
 
 ## Content and routes
 

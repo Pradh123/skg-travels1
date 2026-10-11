@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   cmsPathname,
+  cityRoutePaths,
   getCmsCollectionUrl,
   htmlToSections,
   loadPublicCmsPages,
@@ -12,13 +13,42 @@ import {
   publicSitePages,
 } from "../src/lib/api/cms.js";
 
+test("city route links use the selected city rather than words in the slug", () => {
+  const route = normalizeCmsRecord("route-seo", {
+    title: "Airport transfer",
+    slug: "airport-transfer",
+    cityName: "Mumbai",
+    status: "Published",
+  });
+  assert.equal(route.cityName, "Mumbai");
+  assert.deepEqual(
+    cityRoutePaths(" mUMbAI ", [
+      route,
+      { cmsResource: "route-seo", pathname: "/mumbai-to-pune", cityName: "Pune" },
+      { cmsResource: "area-seo", pathname: "/andheri", cityName: "Mumbai" },
+    ]),
+    ["/airport-transfer"]
+  );
+  assert.deepEqual(cityRoutePaths("", [route]), []);
+});
+
 test("blog display description stays separate from SEO metadata", () => {
-  const record = { title: "Travel guide", slug: "travel-guide", status: "Published", description: "Visible introduction", metaDescription: "Search engine summary", content: "" };
+  const record = {
+    title: "Travel guide",
+    slug: "travel-guide",
+    status: "Published",
+    description: "Visible introduction",
+    metaDescription: "Search engine summary",
+    content: "",
+  };
   const page = normalizeCmsRecord("blogs", record);
   assert.equal(page.blogDescription, "Visible introduction");
   assert.equal(page.description, "Search engine summary");
   assert.deepEqual(page.sections, []);
-  assert.equal(normalizeCmsRecord("blogs", { ...record, description: undefined }).blogDescription, "");
+  assert.equal(
+    normalizeCmsRecord("blogs", { ...record, description: undefined }).blogDescription,
+    ""
+  );
 });
 
 test("CMS collection URLs and public pathnames follow the backend contract", () => {

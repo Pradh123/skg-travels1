@@ -1,6 +1,6 @@
 # Backend integration
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_URL` to the backend API base URL. When it is not set, the website uses `http://localhost:4000/api/v1`.
+Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_URL` to the backend API base URL. When it is not set, the website uses `https://skg-backenf.onrender.com/api/v1`.
 
 The booking, quick-quote, vehicle-enquiry, and app-link forms normalize their fields and send JSON to `POST /public/leads`. Saved enquiries appear in the admin Inquiries list. Forms show success only after the backend confirms saving. Failed requests show an error and keep the entered details for retry. Form submission never opens WhatsApp.
 

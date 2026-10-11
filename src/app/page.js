@@ -1,9 +1,24 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import { AlarmClock, BadgeIndianRupee, CarFront, Check, Clock3, HeartHandshake, MapPin, MousePointerClick, PackageOpen, ShieldCheck, SlidersHorizontal, Sparkles, UserRoundCheck, WalletCards } from "lucide-react";
+import {
+  AlarmClock,
+  BadgeIndianRupee,
+  CarFront,
+  Check,
+  Clock3,
+  HeartHandshake,
+  MapPin,
+  MousePointerClick,
+  PackageOpen,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sparkles,
+  UserRoundCheck,
+  WalletCards,
+} from "lucide-react";
 import BookingForm from "@/components/booking/BookingForm";
 import MobileBookingPromo from "@/components/booking/MobileBookingPromo";
-import FaqItem from "@/components/content/FaqItem";
+import FaqSection from "@/components/content/FaqSection";
 import TestimonialsCarousel from "@/components/content/TestimonialsCarousel";
 import PopularCities from "@/components/content/PopularCities";
 import { getPage } from "@/data/site";
@@ -46,7 +61,16 @@ const testimonials = [
 ];
 
 const benefitIcons = [WalletCards, CarFront, HeartHandshake, ShieldCheck, AlarmClock, PackageOpen];
-const whyIcons = [Sparkles, CarFront, UserRoundCheck, BadgeIndianRupee, SlidersHorizontal, Clock3, MousePointerClick, MapPin];
+const whyIcons = [
+  Sparkles,
+  CarFront,
+  UserRoundCheck,
+  BadgeIndianRupee,
+  SlidersHorizontal,
+  Clock3,
+  MousePointerClick,
+  MapPin,
+];
 
 function CopySection({ section }) {
   if (!section) return null;
@@ -89,7 +113,8 @@ export default function HomePage() {
             areaServed: { "@type": "City", name: "Mumbai" },
             address: {
               "@type": "PostalAddress",
-              streetAddress: "Office No. 170, 1st Floor, Evershine Mall, Link Road, Chincholi Bunder",
+              streetAddress:
+                "Office No. 170, 1st Floor, Evershine Mall, Link Road, Chincholi Bunder",
               addressLocality: "Malad West, Mumbai",
               addressRegion: "Maharashtra",
               postalCode: "400064",
@@ -106,18 +131,12 @@ export default function HomePage() {
             <BookingForm hero />
           </div>
           <div className="home-hero-content">
-            <h1 className="home-hero-title">
-              Best Car Rental in India
-            </h1>
-            <p className="home-hero-offer">
-              ☂ Best Deals on Outstation Taxi - Save Up to 30% ☂
-            </p>
+            <h1 className="home-hero-title">Best Car Rental in India</h1>
+            <p className="home-hero-offer">☂ Best Deals on Outstation Taxi - Save Up to 30% ☂</p>
             <p className="home-hero-starting">Outstation Taxi Starts from @Rs.11/KM</p>
             <div className="home-hero-lower">
               <div className="home-hero-rates">
-                <h2>
-                  Taxi Rates from Mumbai
-                </h2>
+                <h2>Taxi Rates from Mumbai</h2>
                 <ul>
                   <li className="flex items-center gap-2">
                     <Check size={17} /> Etios at Rs.12 per KM
@@ -153,9 +172,7 @@ export default function HomePage() {
         <CopySection section={copy[1]} />
       </div>
       <section className="mx-auto max-w-[1170px] px-4 py-12 sm:px-6">
-        <h2 className="text-ink text-center text-2xl font-bold">
-          Outstation Car Rental Mumbai
-        </h2>
+        <h2 className="text-ink text-center text-2xl font-bold">Outstation Car Rental Mumbai</h2>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {fleet.map((car) => (
             <article
@@ -256,14 +273,7 @@ export default function HomePage() {
           Book Now
         </Link>
       </section>
-      <section className="mx-auto max-w-[900px] px-4 py-14">
-        <h2 className="text-ink text-center text-2xl font-bold">FAQ&apos;s</h2>
-        <div className="mt-6 space-y-3">
-          {faqs.map((item) => (
-            <FaqItem key={item.heading} question={item.heading} answers={item.paragraphs} />
-          ))}
-        </div>
-      </section>
+      <FaqSection items={faqs} />
     </main>
   );
 }
