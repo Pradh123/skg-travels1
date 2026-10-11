@@ -12,7 +12,7 @@ const socialIconClass =
 
 export default async function Footer() {
   const journeys = (await getPublicCmsPages())
-    .filter((page) => ["cities", "route-seo"].includes(page.cmsResource))
+    .filter((page) => page.cmsResource === "route-seo")
     .sort((a, b) => a.displayOrder - b.displayOrder)
     .slice(0, 4);
   return (
@@ -58,11 +58,11 @@ export default async function Footer() {
               {journeys.map((page) => (
                 <li key={page.pathname}>
                   <Link href={page.pathname} className="hover:text-lime-300">
-                    {page.cityName || page.heading}
+                    {page.heading || page.title}
                   </Link>
                 </li>
               ))}
-              {!journeys.length && <li>No destinations published yet.</li>}
+              {!journeys.length && <li>No journeys published yet.</li>}
             </ul>
           </div>
           <div>
